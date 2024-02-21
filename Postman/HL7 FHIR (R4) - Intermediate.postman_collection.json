@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "dc2d665f-b449-4a9f-956b-2b96321b7f5e",
+		"name": "HL7 FHIR (R4) - Intermediate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "921117",
+		"_collection_link": "https://dredevelopment.postman.co/workspace/Eleven-Labs~96c03296-fe72-4bd8-8b2b-4064ed3152f4/collection/921117-dc2d665f-b449-4a9f-956b-2b96321b7f5e?action=share&source=collection_link&creator=921117"
+	},
+	"item": [
+		{
+			"name": "Unit 1",
+			"item": [
+				{
+					"name": "U01-1",
+					"item": []
+				},
+				{
+					"name": "U01-2",
+					"item": []
+				},
+				{
+					"name": "U01-3",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Procedure?patient=X12984&_sort=date,code",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Procedure"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "X12984"
+										},
+										{
+											"key": "_sort",
+											"value": "date,code"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "U01-4",
+					"item": []
+				},
+				{
+					"name": "U01-5",
+					"item": []
+				},
+				{
+					"name": "U01-6",
+					"item": []
+				},
+				{
+					"name": "U01-7",
+					"item": []
+				},
+				{
+					"name": "U01-8",
+					"item": []
+				}
+			]
+		},
+		{
+			"name": "Unit 2",
+			"item": []
+		},
+		{
+			"name": "Unit 3",
+			"item": []
+		},
+		{
+			"name": "Unit 4",
+			"item": []
+		}
+	]
+}
