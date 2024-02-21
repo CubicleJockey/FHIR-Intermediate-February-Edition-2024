@@ -17,6 +17,7 @@ def get_vital_signs(patient_id: str, sorting: List[str] = ('date', 'code')) -> s
         Required: Marked with Red S block
         Skip: Patient + Category - these are known as they are search criteria
         Format: status|code|effectiveDateTime|valueQuantity[value unit]|dataAbsentReason
+        
     :return: Pipe delimited Vital Signs. Single vital per line
     """
     url: str = f'http://fhirserver.hl7fundamentals.org/fhir/Observation?category=vital-signs&patient={patient_id}'
