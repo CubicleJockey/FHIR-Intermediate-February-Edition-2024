@@ -56,4 +56,10 @@ def get_vital_signs(patient_id: str, sorting: List[str] = ('date', 'code')) -> s
         patient_vitals.append(current_vital)
 
     return '\r\n'.join(patient_vitals)
-# %%
+
+
+#Run Code
+patient_id = 'X12984'
+vitals = get_vital_signs(patient_id)
+
+print(vitals)
