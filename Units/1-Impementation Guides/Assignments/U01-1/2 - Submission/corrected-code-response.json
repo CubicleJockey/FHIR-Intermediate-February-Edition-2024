@@ -1,33 +1,29 @@
-[
-    {
-        "resourceType": "MedicationRequest",
-        "text": {
-            "status": "generated",
-            "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><strong>Medication Request</strong></p><p><strong>status</strong>: active</p><p><strong>intent</strong>: order</p><p><strong>medication</strong>: X-Meds - Medicine X</p><p><strong>subject</strong>: John Smith</p><p><strong>authoredOn</strong>:2024-02-21</p><p><strong>requester</strong>:Dr. Prescriber</p><p><strong>dosageInstruction</strong>:Twice an hour.</p><div>"
-        },
-        "medicationCodeableConcept": {
-            "coding": [
-                {
-                    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                    "code": "X-Meds",
-                    "display": "Medicine X"
-                }
-            ],
-            "text": "Medicine X"
-        },
-        "patient": {
-            "reference": "Patient/X12984",
-            "display": "John Smith"
-        },
-        "prescriber": {
-            "reference": "Practitioner/1",
-            "display": "Dr. Prescriber"
-        },
-        "authoredOn": "2024-02-21",
-        "dosageInstruction": [
+{
+    "resourceType": "MedicationRequest",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+        "coding": [
             {
-                "text": "Twice an hour."
+                "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                "code": "Med-X",
+                "display": "X-Meds - Best Medication"
             }
-        ]
-    }
-]
+        ],
+        "text": "X-Meds - Best Medication"
+    },
+    "subject": {
+        "reference": "Patient/X12984",
+        "display": "John Smith"
+    },
+    "requester": {
+        "reference": "Practitioner/2311",
+        "display": "Mary Smith"
+    },
+    "authoredOn": "2023-01-01",
+    "dosageInstruction": [
+        {
+            "text": "Dosage Instructions"
+        }
+    ]
+}

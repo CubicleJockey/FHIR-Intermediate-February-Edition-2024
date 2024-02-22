@@ -201,43 +201,42 @@ function prepareArgoMedReqRecord(
     "<p><strong>subject</strong>: "+v_patient_display+"</p>"+
     "<p><strong>authoredOn</strong>:"+v_prescription_date+"</p>"+
     "<p><strong>requester</strong>:"+v_prescriber_display+"</p>"+
-    "<p><strong>dosageInstruction</strong>:"+v_dosage_instruction+"</p></div>";
+    "<p><strong>dosageInstruction</strong>:"+v_dosage_instruction+"</p><div>";
    
-    resource={
+   resource= 
+    [{
         "resourceType": "MedicationRequest",
         "text": {
-            "status": "generated",
-            "div": v_narrative
+    	   "status": "generated",
+	       "div": v_narrative
         },
-        "status": "active",
-        "intent": "order",
-        "medicationCodeableConcept": {
-            "coding": [
-                {
-                    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                    "code": v_prescription_code,
-                    "display": v_prescription_name
-                }
-            ],
-            "text": v_prescription_name
+           "medicationCodeableConcept" : {
+              "coding" : [
+               {
+                "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+                "code" : v_prescription_code,
+                "display" : v_prescription_name
+               }
+               ],
+              "text" : v_prescription_name
         },
-        "subject": {
-            "reference": `Patient/${v_patient_reference}`,
-            "display": "John Smith"
+        "patient": {
+            "reference": "Patient/"+v_patient_reference,
+            "display":  v_patient_display
         },
-        "requester": {
-            "reference": `Practitioner/${v_prescriber_reference}`,
+          "prescriber":{
+            "reference": "Practitioner/"+v_prescriber_reference,
             "display": v_prescriber_display
         },
         "authoredOn": myVDate.toISOString().split('T')[0],
-        "dosageInstruction": [
-            {
-                "text": v_dosage_instruction
-            }
-        ]
+       "dosageInstruction" : [
+              {"text" : v_dosage_instruction}
+       ]
     }
+   ]
    return resource;
 }
+
 
 
 </script>
