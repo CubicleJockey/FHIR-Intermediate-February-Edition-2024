@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by diegokaminker (http://jsbin.com/yizimod/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Unit 1 - Assignment 1</title>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+ 
+<style id="jsbin-css">
+body {
+  background: white;
+  padding: 20px;
+  font-family: Helvetica;
+}
+
+.zui-table {
+    border: solid 1px #DDEEEE;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font: normal 13px Arial, sans-serif;
+}
+.zui-table thead th {
+    background-color: #DDEFEF;
+    border: solid 1px #DDEEEE;
+    color: #336B6B;
+    padding: 10px;
+    text-align: left;
+    text-shadow: 1px 1px 1px #fff;
+}
+.zui-table tbody td {
+    border: solid 1px #DDEEEE;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+</style>
+</head>
+<body>
+
+
+    	<header>
+		<h1>HL7 FHIR Intermediate Course</h1>
+    <h2>
+    Unit 1 - Assignment 1 - Proposed Solution
+          </h2>
+    <h3>
+    Prepare Argo Medication Resource
+    </h3>
+    </header>
+
+  
+    <div class="main-content">
+
+        <!-- You only need this form and the form-validation.css -->
+
+        <form class="form-validation" method="post" action="#">
+
+              <div class="form-row" >
+
+                <label>
+                    <span>Patient Id</span>
+                    <input type="text" name="patient_id" id="v_patient_reference" onfocus="this.value=''"  value="Enter the patient id" >
+                </label>
+
+             
+           
+            </div>
+              <div class="form-row" >
+
+                <label>
+                    <span>Patient Display</span>
+                    <input type="text" name="patient_display" id="v_patient_display" onfocus="this.value=''"  value="Enter the patient display" >
+                </label>
+
+             
+           
+            </div>
+              <div class="form-row" >
+
+                <label>
+                    <span>Prescriber Id</span>
+                    <input type="text" name="prescriber_id" id="v_prescriber_reference" onfocus="this.value=''"  value="Enter the prescriber id" >
+                </label>
+
+             
+           
+            </div>
+               <div class="form-row" >
+
+                <label>
+                    <span>Prescriber Display</span>
+                    <input type="text" name="prescriber_display" id="v_prescriber_display" onfocus="this.value=''"  value="Enter the prescriber display" >
+                </label>
+
+             
+           
+            </div>
+         
+            <div class="form-row" >
+
+                <label>
+                    <span>Medication Code</span>
+                    <input type="text" name="prescription_code" id="v_med_code" onfocus="this.value=''" value="Enter the RXNorm medication code">
+                </label>
+            </div>
+            <div class="form-row" >
+
+                <label>
+                    <span>Medication Name</span>
+                    <input type="text" name="prescription_name" id="v_med_name" onfocus="this.value=''" value="Enter the RXNorm medication description">
+                </label>
+            </div>
+         
+         <div class="form-row" >
+
+                    <label>
+                        <span>Prescription Date</span>
+                        <input type="text" name="prescription_date" id="v_prescription_date"  onfocus="this.value=''"  value="YYYY-MM-DD">
+                    </label>
+                </div>
+         <div class="form-row" >
+
+                    <label>
+                        <span>Dosage Instruction</span>
+                        <input type="text" name="dosage_instruction" id="v_dosage_instruction"  onfocus="this.value=''"  value="Twice a day before main meals">
+                    </label>
+                </div>
+            
+            <div class="form-row">
+
+                <button type="button" id="btn_submit" onclick="PrepareRecord()">Prepare Record</button>
+   
+            </div>
+
+            <div class="form-row">
+
+<label type="label" id="result" >Result</label>
+       
+             </div>
+    
+        </form>
+
+    </div>
+  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+<script id="jsbin-javascript">
+window.PrepareRecord = function(page = 1, limit=9999)
+	
+{
+    
+  var v_patient_reference = document.getElementById('v_patient_reference').value;
+  var v_prescriber_reference=document.getElementById('v_prescriber_reference').value;
+  var v_prescription_code=document.getElementById('v_med_code').value;
+  var v_prescription_name=document.getElementById('v_med_name').value;
+  var v_prescription_date=document.getElementById('v_prescription_date').value;
+  var v_dosage_instruction=document.getElementById('v_dosage_instruction').value;
+  var v_patient_display = document.getElementById('v_patient_display').value;
+  var v_prescriber_display=document.getElementById('v_prescriber_display').value;
+  
+  result= prepareArgoMedReqRecord
+  (v_patient_reference,v_prescriber_reference,v_prescription_code,v_prescription_name,v_prescription_date,v_dosage_instruction
+  ,v_patient_display,v_prescriber_display)
+  
+    var v_result= document.getElementById('result');
+  
+    v_result.textContent=JSON.stringify(result);
+}
+function prepareArgoMedReqRecord(
+    v_patient_reference,         //reference to a patient resource
+    v_prescriber_reference,      //reference to a practitioner resource
+    v_prescription_code,         //medication code (rxnorm)
+    v_prescription_name,         //medication name (rxnorm)
+    v_prescription_date,         //prescription date
+    v_dosage_instruction,        //dosage instruction text
+    v_patient_display,           //patient basic info
+    v_prescriber_display         //practitioner basic info
+    )
+ {
+   var myVDate=new Date(v_prescription_date); // Date from input
+   var v_narrative="<div xmlns=\"http://www.w3.org/1999/xhtml\">"+
+    "<p><strong>Medication Request</strong></p>"+
+    "<p><strong>status</strong>: active</p>"+
+    "<p><strong>intent</strong>: order</p>"+
+    "<p><strong>medication</strong>: "+v_prescription_code+" - "+v_prescription_name+"</p>"+
+    "<p><strong>subject</strong>: "+v_patient_display+"</p>"+
+    "<p><strong>authoredOn</strong>:"+v_prescription_date+"</p>"+
+    "<p><strong>requester</strong>:"+v_prescriber_display+"</p>"+
+    "<p><strong>dosageInstruction</strong>:"+v_dosage_instruction+"</p><div>";
+   
+   resource= 
+    [{
+        "resourceType": "MedicationRequest",
+        "text": {
+    	   "status": "generated",
+	       "div": v_narrative
+        },
+           "medicationCodeableConcept" : {
+              "coding" : [
+               {
+                "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+                "code" : v_prescription_code,
+                "display" : v_prescription_name
+               }
+               ],
+              "text" : v_prescription_name
+        },
+        "patient": {
+            "reference": "Patient/"+v_patient_reference,
+            "display":  v_patient_display
+        },
+          "prescriber":{
+            "reference": "Practitioner/"+v_prescriber_reference,
+            "display": v_prescriber_display
+        },
+        "authoredOn": myVDate.toISOString().split('T')[0],
+       "dosageInstruction" : [
+              {"text" : v_dosage_instruction}
+       ]
+    }
+   ]
+   return resource;
+}
+
+
+
+</script>
+</body>
+
+</html>

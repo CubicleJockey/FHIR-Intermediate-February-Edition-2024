@@ -22,7 +22,7 @@
 					"name": "U01-3",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "Procedure",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -47,6 +47,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Device",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Device?patient=1",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Device"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Vital-Signs",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
 						}
 					]
 				},
@@ -60,7 +91,39 @@
 				},
 				{
 					"name": "U01-6",
-					"item": []
+					"item": [
+						{
+							"name": "Goals",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Goal?patient=X12984",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Goal"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "X12984"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "U01-7",
