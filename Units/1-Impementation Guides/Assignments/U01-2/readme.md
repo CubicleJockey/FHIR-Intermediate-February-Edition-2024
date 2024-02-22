@@ -18,8 +18,8 @@ Your job is to write the [FHIRPath](http://hl7.org/fhirpath/) expressions with t
 
 ### Example Resources (Material Tools Folder)
 
-* [medicationRequestUSCORE.json](../../Material%20Tools/medicationRequestUSCORE.json)
-* [medicationStatementIPS.json](../../Material%20Tools/medicationStatementIPS.json)
+* [medicationRequestUSCORE.json](./files/medicationRequestUSCORE.json)
+* [medicationStatementIPS.json](./files/medicationStatementIPS.json)
 
 > To retrieve the presciber in both cases, as we just ask for the requesters name, you can use the `display` element. You don't need to retrieve or resolve the referenced resource.
 
