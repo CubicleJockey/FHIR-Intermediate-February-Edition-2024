@@ -30,3 +30,6 @@ Your job is to write the [FHIRPath](http://hl7.org/fhirpath/) expressions with t
 
 #### Our Medication Display
 ![medication-display-table](../U01-2/images/medication-display.jpg)
+
+### US Core R4 Mapping
+![US Core R4 Mapping Table](../U01-2/images/us-core-r4-mapping.jpg)
