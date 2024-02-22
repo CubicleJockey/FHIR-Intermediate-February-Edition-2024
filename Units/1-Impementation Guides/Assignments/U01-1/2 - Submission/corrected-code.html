@@ -162,14 +162,14 @@ body {
 <script id="jsbin-javascript">
 window.PrepareRecord = function(page = 1, limit=9999){
     
-  var v_patient_reference = document.getElementById('v_patient_reference').value;
-  var v_prescriber_reference=document.getElementById('v_prescriber_reference').value;
-  var v_prescription_code=document.getElementById('v_med_code').value;
-  var v_prescription_name=document.getElementById('v_med_name').value;
-  var v_prescription_date=document.getElementById('v_prescription_date').value;
-  var v_dosage_instruction=document.getElementById('v_dosage_instruction').value;
-  var v_patient_display = document.getElementById('v_patient_display').value;
-  var v_prescriber_display=document.getElementById('v_prescriber_display').value;
+  const v_patient_reference = document.getElementById('v_patient_reference').value;
+  const v_prescriber_reference=document.getElementById('v_prescriber_reference').value;
+  const v_prescription_code=document.getElementById('v_med_code').value;
+  const v_prescription_name=document.getElementById('v_med_name').value;
+  const v_prescription_date=document.getElementById('v_prescription_date').value;
+  const v_dosage_instruction=document.getElementById('v_dosage_instruction').value;
+  const v_patient_display = document.getElementById('v_patient_display').value;
+  const v_prescriber_display=document.getElementById('v_prescriber_display').value;
   
   result= prepareArgoMedReqRecord
   (v_patient_reference,v_prescriber_reference,v_prescription_code,v_prescription_name,v_prescription_date,v_dosage_instruction
@@ -178,7 +178,8 @@ window.PrepareRecord = function(page = 1, limit=9999){
     var v_result= document.getElementById('result');
   
     v_result.textContent=JSON.stringify(result);
-}
+};
+
 function prepareArgoMedReqRecord(
     v_patient_reference,         //reference to a patient resource
     v_prescriber_reference,      //reference to a practitioner resource
@@ -224,7 +225,8 @@ function prepareArgoMedReqRecord(
               "text" : v_prescription_name
         },
         "subject": {
-            "reference": `Patient/${v_patient_reference}`
+            "reference": `Patient/${v_patient_reference}`,
+            "display": v_patient_display
         },
         "requester":{
             "reference": `Practitioner/${v_prescriber_reference}`,

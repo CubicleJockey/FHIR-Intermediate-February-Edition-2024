@@ -17,7 +17,8 @@
         "text": "X-Meds - Best Medication"
     },
     "subject": {
-        "reference": "Patient/X12984"
+        "reference": "Patient/X12984",
+        "display": "John Smith"
     },
     "requester": {
         "reference": "Practitioner/2311",
