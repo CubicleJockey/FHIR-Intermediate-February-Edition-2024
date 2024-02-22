@@ -160,9 +160,7 @@ body {
 
 
 <script id="jsbin-javascript">
-window.PrepareRecord = function(page = 1, limit=9999)
-	
-{
+window.PrepareRecord = function(page = 1, limit=9999){
     
   var v_patient_reference = document.getElementById('v_patient_reference').value;
   var v_prescriber_reference=document.getElementById('v_prescriber_reference').value;
@@ -192,52 +190,57 @@ function prepareArgoMedReqRecord(
     v_prescriber_display         //practitioner basic info
     )
  {
-   var myVDate=new Date(v_prescription_date); // Date from input
-   var v_narrative="<div xmlns=\"http://www.w3.org/1999/xhtml\">"+
+   const status = 'active';
+   const intent = 'order';
+
+   let myVDate=new Date(v_prescription_date); // Date from input
+   let v_narrative="<div xmlns=\"http://www.w3.org/1999/xhtml\">"+
     "<p><strong>Medication Request</strong></p>"+
-    "<p><strong>status</strong>: active</p>"+
-    "<p><strong>intent</strong>: order</p>"+
+    `<p><strong>status</strong>: ${status}</p>`+
+    `<p><strong>intent</strong>: ${intent}</p>`+
     "<p><strong>medication</strong>: "+v_prescription_code+" - "+v_prescription_name+"</p>"+
     "<p><strong>subject</strong>: "+v_patient_display+"</p>"+
     "<p><strong>authoredOn</strong>:"+v_prescription_date+"</p>"+
     "<p><strong>requester</strong>:"+v_prescriber_display+"</p>"+
     "<p><strong>dosageInstruction</strong>:"+v_dosage_instruction+"</p></div>";
    
-    resource={
+   resource= 
+    {
         "resourceType": "MedicationRequest",
         "text": {
-            "status": "generated",
-            "div": v_narrative
+    	   "status": "generated",
+	       "div": v_narrative
         },
-        "status": "active",
-        "intent": "order",
-        "medicationCodeableConcept": {
-            "coding": [
+        "status" : status,
+        "intent": intent,
+        "medicationCodeableConcept" : {
+              "coding" : [
                 {
-                    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
-                    "code": v_prescription_code,
-                    "display": v_prescription_name
+                    "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+                    "code" : v_prescription_code,
+                    "display" : v_prescription_name
                 }
-            ],
-            "text": v_prescription_name
+               ],
+              "text" : v_prescription_name
         },
         "subject": {
-            "reference": `Patient/${v_patient_reference}`,
-            "display": "John Smith"
+            "reference": `Patient/${v_patient_reference}`
         },
-        "requester": {
+        "requester":{
             "reference": `Practitioner/${v_prescriber_reference}`,
             "display": v_prescriber_display
         },
         "authoredOn": myVDate.toISOString().split('T')[0],
-        "dosageInstruction": [
-            {
-                "text": v_dosage_instruction
+        "dosageInstruction" : [
+            { 
+                "text" : v_dosage_instruction 
             }
         ]
-    }
+    };
+   
    return resource;
 }
+
 
 
 </script>
