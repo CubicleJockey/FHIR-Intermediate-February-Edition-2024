@@ -44,3 +44,5 @@ Your job as the clinical interface consultant for the company is to resolve thes
       * [CVX Vaccine Administered](https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=cvx)
       * [CodeSystem CVX](https://terminology.hl7.org/5.1.0/CodeSystem-CVX.html)
       * [CVX ValueSet](https://hl7.org/fhir/R4/valueset-vaccine-code.html)
+      * [Loinc](https://loinc.org/search/)
+        * Requires free account sign up to use code search for quiz.
