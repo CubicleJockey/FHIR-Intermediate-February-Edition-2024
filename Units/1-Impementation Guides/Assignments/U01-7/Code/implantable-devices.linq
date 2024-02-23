@@ -35,16 +35,29 @@
 </Query>
 
 /*
+	Assignment: U01-7: US Core FHIR R4 Implantable Device (C#)
 	Student: 	André Davis
 	Framework: 	.NET 8
 	NuGet: 		HL7.FHIR.R4 v5.6.1
 	
-	Documentation: https://www.hl7.org/fhir/device.html
+	Resource Documentation: https://www.hl7.org/fhir/device.html
+	Resource Profile - US Core Implantable Device Profile: https://www.hl7.org/fhir/us/core/StructureDefinition-us-core-implantable-device.html
+	
+		UDI component							US Core Implantable Device Profile element
+		-------------							------------------------------------------
+		UDI HRF string							Device.udiCarrier.carrierHRF
+		DI										Device.udiCarrier.deviceIdentifier
+		Manufacture date (UDI-PI element)		Device.manufactureDate
+		Expiration dat (UDI-PI elemente)		Device.expirationDate
+		Lot number (UDI-PI element)				Device.lotNumber
+		Serial number (UDI-PI element)			Device.serialNumber
+		Distinct identifier (UDI-PI element)	Device.distinctIdentifier
 */
 static async System.Threading.Tasks.Task Main(string[] args)
 {
-	string patientId = "1";
-	string deviceList = await GetPatientDevicesAsync(patientId);
+	var patientId = "1";
+	//var patientId = "X12984";
+	var deviceList = await GetPatientDevicesAsync(patientId);
 	Console.WriteLine(deviceList);
 }
 
@@ -70,26 +83,34 @@ public static async Task<string> GetPatientDevicesAsync(string patientId)
 		{
 			var device = (Device)entry.Resource;
 			
-			if (device.UdiCarrier.Count > 0)
+			if(!device.Status.HasValue) { continue; }
+			//if(device.UdiCarrier.Count <= 0) { continue; }
+			if(device.UdiCarrier.Count > 0)
 			{
-				output.Append($"{device.UdiCarrier[0].CarrierHRF}|{device.UdiCarrier[0].DeviceIdentifier}|");
-			}
-			if (device.Status.HasValue)
-			{
-				output.AppendLine($"{device.Status}|");
+				output.Append($"{device.UdiCarrier[0].CarrierHRF}|");
+				output.Append($"{device.UdiCarrier[0].DeviceIdentifier}|");
 			}
 
-			// get the next page of results
-			if (fhirBundle.NextLink  != default)
-			{
-				fhirBundle = await client.ContinueAsync(fhirBundle);
-			}
-			else 
-			{
-				fhirBundle = default;
-				break;
-			}
+			output.Append($"{device.ManufactureDate}|");
+			output.Append($"{device.ExpirationDate}|");
+			output.Append($"{device.LotNumber}|");
+			output.Append($"{device.SerialNumber}|");
+			output.Append($"{device.DistinctIdentifier}|");
+			//output.Append($"{device.Type.Coding[0].Display}|");
+			
+			//if (device.Status.HasValue)
+			//{
+				output.AppendLine($"{device.Status}");
+			//}
+			//else { output.AppendLine(); }
 		}
+
+		// get the next page of results
+		if (fhirBundle.NextLink != default)
+		{
+			fhirBundle = await client.ContinueAsync(fhirBundle);
+		}
+		else { fhirBundle = default; }
 
 	}
 	return output.ToString();
