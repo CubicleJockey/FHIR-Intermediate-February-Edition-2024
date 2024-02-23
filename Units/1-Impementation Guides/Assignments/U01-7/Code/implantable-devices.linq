@@ -63,7 +63,7 @@ static async System.Threading.Tasks.Task Main(string[] args)
 
 
 //NOTE: Valid search parameters for this search are: [_id, _language, _lastUpdated, device-name, identifier, location, manufacturer, model, organization, patient, status, type, udi-carrier, udi-di, url]
-public static async Task<string> GetPatientDevicesAsync(string patientId)
+public static async Task<string> GetPatientDevicesAsync(string patientId, string status = "active")
 {
 	const string FHIR_EndPoint = "http://fhirserver.hl7fundamentals.org/fhir";
 
@@ -71,6 +71,7 @@ public static async Task<string> GetPatientDevicesAsync(string patientId)
 	
 	var searchParams = new SearchParams();
 	searchParams.Add("patient", patientId);
+	searchParams.Add("status", status);
 	
 	var fhirBundle = await client.SearchAsync<Device>(searchParams);
 	
@@ -96,7 +97,7 @@ public static async Task<string> GetPatientDevicesAsync(string patientId)
 			output.Append($"{device.LotNumber}|");
 			output.Append($"{device.SerialNumber}|");
 			output.Append($"{device.DistinctIdentifier}|");
-			//output.Append($"{device.Type.Coding[0].Display}|");
+			output.Append($"{device.Type.Coding[0].Display}|");
 			
 			//if (device.Status.HasValue)
 			//{
