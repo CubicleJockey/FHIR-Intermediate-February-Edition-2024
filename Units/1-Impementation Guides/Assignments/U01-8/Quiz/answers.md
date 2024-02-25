@@ -54,6 +54,9 @@
 
  * **Question:** If the endpoint for the FHIR server is http://medicarefhir.org/r4, enter the full url to query and retrieve last known A1C. 
  * **Answers:**
+   * Resources:
+     * [Hemoglobin A1c/Hemoglobin.total in Blood](https://loinc.org/search/?t=1&s=4548-4)
+   * URL: - [] http://medicarefhir.org/Observation?code=http://loinc.org|4548-4&subject=Patient/[patient_id]&_sort=-date
 
 ## VIGNETTE 3
 
