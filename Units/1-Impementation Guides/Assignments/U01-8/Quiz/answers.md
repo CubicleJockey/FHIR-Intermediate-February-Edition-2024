@@ -6,7 +6,7 @@
 * **Answer:**
   * Resources:
     * https://hl7.org/fhir/allergyintolerance.html
-  * URL: - [ ] http://serverfhir.org/r4/AllergyIntolerance?patient=[PATIENT_ID]
+  * URL: - [x] http://serverfhir.org/r4/AllergyIntolerance?patient=[PATIENT_ID]
 
 ## VIGNETTE 1
 
@@ -37,28 +37,33 @@
  * **Question:** If the endpoint for the FHIR server is http://resultsfhir.org/r4, enter the full url to query for documents. 
  * **Answer:**
    * Resources:
-     * https://hl7.org/fhir/documentreference.html
-   * URL: - [ ] http://resultsfhir.org/r4/DocumentReference?patient=[PATIENT_ID]
+     * https://hl7.org/fhir/diagnosticreport.html
+   * URL: - [x] http://resultsfhir.org/r4/DiagnosticReport?patient=[PATIENT_ID]
 
 ## VIGNETTE 3
 
  * **Question:** If the endpoint for the FHIR server is http://medicarefhir.org/r4, enter the full url to query and retrieve the highest risk patients based on diabetes control levels, and reach out to those who should be screened for early signs of diabetic retinopathy.
  * **Answer:**
    * Resources:
+     * https://hl7.org/fhir/observation.html
      * Coding Systems:
        * [Snomed](http://snomed.info/sct)
        * [ICD 10](http://hl7.org/fhir/sid/icd-10)
-   * URL: - [ ] http://medicarefhir.org/r4/Condition?code=http://snomed.info/sct|73211009&severity:text=severe
+   * URL: - [x] http://medicarefhir.org/r4/Observation?code=http://snomed.info/sct|73211009&severity:text=severe
 
 ## VIGNETTE 3
 
  * **Question:** If the endpoint for the FHIR server is http://medicarefhir.org/r4, enter the full url to query and retrieve last known A1C. 
  * **Answers:**
    * Resources:
+     * https://hl7.org/fhir/observation.html
      * [Hemoglobin A1c/Hemoglobin.total in Blood](https://loinc.org/search/?t=1&s=4548-4)
-   * URL: - [] http://medicarefhir.org/Observation?code=http://loinc.org|4548-4&subject=Patient/[patient_id]&_sort=-date
+   * URL: - [x] http://medicarefhir.org/Observation?code=http://loinc.org|4548-4&subject=Patient/[patient_id]&_sort=-date
 
 ## VIGNETTE 3
 
  * **Question:** If the endpoint for the FHIR server is http://medicarefhir.org/r4, enter the full url to query the date of the last eye exam for the panel of patients identified per the quality measure specification
  * **Answer:**
+   * Resources:
+     * https://hl7.org/fhir/procedure.html
+   * URL: - [x] http://medicarefhir.org/r4/Procedure

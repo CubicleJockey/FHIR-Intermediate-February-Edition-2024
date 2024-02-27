@@ -12,7 +12,89 @@
 			"item": [
 				{
 					"name": "U01-1",
-					"item": []
+					"item": [
+						{
+							"name": "Practitioners",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Practitioner",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Practitioner"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "MedicationRequest Original",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/fhir+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n    {\r\n        \"resourceType\": \"MedicationRequest\",\r\n        \"text\": {\r\n            \"status\": \"generated\",\r\n            \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><p><strong>Medication Request</strong></p><p><strong>status</strong>: active</p><p><strong>intent</strong>: order</p><p><strong>medication</strong>: X-Meds - X-Meds - Best Medication</p><p><strong>subject</strong>: John Smith</p><p><strong>authoredOn</strong>:2024-02-21</p><p><strong>requester</strong>:Mary Smith</p><p><strong>dosageInstruction</strong>:This are the dosage instructions</p></div>\"\r\n        },\r\n        \"medicationCodeableConcept\": {\r\n            \"coding\": [\r\n                {\r\n                    \"system\": \"http://www.nlm.nih.gov/research/umls/rxnorm\",\r\n                    \"code\": \"X-Meds\",\r\n                    \"display\": \"X-Meds - Best Medication\"\r\n                }\r\n            ],\r\n            \"text\": \"X-Meds - Best Medication\"\r\n        },\r\n        \"patient\": {\r\n            \"reference\": \"Patient/X12984\",\r\n            \"display\": \"John Smith\"\r\n        },\r\n        \"prescriber\": {\r\n            \"reference\": \"Practitioner/2311\",\r\n            \"display\": \"Mary Smith\"\r\n        },\r\n        \"authoredOn\": \"2024-02-21\",\r\n        \"dosageInstruction\": [\r\n            {\r\n                \"text\": \"This are the dosage instructions\"\r\n            }\r\n        ]\r\n    }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/MedicationRequest",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"MedicationRequest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "MedicationRequest Corrected",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/fhir+json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"resourceType\": \"MedicationRequest\",\r\n    \"text\": {\r\n        \"status\": \"generated\",\r\n        \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\"><p><strong>Medication Request</strong></p><p><strong>status</strong>: active</p><p><strong>intent</strong>: order</p><p><strong>medication</strong>: X-Meds - X-Meds - Best Medication</p><p><strong>subject</strong>: John Smith</p><p><strong>authoredOn</strong>:2024-02-21</p><p><strong>requester</strong>:Mary Smith</p><p><strong>dosageInstruction</strong>:This are the dosage instructions</p></div>\"\r\n    },\r\n    \"status\": \"active\",\r\n    \"intent\": \"order\",\r\n    \"medicationCodeableConcept\": {\r\n        \"coding\": [\r\n            {\r\n                \"system\": \"http://www.nlm.nih.gov/research/umls/rxnorm\",\r\n                \"code\": \"X-Meds\",\r\n                \"display\": \"X-Meds - Best Medication\"\r\n            }\r\n        ],\r\n        \"text\": \"X-Meds - Best Medication\"\r\n    },\r\n    \"subject\": {\r\n        \"reference\": \"Patient/X12984\",\r\n        \"display\": \"John Smith\"\r\n    },\r\n    \"requester\": {\r\n        \"reference\": \"Practitioner/2311\",\r\n        \"display\": \"Mary Smith\"\r\n    },\r\n    \"authoredOn\": \"2024-02-21\",\r\n    \"dosageInstruction\": [\r\n        {\r\n            \"text\": \"This are the dosage instructions\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseUrl}}/MedicationRequest",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"MedicationRequest"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "U01-2",
@@ -75,7 +157,30 @@
 							"name": "Vital-Signs",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Observation?category=vital-signs&patient=X12984&_sort=date,code",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Observation"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "vital-signs"
+										},
+										{
+											"key": "patient",
+											"value": "X12984"
+										},
+										{
+											"key": "_sort",
+											"value": "date,code"
+										}
+									]
+								}
 							},
 							"response": []
 						}
@@ -96,7 +201,22 @@
 							"name": "Goals",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Goal?patient=X12984",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Goal"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "X12984"
+										}
+									]
+								}
 							},
 							"response": []
 						},
@@ -127,11 +247,179 @@
 				},
 				{
 					"name": "U01-7",
-					"item": []
+					"item": [
+						{
+							"name": "ImplantableDevices",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Device?patient=1",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Device"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ImplantableDevices Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Device?patient=1",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Device"
+									],
+									"query": [
+										{
+											"key": "patient",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "U01-8",
-					"item": []
+					"item": [
+						{
+							"name": "Allergies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/AllergyIntolerance?type=allergy",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"AllergyIntolerance"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "allergy"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Conditions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Condition?code:text=diabetes&severity",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Condition"
+									],
+									"query": [
+										{
+											"key": "code:text",
+											"value": "diabetes"
+										},
+										{
+											"key": "severity",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Conditions SNOMED",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Condition?code=http://snomed.info/sct|73211009&&severity:text=moderate",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Condition"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "http://snomed.info/sct|73211009"
+										},
+										{
+											"key": null,
+											"value": null
+										},
+										{
+											"key": "severity:text",
+											"value": "moderate"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Diabetes",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Diabetes v2",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Eye Exam",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BaseUrl}}/Observation?code=http://loinc.org|71391-7",
+									"host": [
+										"{{BaseUrl}}"
+									],
+									"path": [
+										"Observation"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "http://loinc.org|71391-7"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
