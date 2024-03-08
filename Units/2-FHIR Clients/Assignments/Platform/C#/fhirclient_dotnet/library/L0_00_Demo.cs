@@ -20,24 +20,21 @@ namespace fhirclient_dotnet
 {
     public class Demo
     {
-
-
-        private string GetGiven(Patient p)
+        private static string GetGiven(Patient p)
         {
-            HumanName name = p.Name[0];
-            string first = "";
+            var name = p.Name[0];
+            var first = string.Empty;
             foreach (var m in name.Given)
             {
                 first += m + " ";
             }
-
 
             return first.TrimEnd();
         }
 
         private string GetFamily(Patient p)
         {
-            string te = p.Name[0].Family;
+            var te = p.Name[0].Family;
             return te.TrimEnd();
         }
 
@@ -48,18 +45,18 @@ namespace fhirclient_dotnet
         )
 
         {
-            string auxA = "";
-            string auxN = "";
+            var auxA = "";
+            var auxN = "";
 
-            Patient pa = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
-            string aux = "Error:Patient_Not_Found"; //Default Error
+            var pa = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
+            var aux = "Error:Patient_Not_Found"; //Default Error
             if (pa != null)
             {
                 auxN = GetFamily(pa) + "," + GetGiven(pa);
                 var add = pa.Address;
                 foreach (var xad in add)
                 {
-                    string paddr = "";
+                    var paddr = "";
                     var lns = xad.Line;
                     foreach (var l in lns)
                     {
@@ -81,15 +78,15 @@ namespace fhirclient_dotnet
 
 
 
-        private Hl7.Fhir.Model.Patient FHIR_SearchByIdentifier(string ServerEndPoint, string IdentifierSystem, string IdentifierValue)
+        private Patient FHIR_SearchByIdentifier(string ServerEndPoint, string IdentifierSystem, string IdentifierValue)
         {
-            Hl7.Fhir.Model.Patient o = new Hl7.Fhir.Model.Patient();
-            var client = new Hl7.Fhir.Rest.FhirClient(ServerEndPoint);
-            Bundle bu = client.Search<Hl7.Fhir.Model.Patient>(new string[]
+            var o = new Patient();
+            var client = new FhirClient(ServerEndPoint);
+            var bu = client.Search<Patient>(new[]
                 {"identifier="  +IdentifierSystem+"|"+IdentifierValue});
             if (bu.Entry.Count > 0)
             {
-                o = (Hl7.Fhir.Model.Patient)bu.Entry[0].Resource;
+                o = (Patient)bu.Entry[0].Resource;
             }
             else
             { o = null; }
@@ -98,20 +95,20 @@ namespace fhirclient_dotnet
 
 
 
-        private string GetRaceExtension(Hl7.Fhir.Model.Patient p)
+        private string GetRaceExtension(Patient p)
         {
-            string auxt = "";
-            string auxo = "";
-            string auxd = "";
-            string raceExtensionUrl = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race";
-            string aux = "Error:No_us-core-race_Extension";
-            System.Collections.Generic.List<Extension> e = p.Extension;
-            foreach (Extension ef in e)
+            var auxt = "";
+            var auxo = "";
+            var auxd = "";
+            var raceExtensionUrl = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race";
+            var aux = "Error:No_us-core-race_Extension";
+            var e = p.Extension;
+            foreach (var ef in e)
             {
                 if (ef.Url == raceExtensionUrl)
                 {
                     aux = "";
-                    foreach (Extension efs in ef.Extension)
+                    foreach (var efs in ef.Extension)
                     {
                         switch (efs.Url)
                         {
@@ -122,13 +119,13 @@ namespace fhirclient_dotnet
                                 }
                             case "ombCategory":
                                 {
-                                    Coding c = (Coding)efs.Value;
+                                    var c = (Coding)efs.Value;
                                     auxo = "code|" + c.Code + ":" + c.Display + "\n";
                                     break;
                                 }
                             case "detailed":
                                 {
-                                    Coding c = (Coding)efs.Value;
+                                    var c = (Coding)efs.Value;
                                     auxd += "detail|" + c.Code + ":" + c.Display + "\n";
                                     break;
                                 }
@@ -155,8 +152,8 @@ namespace fhirclient_dotnet
           string patientidentifiervalue
         )
         {
-            Patient p = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
-            string aux = "Error:Patient_Not_Found"; //Default Error
+            var p = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
+            var aux = "Error:Patient_Not_Found"; //Default Error
             if (p != null)
             {
                 aux = GetRaceExtension(p);
@@ -170,8 +167,8 @@ namespace fhirclient_dotnet
                 string IdentifierValue
                 )
         {
-            Patient patient = FHIR_SearchByIdentifier(ServerEndPoint, IdentifierSystem, IdentifierValue);
-            string aux = "Error:Patient_Not_Found"; //Default Error
+            var patient = FHIR_SearchByIdentifier(ServerEndPoint, IdentifierSystem, IdentifierValue);
+            var aux = "Error:Patient_Not_Found"; //Default Error
 
             if (patient != null)
             {
@@ -183,23 +180,23 @@ namespace fhirclient_dotnet
 
         private string GetDetail(string server, Patient patient)
         {
-            string aux = "Error:No_Conditions";
-            Hl7.Fhir.Model.Condition p = new Hl7.Fhir.Model.Condition();
-            var client = new Hl7.Fhir.Rest.FhirClient(server);
-            Bundle bu = client.Search<Hl7.Fhir.Model.Condition>(new string[]
+            var aux = "Error:No_Conditions";
+            var p = new Condition();
+            var client = new FhirClient(server);
+            var bu = client.Search<Condition>(new[]
              {"patient="  +patient.Id});
             if (bu.Entry.Count > 0)
             {
                 aux = "";
-                foreach (Bundle.EntryComponent e in bu.Entry)
+                foreach (var e in bu.Entry)
                 {
-                    Hl7.Fhir.Model.Condition oneP = (Hl7.Fhir.Model.Condition)e.Resource;
+                    var oneP = (Condition)e.Resource;
 
 
-                    string cStatus = oneP.ClinicalStatus.Coding[0].Display;
-                    string cVerification = oneP.VerificationStatus.Coding[0].Display;
-                    string cCategory = oneP.Category[0].Coding[0].Display;
-                    string cCode = oneP.Code.Coding[0].Code + ":" + oneP.Code.Coding[0].Display;
+                    var cStatus = oneP.ClinicalStatus.Coding[0].Display;
+                    var cVerification = oneP.VerificationStatus.Coding[0].Display;
+                    var cCategory = oneP.Category[0].Coding[0].Display;
+                    var cCode = oneP.Code.Coding[0].Code + ":" + oneP.Code.Coding[0].Display;
                     aux += cStatus + "|" + cVerification + "|" + cCategory + "|" + cCode + "\n";
                 }
 
@@ -222,14 +219,14 @@ namespace fhirclient_dotnet
       )
         {
 
-            Patient patient = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
-            string aux = "Error:Patient_Not_Found"; //Default Error
+            var patient = FHIR_SearchByIdentifier(server, patientidentifiersystem, patientidentifiervalue);
+            var aux = "Error:Patient_Not_Found"; //Default Error
 
             if (patient != null)
             {
 
 
-                AllergyIntolerance Allergy = new AllergyIntolerance()
+                var Allergy = new AllergyIntolerance()
                 {
                     Meta = new Meta()
                     {
@@ -280,7 +277,7 @@ namespace fhirclient_dotnet
                     }
                 };
 
-                AllergyIntolerance.ReactionComponent arc = new AllergyIntolerance.ReactionComponent();
+                var arc = new AllergyIntolerance.ReactionComponent();
                 arc.Manifestation.Add(
                     new CodeableConcept()
                     {
@@ -293,7 +290,7 @@ namespace fhirclient_dotnet
                     );
                 Allergy.Reaction.Add(arc);
 
-                Hl7.Fhir.Serialization.FhirJsonSerializer s = new Hl7.Fhir.Serialization.FhirJsonSerializer();
+                var s = new Hl7.Fhir.Serialization.FhirJsonSerializer();
                 s.Settings.Pretty = false;
                 aux = s.SerializeToString(instance: Allergy, summary: SummaryType.False);
 
@@ -308,8 +305,8 @@ namespace fhirclient_dotnet
                string IdentifierValue
                )
         {
-            Patient patient = FHIR_SearchByIdentifier(ServerEndPoint, IdentifierSystem, IdentifierValue);
-            string aux = "Error:Patient_Not_Found"; //Default Error
+            var patient = FHIR_SearchByIdentifier(ServerEndPoint, IdentifierSystem, IdentifierValue);
+            var aux = "Error:Patient_Not_Found"; //Default Error
 
             if (patient != null)
             {
@@ -321,33 +318,33 @@ namespace fhirclient_dotnet
 
         private string GetIPSLabResultsDetail(string server, Patient patient)
         {
-            string aux = "Error:No_IPS";
-            Hl7.Fhir.Model.Bundle p = new Hl7.Fhir.Model.Bundle();
-            var client = new Hl7.Fhir.Rest.FhirClient(server);
-            Bundle bu = client.Search<Hl7.Fhir.Model.Bundle>(new string[]
+            var aux = "Error:No_IPS";
+            var p = new Bundle();
+            var client = new FhirClient(server);
+            var bu = client.Search<Bundle>(new[]
              {"composition.patient="  +patient.Id});
             //One or More documents
             if (bu.Entry.Count > 0)
             {
 
-                foreach (Bundle.EntryComponent ed in bu.Entry)
+                foreach (var ed in bu.Entry)
                 {
-                    Bundle OneDoc = (Bundle)ed.Resource;
+                    var OneDoc = (Bundle)ed.Resource;
                     if (OneDoc.Entry.Count > 0)
                     {
                         aux = "";
-                        foreach (Bundle.EntryComponent e in OneDoc.Entry)
+                        foreach (var e in OneDoc.Entry)
                         {
                             if (e.Resource.TypeName == "Observation")
                             {
-                                Hl7.Fhir.Model.Observation oneP = (Hl7.Fhir.Model.Observation)e.Resource;
-                                string m_category = oneP.Category[0].Coding[0].Code.ToLower();
+                                var oneP = (Observation)e.Resource;
+                                var m_category = oneP.Category[0].Coding[0].Code.ToLower();
                                 if (m_category == "laboratory")
                                 {
                                     //Must support for IPS Laboratory
-                                    string m_code = "";
-                                    CodeableConcept c = oneP.Code;
-                                    String u_code = "";
+                                    var m_code = "";
+                                    var c = oneP.Code;
+                                    var u_code = "";
                                     if (c.Coding.Count > 0)
                                     { u_code = c.Coding[0].Code; }
                                     //
@@ -361,10 +358,10 @@ namespace fhirclient_dotnet
                                     }
                                     if (m_code != "")
                                     {
-                                        string m_result = "";
+                                        var m_result = "";
                                         if (oneP.Value.TypeName == "Quantity")
                                         {
-                                            Quantity m_Q = (Quantity)oneP.Value;
+                                            var m_Q = (Quantity)oneP.Value;
                                             m_result = m_Q.Value + " " + m_Q.Unit;
                                             ;
                                         }
@@ -374,11 +371,11 @@ namespace fhirclient_dotnet
                                         }
                                         if (oneP.Value.TypeName == "CodeableConcept")
                                         {
-                                            CodeableConcept m_C = (CodeableConcept)oneP.Value;
+                                            var m_C = (CodeableConcept)oneP.Value;
                                             m_result = m_C.Coding[0].Code + ":" + m_C.Coding[0].Display;
                                         }
-                                        string m_status = oneP.Status.ToString();
-                                        string m_datefo = oneP.Effective.ToString();
+                                        var m_status = oneP.Status.ToString();
+                                        var m_datefo = oneP.Effective.ToString();
 
                                         aux += m_code + "|" + m_datefo + "|" + m_status + "|" + m_result + "\n";
 
@@ -407,13 +404,13 @@ namespace fhirclient_dotnet
              )
         {
 
-            string aux = "";
+            var aux = "";
             ValueSet Result = null;
             try
             {
 
                 var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
-                String Response = GetDataSync(EndPoint, Url, Filter);
+                var Response = GetDataSync(EndPoint, Url, Filter);
                 try
                 {
                     Result = parser.Parse<ValueSet>(Response);
@@ -427,7 +424,7 @@ namespace fhirclient_dotnet
                 aux = "";
                 if (Result != null)
                 {
-                    foreach (ValueSet.ContainsComponent ec in Result.Expansion.Contains)
+                    foreach (var ec in Result.Expansion.Contains)
                     {
                         aux += ec.Code + "|" + ec.Display + "\n";
                     }
@@ -443,13 +440,13 @@ namespace fhirclient_dotnet
         }
         String GetDataSync(String Server, String Url, String Filter)
         {
-            String aux = "";
+            var aux = "";
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/fhir+json"));
-                String CompleteUrl = Server + "/ValueSet/$expand?url=" + Url + "&filter=" + Filter;
+                var CompleteUrl = Server + "/ValueSet/$expand?url=" + Url + "&filter=" + Filter;
 
                 var response = client.GetAsync(CompleteUrl).Result;
 
@@ -458,7 +455,7 @@ namespace fhirclient_dotnet
                     var responseContent = response.Content;
 
                     // by calling .Result you are synchronously reading the result
-                    string responseString = responseContent.ReadAsStringAsync().Result;
+                    var responseString = responseContent.ReadAsStringAsync().Result;
 
                     aux = responseString;
                 }

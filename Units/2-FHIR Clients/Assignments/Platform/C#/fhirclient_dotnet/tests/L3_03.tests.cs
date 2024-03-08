@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
 namespace fhirclient_dotnet_tests
@@ -18,7 +17,7 @@ namespace fhirclient_dotnet_tests
         public string L03_3_T01_GetMedication_NonExistingPatient()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L03_3_T01";
@@ -32,7 +31,7 @@ namespace fhirclient_dotnet_tests
          public string L03_3_T02_GetMedicationsPatientWithNoIPS()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
              var IdentifierValue="L03_3_T02";
@@ -48,7 +47,7 @@ namespace fhirclient_dotnet_tests
          public string L03_3_T03_GetMedicationsPatientWithIPSMeds()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
              var IdentifierValue="L03_3_T03";
@@ -63,7 +62,7 @@ namespace fhirclient_dotnet_tests
          public string L03_3_T04_GetMedicationsPatientWithIPSNoMeds()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
              var IdentifierValue="L03_3_T04";
@@ -78,7 +77,7 @@ namespace fhirclient_dotnet_tests
          public string L03_3_T05_GetMedicationsPatientWithIPSImmunization()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L03_3_T04";
@@ -92,7 +91,7 @@ namespace fhirclient_dotnet_tests
          public string L03_3_T06_GetMedicationsPatientWithIPSNoImm()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L03_3_T03";

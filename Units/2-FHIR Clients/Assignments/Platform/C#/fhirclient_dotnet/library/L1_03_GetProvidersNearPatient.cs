@@ -1,4 +1,3 @@
-using System;
 using Hl7.Fhir.Model;  
 using Hl7.Fhir.Rest;
 
@@ -13,20 +12,20 @@ namespace fhirclient_dotnet
          )
          {
 
-             string aux="This is Nothing";
+             var aux="This is Nothing";
              return aux;
 
          }
 
-         private Hl7.Fhir.Model.Patient FHIR_SearchByIdentifier(string ServerEndPoint, string IdentifierSystem, string IdentifierValue)
+         private Patient FHIR_SearchByIdentifier(string ServerEndPoint, string IdentifierSystem, string IdentifierValue)
         {
-            Hl7.Fhir.Model.Patient o = new Hl7.Fhir.Model.Patient();
-            var client = new Hl7.Fhir.Rest.FhirClient(ServerEndPoint);
-            Bundle bu = client.Search<Hl7.Fhir.Model.Patient>(new string[]
+            var o = new Patient();
+            var client = new FhirClient(ServerEndPoint);
+            var bu = client.Search<Patient>(new[]
                 {"identifier="  +IdentifierSystem+"|"+IdentifierValue});
             if (bu.Entry.Count > 0)
             {
-                o = (Hl7.Fhir.Model.Patient)bu.Entry[0].Resource;
+                o = (Patient)bu.Entry[0].Resource;
             }
             else
             { o = null; }

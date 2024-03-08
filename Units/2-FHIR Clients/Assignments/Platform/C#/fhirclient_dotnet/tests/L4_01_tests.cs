@@ -15,20 +15,20 @@ namespace fhirclient_dotnet_tests
         public string L04_1_T01_CreateNumerical_NonExistingPatient()
 
         {
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
            var IdentifierValue="L04_1_T01";
             var ExpObservations="Error:Patient_Not_Found";
-            string ObservationStatusCode="";
-            string ObservationDateTime="";
-            string ObservationLOINCCode="";
-            string ObservationLOINCDisplay="";
-            string ResultType="";
-            string NumericResultValue="";
-            string NumericResultUCUMUnit="";
-            string CodedResultSNOMEDCode="";
-            string CodedResultSNOMEDDisplay="";
+            var ObservationStatusCode="";
+            var ObservationDateTime="";
+            var ObservationLOINCCode="";
+            var ObservationLOINCDisplay="";
+            var ResultType="";
+            var NumericResultValue="";
+            var NumericResultUCUMUnit="";
+            var CodedResultSNOMEDCode="";
+            var CodedResultSNOMEDDisplay="";
       
             var fsh=new CreateUSCoreObs();
             var rm=fsh.CreateUSCoreR4LabObservation(server,IdentifierSystem,IdentifierValue
@@ -43,20 +43,20 @@ namespace fhirclient_dotnet_tests
 
         {
 
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
            var IdentifierValue="L04_1_T02";
             var ExpObservations="Error:Patient_Not_Found";
-            string ObservationStatusCode="final";
-            string ObservationDateTime="2020-10-11T20:30:00Z";
-            string ObservationLOINCCode="5778-6";
-            string ObservationLOINCDisplay="Color of Urine";
-            string ResultType="Coded";
-            string NumericResultValue="";
-            string NumericResultUCUMUnit="";
-            string CodedResultSNOMEDCode="371244009";
-            string CodedResultSNOMEDDisplay="Yellow";
+            var ObservationStatusCode="final";
+            var ObservationDateTime="2020-10-11T20:30:00Z";
+            var ObservationLOINCCode="5778-6";
+            var ObservationLOINCDisplay="Color of Urine";
+            var ResultType="Coded";
+            var NumericResultValue="";
+            var NumericResultUCUMUnit="";
+            var CodedResultSNOMEDCode="371244009";
+            var CodedResultSNOMEDDisplay="Yellow";
       
             var fsh=new CreateUSCoreObs();
             var rm=fsh.CreateUSCoreR4LabObservation(server,IdentifierSystem,IdentifierValue
@@ -83,20 +83,20 @@ namespace fhirclient_dotnet_tests
          public string L04_1_T03_CreateNumericalObservation()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L04_1_T02";
             var ExpObservations="Error:Patient_Not_Found";
-            string ObservationStatusCode="final";
-            string ObservationDateTime="2020-10-11T20:30:00Z";
-            string ObservationLOINCCode="1975-2";
-            string ObservationLOINCDisplay="Bilirubin, serum";
-            string ResultType="numeric";
-            string NumericResultValue="8.6";
-            string NumericResultUCUMUnit="mg/dl";
-            string CodedResultSNOMEDCode="";
-            string CodedResultSNOMEDDisplay="";
+            var ObservationStatusCode="final";
+            var ObservationDateTime="2020-10-11T20:30:00Z";
+            var ObservationLOINCCode="1975-2";
+            var ObservationLOINCDisplay="Bilirubin, serum";
+            var ResultType="numeric";
+            var NumericResultValue="8.6";
+            var NumericResultUCUMUnit="mg/dl";
+            var CodedResultSNOMEDCode="";
+            var CodedResultSNOMEDDisplay="";
       
             var fsh=new CreateUSCoreObs();
             var rm=fsh.CreateUSCoreR4LabObservation(server,IdentifierSystem,IdentifierValue
@@ -122,8 +122,8 @@ namespace fhirclient_dotnet_tests
             string NumericResultValue,string NumericResultUCUMUnit,string CodedResultSNOMEDCode,string CodedResultSNOMEDDisplay)
 
     {
-            string aux="";
-              Hl7.Fhir.Model.Observation  o=new  Hl7.Fhir.Model.Observation() ;
+            var aux="";
+              var  o=new  Observation() ;
              var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
             try
@@ -134,13 +134,13 @@ namespace fhirclient_dotnet_tests
                 if(o.Effective.ToString()!=ObservationDateTime){aux+="Date Differs";}
                 if(ResultType=="numeric")
                 {
-                    Quantity q= (Quantity) o.Value;
+                    var q= (Quantity) o.Value;
                     if (q.Unit!=NumericResultUCUMUnit){aux+="Numeric Result Unit differs";}
                     if (q.Value.ToString()!=NumericResultValue){aux+="Numeric Result Value differs";}
                  }
                 else
                 {
-                    CodeableConcept c=(CodeableConcept) o.Value;
+                    var c=(CodeableConcept) o.Value;
                     if (c.Coding[0].Code!=CodedResultSNOMEDCode){aux+="Coded Result Code differs";}
                 }
 
@@ -155,8 +155,8 @@ namespace fhirclient_dotnet_tests
     
     public string ValidateObservationUSCORE(string JsonObservation,string server)
     {
-             string aux="";
-             Hl7.Fhir.Model.Observation  o=new  Hl7.Fhir.Model.Observation() ;
+             var aux="";
+             var  o=new  Observation() ;
              var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
             try
@@ -169,12 +169,12 @@ namespace fhirclient_dotnet_tests
             }
             if (aux=="")
             {
-            var client = new Hl7.Fhir.Rest.FhirClient(server); 
-            Hl7.Fhir.Model.FhirUri profile=  new FhirUri("http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab");
+            var client = new FhirClient(server); 
+            var profile=  new FhirUri("http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab");
            
-            Parameters inParams = new Parameters();
+            var inParams = new Parameters();
             inParams.Add("resource", o);
-            OperationOutcome bu = client.ValidateResource(o); 
+            var bu = client.ValidateResource(o); 
             if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
             {
                 aux="Error:"+bu.Issue[0].Details.Text;

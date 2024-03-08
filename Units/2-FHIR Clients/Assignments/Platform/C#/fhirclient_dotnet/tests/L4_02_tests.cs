@@ -1,11 +1,7 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
 using Hl7.Fhir.Model; 
-using Hl7.Fhir.Rest; 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using Hl7.Fhir.Rest;
 
 namespace fhirclient_dotnet_tests
 {
@@ -20,7 +16,7 @@ namespace fhirclient_dotnet_tests
         public string L04_2_T01_NonExistingPatient()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
              var IdentifierValue="L04_2_T01";
@@ -49,7 +45,7 @@ namespace fhirclient_dotnet_tests
         public string L04_2_T02_ImmunizationCompleted()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L04_2_T02";
@@ -94,7 +90,7 @@ namespace fhirclient_dotnet_tests
         public string L04_2_T03_ImmunizationNotDone()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L04_2_T02";
@@ -114,7 +110,7 @@ namespace fhirclient_dotnet_tests
                      ProductCVXDisplay,
                      ReasonCode);
            
-           string ExpImmunization=ValidateImmunizationUSCORE(rm,server);
+           var ExpImmunization=ValidateImmunizationUSCORE(rm,server);
             
             if (ExpImmunization=="")
             {
@@ -137,8 +133,8 @@ namespace fhirclient_dotnet_tests
 
     public string ValidateImmunizationUSCORE(string JsonImmunization,string server)
     {
-             string aux="";
-             Hl7.Fhir.Model.Immunization o=new  Hl7.Fhir.Model.Immunization() ;
+             var aux="";
+             var o=new  Immunization() ;
              var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
             try
@@ -152,12 +148,12 @@ namespace fhirclient_dotnet_tests
 
             if (aux=="")
             {
-                var client = new Hl7.Fhir.Rest.FhirClient(server); 
-                Hl7.Fhir.Model.FhirUri profile=  new FhirUri("http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization");
+                var client = new FhirClient(server); 
+                var profile=  new FhirUri("http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization");
             
-                Parameters inParams = new Parameters();
+                var inParams = new Parameters();
                 inParams.Add("resource", o);
-                OperationOutcome bu = client.ValidateResource(o); 
+                var bu = client.ValidateResource(o); 
                 if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
                 {
                     aux="Error:"+bu.Issue[0].Details.Text;
@@ -179,8 +175,8 @@ namespace fhirclient_dotnet_tests
             string ReasonCode
         )
     {
-            string aux="";
-            Hl7.Fhir.Model.Immunization  o=new  Hl7.Fhir.Model.Immunization() ;
+            var aux="";
+            var  o=new  Immunization() ;
             
             var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
@@ -190,12 +186,12 @@ namespace fhirclient_dotnet_tests
                 //if(o.Status.ToString().ToUpper()!=ImmunizationStatusCode.ToUpper()){aux+="Status Code Differs :"+ImmunizationStatusCode.ToUpper()+ "!="+o.Status.ToString().ToUpper() ;}
                 //if(o.OcurrenceDateTime.ToString()!=ImmunizationDateTime){aux+="Date Differs";}
                 
-                CodeableConcept c= o.VaccineCode;
+                var c= o.VaccineCode;
                 if (c.Coding[0].Code!=ProductCVXCode){aux+="Vaccine Code code differs";}
                 if (c.Coding[0].Display!=ProductCVXDisplay){aux+="Vaccine Code Display differs";}
                 if (ImmunizationStatusCode=="not-done")
                 {
-                    CodeableConcept cr=o.ReasonCode[0];
+                    var cr=o.ReasonCode[0];
                     if (cr.Coding[0].Code!=ReasonCode){aux+="Coded Reason code differs";}
                 } 
 

@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
 namespace fhirclient_dotnet_tests
@@ -15,7 +14,7 @@ namespace fhirclient_dotnet_tests
         public string L02_1_T01_GetEthnicity_NonExistingPatient()
 
         {
-          MyConfiguration c=new MyConfiguration();
+          var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
                 var IdentifierValue="L02_1_T01";
@@ -29,7 +28,7 @@ namespace fhirclient_dotnet_tests
          public  string L02_1_T02_GetEthnicityPatientWithNoEthnicityExtension()
 
         {
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
               var IdentifierValue="L02_1_T02";
@@ -44,7 +43,7 @@ namespace fhirclient_dotnet_tests
          public  string L02_1_T03_GetEthnicityPatientWithNonCompliantEthnicityExtension()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
              var IdentifierValue="L02_1_T03";
@@ -58,7 +57,7 @@ namespace fhirclient_dotnet_tests
          public  string L02_1_T04_GetEthnicityPatientWithMinimumEthnicityExtension()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L02_1_T04";
@@ -73,7 +72,7 @@ namespace fhirclient_dotnet_tests
          public  string L02_1_T05_GetEthnicityPatientWithFullEthnicityExtension()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
             var IdentifierValue="L02_1_T05";

@@ -1,7 +1,3 @@
-using System;
-using Hl7.Fhir.Model;  
-using Hl7.Fhir.Rest;
-
 namespace fhirclient_dotnet
 {
     public class CompareDemographics
@@ -16,7 +12,7 @@ namespace fhirclient_dotnet
          string myBirthDate
          )
          {
-            string aux="";
+            var aux="";
             return aux;
          }
     }

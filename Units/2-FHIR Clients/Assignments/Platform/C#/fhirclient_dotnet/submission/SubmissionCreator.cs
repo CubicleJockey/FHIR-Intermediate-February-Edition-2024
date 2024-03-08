@@ -17,24 +17,24 @@ namespace fhirclient_dotnet_submission
      
         public Dictionary<string,string> L01_1_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L01_1_T01","L01_1_T01");
             tl.Add("L01_1_T02","L01_1_T02");
             tl.Add("L01_1_T03","L01_1_T03");
             tl.Add("L01_1_T04","L01_1_T04");
             tl.Add("L01_1_T05","L01_1_T05");
             tl.Add("L01_1_T06","L01_1_T06");
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.FetchDemographics L01_1=new FetchDemographics();
-                    String result= L01_1.GetPatientPhoneAndEmail(ServerAddress,IdentifierSystem,IdentifierValue);
+                    var IdentifierValue=test.Value;
+                    var L01_1=new FetchDemographics();
+                    var result= L01_1.GetPatientPhoneAndEmail(ServerAddress,IdentifierSystem,IdentifierValue);
                     tr.Add(test.Key,result);
             }
             return tr;
@@ -48,19 +48,19 @@ namespace fhirclient_dotnet_submission
         public String birthDate;
 
         public Person(String Identifier, String Family, String Given, String Gender, String BirthDate) {
-            this.identifier = Identifier;
-            this.family = Family;
-            this.given = Given;
-            this.gender = Gender;
-            this.birthDate = BirthDate;
+            identifier = Identifier;
+            family = Family;
+            given = Given;
+            gender = Gender;
+            birthDate = BirthDate;
         }
 
     }
 
     private static Dictionary<String, String> L01_2_Tests() {
-        Dictionary<String, String> my_results = new Dictionary<String, String>();
+        var my_results = new Dictionary<String, String>();
 
-        Dictionary<String, Person> my_tests = new Dictionary<String, Person>();
+        var my_tests = new Dictionary<String, Person>();
         
         my_tests.Add("L01_2_T01", new Person("L01_2_T01", "", "", "", ""));
         my_tests.Add("L01_2_T02", new Person("L01_2_T02", "Dougras", "Jamieson Harris", "male", "1968-07-23"));
@@ -69,21 +69,21 @@ namespace fhirclient_dotnet_submission
         my_tests.Add("L01_2_T05", new Person("L01_2_T02", "Douglas", "Jamieson Harris", "female", "1968-07-23"));
         my_tests.Add("L01_2_T06", new Person("L01_2_T02", "Douglas", "Jamieson Harris", "male", "1968-07-23"));
 
-         foreach(KeyValuePair<string,Person> test in my_tests)
+         foreach(var test in my_tests)
             {
-                String aux = "";
+                var aux = "";
            
-                MyConfiguration c=new MyConfiguration();
-                String ServerAddress=c.ServerEndpoint;
-                String IdentifierSystem=c.PatientIdentifierSystem;
-                Person p=test.Value;
-                String IdentifierValue = p.identifier;
-                String myFamily = p.family;
-                String myGiven = p.given;
-                String myGender = p.gender;
-                String myBirth = p.birthDate;
+                var c=new MyConfiguration();
+                var ServerAddress=c.ServerEndpoint;
+                var IdentifierSystem=c.PatientIdentifierSystem;
+                var p=test.Value;
+                var IdentifierValue = p.identifier;
+                var myFamily = p.family;
+                var myGiven = p.given;
+                var myGender = p.gender;
+                var myBirth = p.birthDate;
                 try {
-                    fhirclient_dotnet.CompareDemographics L01_2=new CompareDemographics();
+                    var L01_2=new CompareDemographics();
                     aux = L01_2.GetDemographicComparison(ServerAddress, IdentifierSystem, IdentifierValue, myFamily, myGiven,
                     
                     myGender, myBirth);
@@ -100,45 +100,45 @@ namespace fhirclient_dotnet_submission
 
         private Dictionary<string,string> L01_3_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L01_3_T01","L01_3_T01");
             tl.Add("L01_3_T02","L01_3_T02");
             tl.Add("L01_3_T03","L01_3_T03");
             tl.Add("L01_3_T04","L01_3_T04");
             tl.Add("L01_3_T05","L01_3_T05");
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.GetProvidersNearPatient L01_3=new fhirclient_dotnet.GetProvidersNearPatient();
-                    String result= L01_3.GetProvidersNearCity(ServerAddress,IdentifierSystem,IdentifierValue);
+                    var IdentifierValue=test.Value;
+                    var L01_3=new GetProvidersNearPatient();
+                    var result= L01_3.GetProvidersNearCity(ServerAddress,IdentifierSystem,IdentifierValue);
                     tr.Add(test.Key,result);
             }
             return tr;
         }
    private Dictionary<string,string> L03_1_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L03_1_T01","L03_1_T01");
             tl.Add("L03_1_T02","L03_1_T02");
             tl.Add("L03_1_T03","L03_1_T03");
             tl.Add("L03_1_T04","L03_1_T04");
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.FetchImmunization L03_1=new fhirclient_dotnet.FetchImmunization();
-                    String result= L03_1.GetImmunizations(ServerAddress,IdentifierSystem,IdentifierValue);
+                    var IdentifierValue=test.Value;
+                    var L03_1=new FetchImmunization();
+                    var result= L03_1.GetImmunizations(ServerAddress,IdentifierSystem,IdentifierValue);
                     tr.Add(test.Key,result);
             }
             return tr;
@@ -146,34 +146,34 @@ namespace fhirclient_dotnet_submission
 
         private Dictionary<string,string> L03_2_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L03_2_T01","L03_2_T01");
             tl.Add("L03_2_T02","L03_2_T02");
             tl.Add("L03_2_T03","L03_2_T03");
             tl.Add("L03_2_T04","L03_2_T04");
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.FetchMedication L03_2=new fhirclient_dotnet.FetchMedication();
-                    String result= L03_2.GetMedications(ServerAddress,IdentifierSystem,IdentifierValue);
+                    var IdentifierValue=test.Value;
+                    var L03_2=new FetchMedication();
+                    var result= L03_2.GetMedications(ServerAddress,IdentifierSystem,IdentifierValue);
                     tr.Add(test.Key,result);
             }
             return tr;
         }
         private Dictionary<string,string> L03_3_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L03_3_T01","L03_3_T01");
             tl.Add("L03_3_T02","L03_3_T02");
             tl.Add("L03_3_T03","L03_3_T03");
@@ -181,13 +181,13 @@ namespace fhirclient_dotnet_submission
             tl.Add("L03_3_T05","L03_3_T04");
             tl.Add("L03_3_T06","L03_3_T03");
             
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.FetchIPS L03_3=new fhirclient_dotnet.FetchIPS();
-                    String kind="medications";
-                    String result="";
+                    var IdentifierValue=test.Value;
+                    var L03_3=new FetchIPS();
+                    var kind="medications";
+                    var result="";
                     if (test.Key=="L03_3_T05"){kind="immunizations";}
                     if (test.Key=="L03_3_T06"){kind="immunizations";}
                     if (kind=="immunizations")
@@ -216,12 +216,12 @@ namespace fhirclient_dotnet_submission
                 String ProductCVXCode, String ProductCVXDisplay, String ReasonCode
 
         ) {
-            this.identifierValue = IdentifierValue;
-            this.immunizationStatusCode = ImmunizationStatusCode;
-            this.immunizationDateTime = ImmunizationDateTime;
-            this.productCVXCode = ProductCVXCode;
-            this.productCVXDisplay = ProductCVXDisplay;
-            this.reasonCode = ReasonCode;
+            identifierValue = IdentifierValue;
+            immunizationStatusCode = ImmunizationStatusCode;
+            immunizationDateTime = ImmunizationDateTime;
+            productCVXCode = ProductCVXCode;
+            productCVXDisplay = ProductCVXDisplay;
+            reasonCode = ReasonCode;
         }
 
     }
@@ -241,50 +241,50 @@ namespace fhirclient_dotnet_submission
                 String ObservationLOINCCode, String ObservationLOINCDisplay, String ResultType,
                 String NumericResultValue, String NumericResultUCUMUnit, String CodedResultSNOMEDCode,
                 String CodedResultSNOMEDDisplay) {
-            this.identifierValue = IdentifierValue;
-            this.observationStatusCode = ObservationStatusCode;
-            this.observationDateTime = ObservationDateTime;
-            this.observationLOINCCode = ObservationLOINCCode;
-            this.observationLOINCDisplay = ObservationLOINCDisplay;
-            this.resultType = ResultType;
-            this.numericResultValue = NumericResultValue;
-            this.numericResultUCUMUnit = NumericResultUCUMUnit;
-            this.codedResultSNOMEDCode = CodedResultSNOMEDCode;
-            this.codedResultSNOMEDCode = CodedResultSNOMEDDisplay;
+            identifierValue = IdentifierValue;
+            observationStatusCode = ObservationStatusCode;
+            observationDateTime = ObservationDateTime;
+            observationLOINCCode = ObservationLOINCCode;
+            observationLOINCDisplay = ObservationLOINCDisplay;
+            resultType = ResultType;
+            numericResultValue = NumericResultValue;
+            numericResultUCUMUnit = NumericResultUCUMUnit;
+            codedResultSNOMEDCode = CodedResultSNOMEDCode;
+            codedResultSNOMEDCode = CodedResultSNOMEDDisplay;
         }
 
     }
 
         public static Dictionary<String, String> L04_1_Tests() {
-        Dictionary<String, String> my_results = new Dictionary<String, String>();
+        var my_results = new Dictionary<String, String>();
 
-        Dictionary<String, LabResult> my_tests = new Dictionary<String, LabResult>();
+        var my_tests = new Dictionary<String, LabResult>();
         my_tests.Add("L04_1_T01", new LabResult("L04_1_T01", "", "", "", "", "", "", "", "", ""));
         my_tests.Add("L04_1_T02", new LabResult("L04_1_T02", "final", "2020-10-11T20:30:00Z", "5778-5",
                 "Color or Urine", "coded", "", "", "371244009", "Yellow"));
         my_tests.Add("L04_1_T03", new LabResult("L04_1_T02", "final", "2020-10-11T20:30:00Z", "1975-2",
                 "Bilirubin, serum", "numeric", "8.6", "mg/dl", "", ""));
 
-        MyConfiguration c=new MyConfiguration();
-        String ServerAddress=c.ServerEndpoint;
-        String IdentifierSystem=c.PatientIdentifierSystem;
+        var c=new MyConfiguration();
+        var ServerAddress=c.ServerEndpoint;
+        var IdentifierSystem=c.PatientIdentifierSystem;
         
-            foreach(KeyValuePair<string,LabResult> test in my_tests)
+            foreach(var test in my_tests)
             {
-                String aux="";
-                String str = test.Key;
-                LabResult l = test.Value;
-                String IdentifierValue = l.identifierValue;
-                String ObservationStatusCode = l.observationStatusCode;
-                String ObservationDateTime = l.observationDateTime;
-                String ObservationLOINCCode = l.observationLOINCCode;
-                String ObservationLOINCDisplay = l.observationLOINCDisplay;
-                String ResultType = l.resultType;
-                String NumericResultValue = l.numericResultValue;
-                String NumericResultUCUMUnit = l.numericResultUCUMUnit;
-                String CodedResultSNOMEDCode = l.codedResultSNOMEDCode;
-                String CodedResultSNOMEDDisplay = l.codedResultSNOMEDDisplay;
-                fhirclient_dotnet.CreateUSCoreObs L04_1=new fhirclient_dotnet.CreateUSCoreObs();
+                var aux="";
+                var str = test.Key;
+                var l = test.Value;
+                var IdentifierValue = l.identifierValue;
+                var ObservationStatusCode = l.observationStatusCode;
+                var ObservationDateTime = l.observationDateTime;
+                var ObservationLOINCCode = l.observationLOINCCode;
+                var ObservationLOINCDisplay = l.observationLOINCDisplay;
+                var ResultType = l.resultType;
+                var NumericResultValue = l.numericResultValue;
+                var NumericResultUCUMUnit = l.numericResultUCUMUnit;
+                var CodedResultSNOMEDCode = l.codedResultSNOMEDCode;
+                var CodedResultSNOMEDDisplay = l.codedResultSNOMEDDisplay;
+                var L04_1=new CreateUSCoreObs();
                 try {
 
                     aux = L04_1.CreateUSCoreR4LabObservation(ServerAddress, IdentifierSystem, IdentifierValue,
@@ -311,32 +311,32 @@ namespace fhirclient_dotnet_submission
 
     
         public static Dictionary<String, String> L04_2_Tests() {
-        Dictionary<String, String> my_results = new Dictionary<String, String>();
+        var my_results = new Dictionary<String, String>();
 
-        Dictionary<String, Immun> my_tests = new Dictionary<String, Immun>();
+        var my_tests = new Dictionary<String, Immun>();
         my_tests.Add("L04_2_T01", new Immun("L04_2_T01", "", "", "", "", ""));
         my_tests.Add("L04_2_T02", new Immun("L04_2_T02", "completed", "2021-10-25", "173", "", "cholera, BivWC"));
         my_tests.Add("L04_2_T03", new Immun("L04_2_T02", "not-done", "2021-10-30T10:30:00Z", "207",
                 "COVID-19, mRNA, LNP-S, PF, 100 mcg/0.5 mL dose", "IMMUNE"));
-        MyConfiguration c=new MyConfiguration();
-        String ServerAddress=c.ServerEndpoint;
-        String IdentifierSystem=c.PatientIdentifierSystem;
+        var c=new MyConfiguration();
+        var ServerAddress=c.ServerEndpoint;
+        var IdentifierSystem=c.PatientIdentifierSystem;
         
-            foreach(KeyValuePair<string,Immun> test in my_tests)
+            foreach(var test in my_tests)
             {
-                String aux="";
-                String str = test.Key;
-                Immun i = test.Value;
-                String IdentifierValue = i.identifierValue;
-                String ImmunizationStatusCode = i.immunizationStatusCode;
-                String ImmunizationDateTime = i.immunizationDateTime;
-                String ProductCVXCode = i.productCVXCode;
-                String ProductCVXDisplay = i.productCVXDisplay;
-                String ReasonCode = i.reasonCode;
+                var aux="";
+                var str = test.Key;
+                var i = test.Value;
+                var IdentifierValue = i.identifierValue;
+                var ImmunizationStatusCode = i.immunizationStatusCode;
+                var ImmunizationDateTime = i.immunizationDateTime;
+                var ProductCVXCode = i.productCVXCode;
+                var ProductCVXDisplay = i.productCVXDisplay;
+                var ReasonCode = i.reasonCode;
                 try {
                      
 
-                    fhirclient_dotnet.CreateUSCoreImm L04_2=new fhirclient_dotnet.CreateUSCoreImm();
+                    var L04_2=new CreateUSCoreImm();
                  
                     aux = L04_2.CreateUSCoreR4Immunization(ServerAddress, IdentifierSystem, IdentifierValue,
                     ImmunizationStatusCode, ImmunizationDateTime, ProductCVXCode, ProductCVXDisplay, ReasonCode);
@@ -358,8 +358,8 @@ namespace fhirclient_dotnet_submission
     }
         public static string ValidateImmunizationUSCORE(string JsonImmunization,string server)
         {
-             string aux="";
-             Hl7.Fhir.Model.Immunization o=new  Hl7.Fhir.Model.Immunization() ;
+             var aux="";
+             var o=new  Immunization() ;
              var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
             try
@@ -373,13 +373,13 @@ namespace fhirclient_dotnet_submission
 
             if (aux=="")
             {
-                var client = new Hl7.Fhir.Rest.FhirClient(server); 
+                var client = new FhirClient(server); 
                 if (o.Meta.Profile is null)
                    o.Meta.Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization" };
                    
-                Parameters inParams = new Parameters();
+                var inParams = new Parameters();
                 inParams.Add("resource", o);
-                OperationOutcome bu = client.ValidateResource(o); 
+                var bu = client.ValidateResource(o); 
                 aux="OK";
                 if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
                 {
@@ -391,8 +391,8 @@ namespace fhirclient_dotnet_submission
     }
    public static string ValidateObservationUSCORE(string JsonObservation,string server)
         {
-             string aux="";
-             Hl7.Fhir.Model.Observation o=new  Hl7.Fhir.Model.Observation() ;
+             var aux="";
+             var o=new  Observation() ;
              var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
           
             try
@@ -406,13 +406,13 @@ namespace fhirclient_dotnet_submission
 
             if (aux=="")
             {
-                var client = new Hl7.Fhir.Rest.FhirClient(server); 
+                var client = new FhirClient(server); 
                 if (o.Meta.Profile is null)
                    o.Meta.Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab" };
                    
-                Parameters inParams = new Parameters();
+                var inParams = new Parameters();
                 inParams.Add("resource", o);
-                OperationOutcome bu = client.ValidateResource(o); 
+                var bu = client.ValidateResource(o); 
                 aux="OK";
                 if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
                 {
@@ -425,21 +425,21 @@ namespace fhirclient_dotnet_submission
     
         private Dictionary<string,string> L05_1_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.TerminologyServerEndpoint;
+            var c=new MyConfiguration();
+            var ServerAddress=c.TerminologyServerEndpoint;
             
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
             tl.Add("L05_1_T01", "diaxetes");
             tl.Add("L05_1_T02","Drug-induced diabetes");
-            String url="http://snomed.info/sct?fhir_vs=isa/73211009";
+            var url="http://snomed.info/sct?fhir_vs=isa/73211009";
 
-            Dictionary<string, string> tr = new System.Collections.Generic.Dictionary<string, string>();
-            foreach (KeyValuePair<string, string> test in tl)
+            var tr = new Dictionary<string, string>();
+            foreach (var test in tl)
             {
-                String filter = test.Value;
+                var filter = test.Value;
                 var fsh = new TerminologyService();
-                String result = fsh.ExpandValueSetForCombo(
+                var result = fsh.ExpandValueSetForCombo(
                      ServerAddress,
                      url,
                      filter);
@@ -452,12 +452,12 @@ namespace fhirclient_dotnet_submission
         
         private Dictionary<string,string> L02_1_Tests()
         {
-            MyConfiguration c=new MyConfiguration();
-            String ServerAddress=c.ServerEndpoint;
-            String IdentifierSystem=c.PatientIdentifierSystem;
+            var c=new MyConfiguration();
+            var ServerAddress=c.ServerEndpoint;
+            var IdentifierSystem=c.PatientIdentifierSystem;
              
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             tl.Add("L02_1_T01","L02_1_T01");
             tl.Add("L02_1_T02","L02_1_T02");
             tl.Add("L02_1_T03","L02_1_T03");
@@ -465,27 +465,27 @@ namespace fhirclient_dotnet_submission
             tl.Add("L02_1_T05","L02_1_T05");
             
             
-            foreach(KeyValuePair<string,string> test in tl)
+            foreach(var test in tl)
             {
           
-                    String IdentifierValue=test.Value;
-                    fhirclient_dotnet.FetchEthnicity L02_1=new fhirclient_dotnet.FetchEthnicity();
+                    var IdentifierValue=test.Value;
+                    var L02_1=new FetchEthnicity();
                     
 
-                    String result= L02_1.GetEthnicity(ServerAddress,IdentifierSystem,IdentifierValue);
+                    var result= L02_1.GetEthnicity(ServerAddress,IdentifierSystem,IdentifierValue);
                     tr.Add(test.Key,result);
             }
             return tr;
         }    
         public Dictionary<String,String> AddAll(Dictionary<String,String> tAll,Dictionary<String,String> tOne)
         {
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            foreach(KeyValuePair<string,string> test in tAll)
+            var tl=new Dictionary<string, string>();
+            foreach(var test in tAll)
             {
                 tl.Add(test.Key,test.Value);
 
             }
-            foreach(KeyValuePair<string,string> test in tOne)
+            foreach(var test in tOne)
             {
                 Console.WriteLine("adding...");
                 Console.WriteLine(test.Key);     
@@ -498,10 +498,10 @@ namespace fhirclient_dotnet_submission
         public String CreateSubmission()
         {
            
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
 
 
-            Dictionary<string,string> TestList=new System.Collections.Generic.Dictionary<string, string>();
+            var TestList=new Dictionary<string, string>();
             TestList=AddAll (TestList,L01_1_Tests());
             TestList=AddAll (TestList,L01_2_Tests());
             TestList=AddAll (TestList,L01_3_Tests());
@@ -515,44 +515,44 @@ namespace fhirclient_dotnet_submission
                   
           
             
-            Hl7.Fhir.Model.TestReport  tr=new  Hl7.Fhir.Model.TestReport();
-            tr.Result=Hl7.Fhir.Model.TestReport.TestReportResult.Pending;
-            String datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            var  tr=new  TestReport();
+            tr.Result=TestReport.TestReportResult.Pending;
+            var datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
             datee=datee.Replace(":","");
             tr.Identifier=new Identifier("http://fhirintermediate.org/test_report/id",c.StudentId+"-"+datee);
             tr.Issued=datee;
             tr.Status=TestReport.TestReportStatus.InProgress;
-            ResourceReference r=new ResourceReference();
+            var r=new ResourceReference();
             r.Identifier=new Identifier("http://fhirintermediate.org/test_script/id","FHIR_INTERMEDIATE_U02-.NET");
             tr.TestScript=r;
             tr.Tester=c.StudentId;
 
-            TestReport.ParticipantComponent pcS=new TestReport.ParticipantComponent();
+            var pcS=new TestReport.ParticipantComponent();
             pcS.Type=TestReport.TestReportParticipantType.Server;
             pcS.Uri=c.ServerEndpoint;
             pcS.Display="Resource Server";
             tr.Participant.Add(pcS);
             
-            TestReport.ParticipantComponent pcTS=new TestReport.ParticipantComponent();
+            var pcTS=new TestReport.ParticipantComponent();
             pcTS.Type=TestReport.TestReportParticipantType.Server;
             pcTS.Uri=c.TerminologyServerEndpoint;
             pcTS.Display="Terminology Server";
             tr.Participant.Add(pcTS);
             
-            TestReport.ParticipantComponent pcC=new TestReport.ParticipantComponent();
+            var pcC=new TestReport.ParticipantComponent();
             pcC.Type=TestReport.TestReportParticipantType.Client;
             pcC.Uri="http://localhost";
             pcC.Display=c.StudentName;
             tr.Participant.Add(pcC);
 
-            foreach(KeyValuePair<string,string> test in TestList)
+            foreach(var test in TestList)
             {
                 
-                TestReport.TestComponent testComponent=new TestReport.TestComponent();
+                var testComponent=new TestReport.TestComponent();
                 testComponent.Name=test.Key;
                 testComponent.Description=test.Key;
-                TestReport.TestActionComponent ta=new TestReport.TestActionComponent();
-                TestReport.AssertComponent tac=new TestReport.AssertComponent();
+                var ta=new TestReport.TestActionComponent();
+                var tac=new TestReport.AssertComponent();
                 if (test.Value=="")
                 {
                     tac.Result=TestReport.TestReportActionResult.Fail;
@@ -570,9 +570,9 @@ namespace fhirclient_dotnet_submission
             }
             
             
-            Hl7.Fhir.Serialization.FhirJsonSerializer s = new Hl7.Fhir.Serialization.FhirJsonSerializer();  
-            String results = s.SerializeToString(tr);  
-            String filename=@"FHIR_INTERMEDIATE_U2_SUBMISSION_" + c.StudentId+"_"+datee+".JSON";
+            var s = new Hl7.Fhir.Serialization.FhirJsonSerializer();  
+            var results = s.SerializeToString(tr);  
+            var filename=@"FHIR_INTERMEDIATE_U2_SUBMISSION_" + c.StudentId+"_"+datee+".JSON";
             System.IO.File.WriteAllText(filename, results);
             return filename;
 

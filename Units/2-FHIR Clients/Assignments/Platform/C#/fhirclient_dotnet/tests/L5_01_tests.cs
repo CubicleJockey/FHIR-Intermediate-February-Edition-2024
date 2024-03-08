@@ -1,11 +1,5 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
-using Hl7.Fhir.Model; 
-using Hl7.Fhir.Rest; 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace fhirclient_dotnet_tests
 {
@@ -21,7 +15,7 @@ namespace fhirclient_dotnet_tests
         public  void L05_1_T01_ExpandFilterNonExistingTerm()
     
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.TerminologyServerEndpoint;
 
                 var ExpTerms="Error:ValueSet_Filter_Not_Found";
@@ -42,7 +36,7 @@ namespace fhirclient_dotnet_tests
         public  void L05_1_T02_ExpandFilterExistingTerm()
         {
 
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
             var server=c.TerminologyServerEndpoint;
             var ExpTerms="5368009|Drug-induced diabetes mellitus\n";
             

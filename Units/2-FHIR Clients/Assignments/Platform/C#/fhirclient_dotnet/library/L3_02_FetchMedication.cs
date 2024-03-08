@@ -1,7 +1,3 @@
-using System;
-using Hl7.Fhir.Model;  
-using Hl7.Fhir.Rest;
-
 namespace fhirclient_dotnet
 {
     public class FetchMedication
@@ -12,7 +8,7 @@ namespace fhirclient_dotnet
          string IdentifierValue
          )
          {
-             String aux="";
+             var aux="";
              return aux;
              
          }        

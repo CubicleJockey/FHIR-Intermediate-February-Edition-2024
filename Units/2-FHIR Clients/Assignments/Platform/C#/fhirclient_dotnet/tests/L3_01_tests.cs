@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
 namespace fhirclient_dotnet_tests
@@ -15,7 +14,7 @@ namespace fhirclient_dotnet_tests
         public string L03_1_T01_GetImmunization_NonExistingPatient()
 
         {
-           MyConfiguration c=new MyConfiguration();
+           var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
                var IdentifierValue="L03_1_T01";
@@ -29,7 +28,7 @@ namespace fhirclient_dotnet_tests
          public  string L03_1_T02_GetImmunizationsPatientWithNoImmunization()
 
         {
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
               var IdentifierValue="L03_1_T02";
@@ -45,7 +44,7 @@ namespace fhirclient_dotnet_tests
          public  string L03_1_T03_GetImmunizationsPatientWithOneImmunization()
 
         {
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
               var IdentifierValue="L03_1_T03";
@@ -59,7 +58,7 @@ namespace fhirclient_dotnet_tests
          public  string L03_1_T04_GetImmunizationsPatientWithSeveralImmunizations()
 
         {
-            MyConfiguration c=new MyConfiguration();
+            var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
               var IdentifierValue="L03_1_T04";

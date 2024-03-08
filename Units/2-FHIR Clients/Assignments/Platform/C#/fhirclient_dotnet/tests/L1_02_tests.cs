@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using fhirclient_dotnet;
 namespace fhirclient_dotnet_tests
@@ -16,7 +15,7 @@ namespace fhirclient_dotnet_tests
         [Fact]
         public string L01_2_T01_CompareDemographics_NonExistingPatient()
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
               var IdentifierValue="L01_2_T01";
@@ -34,7 +33,7 @@ namespace fhirclient_dotnet_tests
          [Fact]
         public string L01_2_T02_CompareDemographics_DifferentFamilyName()
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
           var IdentifierValue="L01_2_T02";
@@ -55,7 +54,7 @@ namespace fhirclient_dotnet_tests
          [Fact]
         public string L01_2_T03_CompareDemographics_DifferentGivenName()
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
           var IdentifierValue="L01_2_T02";
@@ -77,7 +76,7 @@ namespace fhirclient_dotnet_tests
         public string L01_2_T04_CompareDemographics_DifferentBirthDate()
         {
 
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
          var IdentifierValue="L01_2_T02";
@@ -99,7 +98,7 @@ namespace fhirclient_dotnet_tests
         public string L01_2_T05_CompareDemographics_DifferentGender()
         {
 
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
          var IdentifierValue="L01_2_T02";
@@ -121,7 +120,7 @@ namespace fhirclient_dotnet_tests
            [Fact]
         public string L01_2_T06_CompareDemographics_PerfectMatch()
         {
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
          var IdentifierValue="L01_2_T02";

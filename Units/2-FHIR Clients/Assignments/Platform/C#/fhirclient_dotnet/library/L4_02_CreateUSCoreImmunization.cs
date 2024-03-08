@@ -1,10 +1,3 @@
-using Hl7.Fhir.Model; 
-using Hl7.Fhir.Rest; 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 namespace fhirclient_dotnet
 {
     public class CreateUSCoreImm
@@ -20,7 +13,7 @@ namespace fhirclient_dotnet
          string ReasonCode)
         {
 
-            string aux="";
+            var aux="";
             return aux;
         }   
     }

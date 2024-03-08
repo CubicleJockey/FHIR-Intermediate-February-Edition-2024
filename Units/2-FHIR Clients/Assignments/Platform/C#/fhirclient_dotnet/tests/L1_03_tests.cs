@@ -1,7 +1,4 @@
-using System;
 using Xunit;
-using Xunit.Abstractions;
-
 using fhirclient_dotnet;
 namespace fhirclient_dotnet_tests
 {
@@ -16,7 +13,7 @@ namespace fhirclient_dotnet_tests
         public string L01_3_T01_GetProviderNearCity_NonExistingPatient()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
           var IdentifierValue="L01_3_T01";
@@ -30,7 +27,7 @@ namespace fhirclient_dotnet_tests
          public string L01_3_T02_GetProviderNearCity_PatientWithNoCityElement()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
           var IdentifierValue="L01_3_T02";
@@ -45,7 +42,7 @@ namespace fhirclient_dotnet_tests
          public string L01_3_T03_GetProviderNearCity_NoProviderInTheCity()
 
         {
-               MyConfiguration c=new MyConfiguration();
+               var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
          var IdentifierValue="L01_3_T03";
@@ -59,7 +56,7 @@ namespace fhirclient_dotnet_tests
          public string L01_3_T04_GetProviderNearCity_OneProvider()
 
         {
-              MyConfiguration c=new MyConfiguration();
+              var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
           var IdentifierValue="L01_3_T04";
@@ -74,7 +71,7 @@ namespace fhirclient_dotnet_tests
          public string L01_3_T05_GetProviderNearCity_SeveralProviders()
 
         {
-             MyConfiguration c=new MyConfiguration();
+             var c=new MyConfiguration();
             var server=c.ServerEndpoint;
             var IdentifierSystem=c.PatientIdentifierSystem;
            var IdentifierValue="L01_3_T05";

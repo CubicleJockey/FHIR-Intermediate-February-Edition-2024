@@ -1,12 +1,4 @@
-using Hl7.Fhir.Model; 
-using Hl7.Fhir.Rest; 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net.Http; 
-using System.Net.Http.Headers;
 
 namespace fhirclient_dotnet
 {
@@ -20,7 +12,7 @@ namespace fhirclient_dotnet
         )
         {
             
-            string aux="";
+            var aux="";
             return aux;
 
         }
