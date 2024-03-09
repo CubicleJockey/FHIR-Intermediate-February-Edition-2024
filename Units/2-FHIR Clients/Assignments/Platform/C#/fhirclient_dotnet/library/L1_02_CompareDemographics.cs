@@ -29,7 +29,7 @@ namespace fhirclient_dotnet
             var fhirGiven = string.Join(" ", givenParts);
             
             var fhirGender = patient.Gender.ToString()?.ToUpper();
-            var fhirBirthDate = patient.BirthDate.ToString();
+            var fhirBirthDate = patient.BirthDate;
 
             gender = gender.ToUpper();
             

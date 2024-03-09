@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Hl7.Fhir.Model;  
 using Hl7.Fhir.Rest;
 
@@ -5,31 +8,63 @@ namespace fhirclient_dotnet
 {
     public class GetProvidersNearPatient
     {
-        public string GetProvidersNearCity
-        (string ServerEndPoint,
-         string IdentifierSystem,
-         string IdentifierValue
-         )
-         {
-
-             var aux="This is Nothing";
-             return aux;
-
-         }
-
-         private Patient FHIR_SearchByIdentifier(string ServerEndPoint, string IdentifierSystem, string IdentifierValue)
+        public string GetProvidersNearCity(string serverEndPoint, string identifierSystem, string identifierValue)
         {
-            var o = new Patient();
-            var client = new FhirClient(ServerEndPoint);
-            var bu = client.Search<Patient>(new[]
-                {"identifier="  +IdentifierSystem+"|"+IdentifierValue});
-            if (bu.Entry.Count > 0)
+            var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
+            
+            if (patient == default) { return "Error:Patient_Not_Found"; }
+            if (!patient.Address.Any()) { return "Error:Patient_w/o_City"; }
+
+            var patientCity = patient.Address.First().City;
+            var providers = SearchProviderByCity(serverEndPoint, patientCity);
+
+            if (providers == default || !providers.Any()) { return "Error:No_Provider_In_Patient_City"; }
+
+            var response = new StringBuilder();
+            foreach (var provider in providers)
             {
-                o = (Patient)bu.Entry[0].Resource;
+                var name = provider.Name.First();
+                var given = name.Given.ToArray()[0];
+                var fullName = $"{name.Family},{given}";
+                var addressLine = provider.Address.First().Line.First();
+                var phone = provider.Telecom.First().Value;
+                var qualification = provider.Qualification.First().Code.Coding.First().Display;
+
+
+                response.Append($"{fullName}|Phone:{phone}|{addressLine}|{qualification}\n");
             }
-            else
-            { o = null; }
-            return o;
+
+            return response.ToString();
+
+        }
+
+        private static Patient SearchPatient(string serverEndPoint, string identifierSystem, string identifierValue)
+        {
+            Patient patient;
+            using var client = new FhirClient(serverEndPoint);
+            var patientResults = client.Search<Patient>(new[] { $"identifier={identifierSystem}|{identifierValue}" });
+            
+            if (patientResults.Entry.Count > 0)
+            {
+                patient = (Patient)patientResults.Entry[0].Resource;
+            }
+            else { patient = default; }
+
+            return patient;
+        }
+
+        private static List<Practitioner> SearchProviderByCity(string serverEndpoint, string city)
+        {
+            var providers = new List<Practitioner>();
+            using var client = new FhirClient(serverEndpoint);
+            var providerResults = client.Search<Practitioner>(new [] { $"address-city={city}"});
+            if (providerResults.Entry.Count > 0)
+            {
+                providers.AddRange(providerResults.Entry.Select(provider => (Practitioner)provider.Resource));
+            }
+            else { providers = default; }
+            
+            return providers;
         }
 
     }
