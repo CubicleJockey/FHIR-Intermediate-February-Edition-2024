@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 
@@ -5,12 +7,23 @@ namespace fhirclient_dotnet
 {
     public class FetchEthnicity
     {
+        /* Documentation: https://www.hl7.org/fhir/structuredefinition.html */
         public string GetEthnicity(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
             if (patient == default) { return "Error:Patient_Not_Found"; }
-            if (patient.Extension.Count == 0) { return "Error:No_us-core-ethnicity_Extension"; }
 
+            var (extensionFound, ethnicityExtension) = ExtensionContainsOmbCategory(patient.Extension);
+
+            if (patient.Extension.Count == 0 || !extensionFound)
+            {
+                return "Error:No_us-core-ethnicity_Extension";
+            }
+
+            var isConformant = CheckEthnicityExtensionsConformance(ethnicityExtension);
+            if (!isConformant) { return "Error:Non_Conformant_us-core-ethnicity_Extension"; }
+            
+            
             var aux = "";
             return aux;
 
@@ -30,6 +43,20 @@ namespace fhirclient_dotnet
             else { patient = default; }
 
             return patient;
+        }
+
+        private static (bool, Extension) ExtensionContainsOmbCategory(IEnumerable<Extension> extensions)
+        {
+            var ethnicityExtension = extensions.FirstOrDefault(extension => extension.Url == "ombCategory");
+            var found = ethnicityExtension != default;
+            return (found, ethnicityExtension);
+        }
+
+        private static bool CheckEthnicityExtensionsConformance(Extension extension)
+        {
+            //TODO: review documentation and complete logic.
+
+            return false;
         }
     }
 }

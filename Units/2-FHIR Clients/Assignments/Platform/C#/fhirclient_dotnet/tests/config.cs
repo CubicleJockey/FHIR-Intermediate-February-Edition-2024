@@ -22,9 +22,9 @@ namespace fhirclient_dotnet
          * 
          */
 
-        public string ServerEndpoint { get; } = "http://wildfhir4.aegis.net/fhir4-0-1";
+        //public string ServerEndpoint { get; } = "http://wildfhir4.aegis.net/fhir4-0-1";
         //public string ServerEndpoint { get; } = "http://localhost:8080/fhir/";
-        //public string ServerEndpoint { get; } = "http://hl7-ips-server.org:8080/fhir";
+        public string ServerEndpoint { get; } = "http://hl7-ips-server.org:8080/fhir";
 
 
         public string PatientIdentifierSystem { get; } = "http://fhirintermediate.org/patient_id";
