@@ -7,6 +7,7 @@ namespace fhirclient_dotnet
 {
     public class CompareDemographics
     {
+        /* Documentation: https://www.hl7.org/fhir/patient.html */
         public string GetDemographicComparison(string serverEndPoint, string identifierSystem, string identifierValue,
             string family, string given, string gender, string birthDate)
         {

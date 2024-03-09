@@ -7,6 +7,7 @@ namespace fhirclient_dotnet
 {
     public class FetchDemographics
     {
+        /* Documentation: https://www.hl7.org/fhir/patient.html */
         public string GetPatientPhoneAndEmail(string serverEndPoint, string identifierSystem, string identifierValue)
          {
             var patient = new Patient();

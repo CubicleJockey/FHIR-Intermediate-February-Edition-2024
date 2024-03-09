@@ -38,6 +38,7 @@ namespace fhirclient_dotnet
 
         }
 
+        /* Documentation: https://www.hl7.org/fhir/patient.html */
         private static Patient SearchPatient(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             Patient patient;
@@ -53,6 +54,7 @@ namespace fhirclient_dotnet
             return patient;
         }
 
+        /* Documentation: https://www.hl7.org/fhir/practitioner.html */
         private static List<Practitioner> SearchProviderByCity(string serverEndpoint, string city)
         {
             var providers = new List<Practitioner>();
