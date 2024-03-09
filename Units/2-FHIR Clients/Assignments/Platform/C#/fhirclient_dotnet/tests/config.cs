@@ -30,8 +30,8 @@ namespace fhirclient_dotnet
         public string PatientIdentifierSystem { get; } = "http://fhirintermediate.org/patient_id";
         //public string PatientIdentifierSystem { get; } = "http://localhost:8080/fhir/patient_id";
 
-        //public string TerminologyServerEndpoint { get; } = "https://r4.ontoserver.csiro.au/fhir";
-        public string TerminologyServerEndpoint { get; } = "https://demo.kodjin.com/fhir";
+        public string TerminologyServerEndpoint { get; } = "https://r4.ontoserver.csiro.au/fhir";
+        //public string TerminologyServerEndpoint { get; } = "https://demo.kodjin.com/fhir";
 
         public string AssignmentSubmissionFHIRServer { get; } = "http://fhir.hl7fundamentals.org/r4";
 
