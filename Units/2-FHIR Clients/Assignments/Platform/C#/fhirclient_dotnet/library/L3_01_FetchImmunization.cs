@@ -1,17 +1,14 @@
+using fi_u2_lib;
+
 namespace fhirclient_dotnet
 {
-    public class FetchImmunization
+    public class FetchImmunization : BasePatientSearch
     {
-        public string GetImmunizations
-        (string ServerEndPoint,
-         string IdentifierSystem,
-         string IdentifierValue
-         )
-         {
-             var aux="";
-             return aux;
-             
-                  }
-        
+        public string GetImmunizations(string serverEndPoint, string identifierSystem, string identifierValue)
+        {
+            var aux = "";
+            return aux;
+
+        }
     }
 }

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using fi_u2_lib;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 
 namespace fhirclient_dotnet
 {
-    public class FetchEthnicity
+    public class FetchEthnicity : BasePatientSearch
     {
         /* Documentation: https://www.hl7.org/fhir/structuredefinition.html */
         public string GetEthnicity(string serverEndPoint, string identifierSystem, string identifierValue)
@@ -39,22 +40,6 @@ namespace fhirclient_dotnet
             
             return response.ToString();
 
-        }
-
-        /* Documentation: https://www.hl7.org/fhir/patient.html */
-        private static Patient SearchPatient(string serverEndPoint, string identifierSystem, string identifierValue)
-        {
-            Patient patient;
-            using var client = new FhirClient(serverEndPoint);
-            var patientResults = client.Search<Patient>(new[] { $"identifier={identifierSystem}|{identifierValue}" });
-
-            if (patientResults.Entry.Count > 0)
-            {
-                patient = (Patient)patientResults.Entry[0].Resource;
-            }
-            else { patient = default; }
-
-            return patient;
         }
 
         private static (bool found, Extension extension) ExtensionContainsUsCoreEthnicity(IEnumerable<Extension> extensions)

@@ -1,25 +1,19 @@
 using System.Linq;
 using System.Text;
+using fi_u2_lib;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 
 namespace fhirclient_dotnet
 {
-    public class CompareDemographics
+    public class CompareDemographics : BasePatientSearch
     {
         /* Documentation: https://www.hl7.org/fhir/patient.html */
         public string GetDemographicComparison(string serverEndPoint, string identifierSystem, string identifierValue,
             string family, string given, string gender, string birthDate)
         {
-            var patient = new Patient();
-
-            using var client = new FhirClient(serverEndPoint);
-            var patientSearchBundle = client.Search<Patient>(new[] { $"identifier={identifierSystem}|{identifierValue}"});
-            if (patientSearchBundle.Entry.Count > 0)
-            {
-                patient = (Patient)patientSearchBundle.Entry[0].Resource;
-            }
-            else { return "Error:Patient_Not_Found"; }
+            var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
+            if(patient == default) { return "Error:Patient_Not_Found"; }
 
             var demographics = new StringBuilder();
 
