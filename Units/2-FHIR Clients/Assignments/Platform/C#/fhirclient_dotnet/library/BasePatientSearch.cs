@@ -20,5 +20,7 @@ namespace fi_u2_lib
 
             return patient;
         }
+
+        protected static readonly string PATIENTNOTFOUND = "Error:Patient_Not_Found";
     }
 }

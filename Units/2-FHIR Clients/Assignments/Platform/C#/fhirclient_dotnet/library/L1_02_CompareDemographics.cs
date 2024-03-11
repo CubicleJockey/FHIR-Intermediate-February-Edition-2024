@@ -13,7 +13,7 @@ namespace fhirclient_dotnet
             string family, string given, string gender, string birthDate)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
-            if(patient == default) { return "Error:Patient_Not_Found"; }
+            if(patient == default) { return PATIENTNOTFOUND; }
 
             var demographics = new StringBuilder();
 

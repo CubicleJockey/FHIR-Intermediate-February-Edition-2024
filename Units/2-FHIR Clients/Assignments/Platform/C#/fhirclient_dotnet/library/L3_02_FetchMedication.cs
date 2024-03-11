@@ -12,7 +12,7 @@ namespace fhirclient_dotnet
         public string GetMedications(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
-            if (patient == default) { return "Error:Patient_Not_Found"; }
+            if (patient == default) { return PATIENTNOTFOUND; }
 
             using var fhirClient = new FhirClient(serverEndPoint);
             var medicationRequestSearch = fhirClient.Search<MedicationRequest>(new[] { $"patient={patient.Id}" });

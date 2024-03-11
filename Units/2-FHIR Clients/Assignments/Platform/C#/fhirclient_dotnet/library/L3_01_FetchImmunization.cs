@@ -11,7 +11,7 @@ namespace fhirclient_dotnet
         public string GetImmunizations(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
-            if (patient == default) { return "Error:Patient_Not_Found"; }
+            if (patient == default) { return PATIENTNOTFOUND; }
 
             using var fhirClient = new FhirClient(serverEndPoint);
             var immunizationSearchResults = fhirClient.Search<Immunization>(new []{ $"patient={patient.Id}" });

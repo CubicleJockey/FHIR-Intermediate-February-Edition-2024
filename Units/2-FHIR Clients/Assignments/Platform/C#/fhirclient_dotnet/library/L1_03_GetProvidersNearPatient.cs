@@ -13,7 +13,7 @@ namespace fhirclient_dotnet
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
             
-            if (patient == default) { return "Error:Patient_Not_Found"; }
+            if (patient == default) { return PATIENTNOTFOUND; }
             if (!patient.Address.Any()) { return "Error:Patient_w/o_City"; }
 
             var patientCity = patient.Address.First().City;

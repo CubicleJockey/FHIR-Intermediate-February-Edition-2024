@@ -12,7 +12,7 @@ namespace fhirclient_dotnet
         public string GetPatientPhoneAndEmail(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
-            if(patient == default) { return "Error:Patient_Not_Found"; }
+            if(patient == default) { return PATIENTNOTFOUND; }
 
             var phones = new List<string>();
             var emails = new List<string>();

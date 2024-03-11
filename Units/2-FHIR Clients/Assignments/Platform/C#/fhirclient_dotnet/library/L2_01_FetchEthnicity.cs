@@ -13,7 +13,7 @@ namespace fhirclient_dotnet
         public string GetEthnicity(string serverEndPoint, string identifierSystem, string identifierValue)
         {
             var patient = SearchPatient(serverEndPoint, identifierSystem, identifierValue);
-            if (patient == default) { return "Error:Patient_Not_Found"; }
+            if (patient == default) { return PATIENTNOTFOUND; }
 
             var (extensionFound, ethnicityExtension) = ExtensionContainsUsCoreEthnicity(patient.Extension);
 
