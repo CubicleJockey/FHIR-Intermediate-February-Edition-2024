@@ -50,8 +50,8 @@ namespace fhirclient_dotnet
                     if (noRefCoding.Coding.First() is { } coding)
                     {
                         //TODO: Double check forum about the status being Unknown in JSON response but expecting Active
-                        //response.Append($"{status}|{date}|{coding.Code}:{coding.Display}\n");
-                        response.Append($"Active|{date}|{coding.Code}:{coding.Display}\n");
+                        response.Append($"{status}|{date}|{coding.Code}:{coding.Display}\n");
+                        //response.Append($"Active|{date}|{coding.Code}:{coding.Display}\n");
                     }
                 }
 
