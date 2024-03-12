@@ -69,8 +69,12 @@ namespace fhirclient_dotnet_tests
             var server = c.ServerEndpoint;
             var IdentifierSystem = c.PatientIdentifierSystem;
             var IdentifierValue = "L03_3_T04";
-            var ExpMedication = "Active||no-medication-info:No information about medications\n";
-            var fsh = new FetchIPS();
+
+            //COMMENT: Rik Smithies 
+            //         I suggest to update the unit test, because "unknown" seems to be the correct value in the newer generated version of the IPS
+            //var ExpMedication = "Active||no-medication-info:No information about medications\n";
+            var ExpMedication = "Unknown||no-medication-info:No information about medications\n";
+            var fsh = new FetchIPS();           
             var rm = fsh.GetIPSMedications(server, IdentifierSystem, IdentifierValue);
             Assert.True(ExpMedication == rm, ExpMedication + "!=" + rm);
             return rm;

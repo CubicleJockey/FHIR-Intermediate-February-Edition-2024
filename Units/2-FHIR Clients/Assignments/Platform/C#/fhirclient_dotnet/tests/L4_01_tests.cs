@@ -204,9 +204,13 @@ namespace fhirclient_dotnet_tests
                 var inParams = new Parameters();
                 inParams.Add("resource", o);
                 var bu = client.ValidateResource(o);
-                if (bu.Issue[0].Details.Text != "Validation successful, no issues found")
+
+                //COMMENT: Rik Smithies 
+                //         The way that OperationOutcome is used to report the error differs from server to server.So you can update the unit test according to how your server does it.
+                //if (bu.Issue[0].Details.Text != "Validation successful, no issues found")
+                if (bu.Issue[0].Diagnostics != "No issues detected during validation")
                 {
-                    aux = "Error:" + bu.Issue[0].Details.Text;
+                    aux = "Error:" + bu.Issue[0].Diagnostics;
                 }
             }
 
