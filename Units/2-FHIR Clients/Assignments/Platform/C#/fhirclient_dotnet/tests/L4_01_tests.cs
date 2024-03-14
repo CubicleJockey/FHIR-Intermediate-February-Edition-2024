@@ -210,6 +210,7 @@ namespace fhirclient_dotnet_tests
                 //if (bu.Issue[0].Details.Text != "Validation successful, no issues found")
                 if (bu.Issue[0].Diagnostics != "No issues detected during validation")
                 {
+                    //aux = "Error:" + bu.Issue[0].Details.Text;
                     aux = "Error:" + bu.Issue[0].Diagnostics;
                 }
             }
