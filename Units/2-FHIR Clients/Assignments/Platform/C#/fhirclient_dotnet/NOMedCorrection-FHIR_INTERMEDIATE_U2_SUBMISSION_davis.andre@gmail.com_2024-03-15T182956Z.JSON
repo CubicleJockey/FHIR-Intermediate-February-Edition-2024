@@ -1,0 +1,564 @@
+{
+    "resourceType": "TestReport",
+    "identifier": {
+        "system": "http://fhirintermediate.org/test_report/id",
+        "value": "davis.andre@gmail.com-2024-03-15T182956Z"
+    },
+    "status": "in-progress",
+    "testScript": {
+        "identifier": {
+            "system": "http://fhirintermediate.org/test_script/id",
+            "value": "FHIR_INTERMEDIATE_U02-.NET"
+        }
+    },
+    "result": "pending",
+    "tester": "davis.andre@gmail.com",
+    "issued": "2024-03-15T182956Z",
+    "participant": [
+        {
+            "type": "server",
+            "uri": "http://hl7-ips-server.org:8080/fhir",
+            "display": "Resource Server"
+        },
+        {
+            "type": "server",
+            "uri": "https://r4.ontoserver.csiro.au/fhir",
+            "display": "Terminology Server"
+        },
+        {
+            "type": "client",
+            "uri": "http://localhost",
+            "display": "André Davis"
+        }
+    ],
+    "test": [
+        {
+            "name": "L01_1_T01",
+            "description": "L01_1_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_1_T02",
+            "description": "L01_1_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Emails:-\nPhones:-"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_1_T03",
+            "description": "L01_1_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Emails:-\nPhones:+15555555555(Home)"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_1_T04",
+            "description": "L01_1_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Emails:mymail@patientt04.com(Home)\nPhones:-"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_1_T05",
+            "description": "L01_1_T05",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Emails:mymail@patientt05job.com(Work),mymail@patientt05.com(Home)\nPhones:+15555555555(Work),+16666666666(Home)"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_1_T06",
+            "description": "L01_1_T06",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Emails:-\nPhones:-"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T01",
+            "description": "L01_2_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T02",
+            "description": "L01_2_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "{family}|Dougras|Douglas|{red}\n{given}|Jamieson Harris|Jamieson Harris|{green}\n{gender}|MALE|MALE|{green}\n{birthDate}|1968-07-23|1968-07-23|{green}"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T03",
+            "description": "L01_2_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "{family}|Douglas|Douglas|{green}\n{given}|Jamieson|Jamieson Harris|{red}\n{gender}|MALE|MALE|{green}\n{birthDate}|1968-07-23|1968-07-23|{green}"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T04",
+            "description": "L01_2_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "{family}|Douglas|Douglas|{green}\n{given}|Jamieson Harris|Jamieson Harris|{green}\n{gender}|MALE|MALE|{green}\n{birthDate}|1968-07-24|1968-07-23|{red}"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T05",
+            "description": "L01_2_T05",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "{family}|Douglas|Douglas|{green}\n{given}|Jamieson Harris|Jamieson Harris|{green}\n{gender}|FEMALE|MALE|{red}\n{birthDate}|1968-07-23|1968-07-23|{green}"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_2_T06",
+            "description": "L01_2_T06",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "{family}|Douglas|Douglas|{green}\n{given}|Jamieson Harris|Jamieson Harris|{green}\n{gender}|MALE|MALE|{green}\n{birthDate}|1968-07-23|1968-07-23|{green}"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_3_T01",
+            "description": "L01_3_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_3_T02",
+            "description": "L01_3_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_w/o_City"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_3_T03",
+            "description": "L01_3_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:No_Provider_In_Patient_City"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_3_T04",
+            "description": "L01_3_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OnlyPhysician,InTown|Phone:+402-772-7777|2000 ONE PROVIDER DRIVE|OB/GYN"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L01_3_T05",
+            "description": "L01_3_T05",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OnePhysician,First|Phone:+402-772-7777|2000 ONE PROVIDER DRIVE|OB/GYN\nTwoPhysician,Second|Phone:+403-772-7777|3000 TWO PROVIDER DRIVE|FAMILY MEDICINE"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L02_1_T01",
+            "description": "L02_1_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L02_1_T02",
+            "description": "L02_1_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:No_us-core-ethnicity_Extension"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L02_1_T03",
+            "description": "L02_1_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Non_Conformant_us-core-ethnicity_Extension"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L02_1_T04",
+            "description": "L02_1_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "text|Hispanic or Latino\ncode|2135-2:Hispanic or Latino"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L02_1_T05",
+            "description": "L02_1_T05",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "text|Hispanic or Latino\ncode|2135-2:Hispanic or Latino\ndetail|2184-0:Dominican\ndetail|2148-5:Mexican\ndetail|2151-9:Chicano"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_1_T01",
+            "description": "L03_1_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_1_T02",
+            "description": "L03_1_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:No_Immunizations"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_1_T03",
+            "description": "L03_1_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Completed|158:influenza, injectable, quadrivalent|2020-01-08"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_1_T04",
+            "description": "L03_1_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Completed|207:COVID-19, mRNA, LNP-S, PF, 100 mcg/0.5 mL dose|2020-01-10\nCompleted|173:cholera, BivWC|2019-10-20"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_2_T01",
+            "description": "L03_2_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_2_T02",
+            "description": "L03_2_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:No_Medications"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_2_T03",
+            "description": "L03_2_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Active|Order|2021-01-05|582620:Nizatidine 15 MG/ML Oral Solution [Axid]|John Requester, MD"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_2_T04",
+            "description": "L03_2_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Active|Order|2021-01-05|582620:Nizatidine 15 MG/ML Oral Solution [Axid]|Mary Requesting, MD\nActive|Order|2021-01-05|198436:Acetaminophen 325 MG Oral Capsule|Mary Requesting, MD"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T01",
+            "description": "L03_3_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T02",
+            "description": "L03_3_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:No_IPS"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T03",
+            "description": "L03_3_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Active|2015-03|108774000:Product containing anastrozole (medicinal product)\nActive|2016-01|412588001:Cimicifuga racemosa extract (substance)"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T04",
+            "description": "L03_3_T04",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Active||no-medication-info:No information about medications"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T05",
+            "description": "L03_3_T05",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Completed|1998-06-04T00:00:00+02:00|414005006:Diphtheria + Pertussis + Poliomyelitis + Tetanus vaccine"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L03_3_T06",
+            "description": "L03_3_T06",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:IPS_No_Immunizations"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_1_T01",
+            "description": "L04_1_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_1_T02",
+            "description": "L04_1_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OK"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_1_T03",
+            "description": "L04_1_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OK"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_2_T01",
+            "description": "L04_2_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:Patient_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_2_T02",
+            "description": "L04_2_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OK"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L04_2_T03",
+            "description": "L04_2_T03",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "OK"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L05_1_T01",
+            "description": "L05_1_T01",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "Error:ValueSet_Filter_Not_Found"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "L05_1_T02",
+            "description": "L05_1_T02",
+            "action": [
+                {
+                    "assert": {
+                        "result": "pass",
+                        "message": "5368009|Drug-induced diabetes mellitus"
+                    }
+                }
+            ]
+        }
+    ]
+}

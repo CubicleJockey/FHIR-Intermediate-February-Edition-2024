@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fi_u2_tests", "tests\fi_u2_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66307D40-AC30-49A6-B2B4-608D84DED401}"
 	ProjectSection(SolutionItems) = preProject
+		FHIR_INTERMEDIATE_U2_SUBMISSION_davis.andre@gmail.com_2024-03-15T182956Z.JSON = FHIR_INTERMEDIATE_U2_SUBMISSION_davis.andre@gmail.com_2024-03-15T182956Z.JSON
 		GRADER-README.txt = GRADER-README.txt
+		NOMedCorrection-FHIR_INTERMEDIATE_U2_SUBMISSION_davis.andre@gmail.com_2024-03-15T182956Z.JSON = NOMedCorrection-FHIR_INTERMEDIATE_U2_SUBMISSION_davis.andre@gmail.com_2024-03-15T182956Z.JSON
 	EndProjectSection
 EndProject
 Global
