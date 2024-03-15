@@ -373,7 +373,8 @@ namespace fhirclient_dotnet_submission
 
             if (aux=="")
             {
-                var client = new FhirClient(server); 
+                var client = new FhirClient(server);
+                if (o.Meta is null) { o.Meta = new Meta(); } //FIX to allow submissions to fun.
                 if (o.Meta.Profile is null)
                    o.Meta.Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-immunization" };
                    
@@ -381,9 +382,13 @@ namespace fhirclient_dotnet_submission
                 inParams.Add("resource", o);
                 var bu = client.ValidateResource(o); 
                 aux="OK";
-                if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
+                //COMMENT: Rik Smithies 
+                //         The way that OperationOutcome is used to report the error differs from server to server.So you can update the unit test according to how your server does it.
+                //if (bu.Issue[0].Details.Text != "Validation successful, no issues found")
+                if (bu.Issue[0].Diagnostics != "No issues detected during validation")
                 {
-                    aux="Error:"+bu.Issue[0].Details.Text;
+                    //aux = "Error:" + bu.Issue[0].Details.Text;
+                    aux = "Error:" + bu.Issue[0].Diagnostics;
                 }
             }
             return aux;
@@ -406,7 +411,8 @@ namespace fhirclient_dotnet_submission
 
             if (aux=="")
             {
-                var client = new FhirClient(server); 
+                var client = new FhirClient(server);
+                if (o.Meta is null) { o.Meta = new Meta(); } //FIX to allow submission to generate.
                 if (o.Meta.Profile is null)
                    o.Meta.Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab" };
                    
@@ -414,9 +420,13 @@ namespace fhirclient_dotnet_submission
                 inParams.Add("resource", o);
                 var bu = client.ValidateResource(o); 
                 aux="OK";
-                if (bu.Issue[0].Details.Text!="Validation successful, no issues found")
+                //COMMENT: Rik Smithies 
+                //         The way that OperationOutcome is used to report the error differs from server to server.So you can update the unit test according to how your server does it.
+                //if (bu.Issue[0].Details.Text != "Validation successful, no issues found")
+                if (bu.Issue[0].Diagnostics != "No issues detected during validation")
                 {
-                    aux="Error:"+bu.Issue[0].Details.Text;
+                    //aux = "Error:" + bu.Issue[0].Details.Text;
+                    aux = "Error:" + bu.Issue[0].Diagnostics;
                 }
             }
             return aux;
