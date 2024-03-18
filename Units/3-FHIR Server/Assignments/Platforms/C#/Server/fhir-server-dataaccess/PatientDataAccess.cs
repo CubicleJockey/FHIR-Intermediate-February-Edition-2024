@@ -127,10 +127,10 @@ namespace fhir_server_dataaccess
                             }
                             break;
                         case LegacyFilter.field.email:
-                            //TODO: Get patient by email
-
-                            var a = 10;
-
+                            if (!(item.PRSN_EMAIL.ToLower().Contains(criteria.value.ToLower())))
+                            {
+                                include = false;
+                            }
                             break;
                     default:
                         break;
