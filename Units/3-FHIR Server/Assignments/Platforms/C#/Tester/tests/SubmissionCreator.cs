@@ -11,8 +11,8 @@ public class SubmissionCreator
         [Fact]
         public void CreateSubmission()
         {
-            MyConfiguration c=new MyConfiguration();
-            Dictionary<string,string> TestList=new System.Collections.Generic.Dictionary<string, string>();
+            var c=new MyConfiguration();
+            var TestList=new System.Collections.Generic.Dictionary<string, string>();
             TestList=AddAll (TestList,L01_1_Tests_Results());
             TestList=AddAll (TestList,L01_2_Tests_Results());
             TestList=AddAll (TestList,L02_1_Tests_Results());
@@ -23,41 +23,41 @@ public class SubmissionCreator
             TestList=AddAll (TestList,L03_1_Tests_Results());
           
             
-            Hl7.Fhir.Model.TestReport  tr=new  Hl7.Fhir.Model.TestReport();
+            var  tr=new  Hl7.Fhir.Model.TestReport();
             tr.Result=Hl7.Fhir.Model.TestReport.TestReportResult.Pending;
-            String datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            var datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
             datee=datee.Replace(":","");
             
             tr.Identifier=new Identifier("http://fhirintermediate.org/test_report/id",c.StudentId+"-"+datee);
             tr.Issued=datee;
             tr.Status=TestReport.TestReportStatus.InProgress;
-            ResourceReference r=new ResourceReference();
+            var r=new ResourceReference();
             r.Identifier=new Identifier("http://fhirintermediate.org/test_script/id","FHIR_INTERMEDIATE_U03-.NET");
             tr.TestScript=r;
             tr.Tester=c.StudentId;
 
-            TestReport.ParticipantComponent pcS=new TestReport.ParticipantComponent();
+            var pcS=new TestReport.ParticipantComponent();
             pcS.Type=TestReport.TestReportParticipantType.Server;
             pcS.Uri=c.ServerEndpoint;
             pcS.Display="Resource Server";
             tr.Participant.Add(pcS);
             
             
-            TestReport.ParticipantComponent pcC=new TestReport.ParticipantComponent();
+            var pcC=new TestReport.ParticipantComponent();
             pcC.Type=TestReport.TestReportParticipantType.Client;
             pcC.Uri="http://localhost";
             pcC.Display=c.StudentName;
             tr.Participant.Add(pcC);
 
-            foreach(KeyValuePair<string,string> test in TestList)
+            foreach(var test in TestList)
             {
                 
-                TestReport.TestComponent testComponent=new TestReport.TestComponent();
+                var testComponent=new TestReport.TestComponent();
                 testComponent.Name=test.Key;
                 
                 testComponent.Description=test.Key;
-                TestReport.TestActionComponent ta=new TestReport.TestActionComponent();
-                TestReport.AssertComponent tac=new TestReport.AssertComponent();
+                var ta=new TestReport.TestActionComponent();
+                var tac=new TestReport.AssertComponent();
                 if (test.Value=="")
                 {
                     tac.Result=TestReport.TestReportActionResult.Fail;
@@ -75,9 +75,9 @@ public class SubmissionCreator
             }
             
             
-            Hl7.Fhir.Serialization.FhirJsonSerializer s = new Hl7.Fhir.Serialization.FhirJsonSerializer();  
-            String results = s.SerializeToString(tr);  
-            String filename=@"FHIR_INTERMEDIATE_U3_SUBMISSION_" + c.StudentId+"_"+datee+".JSON";
+            var s = new Hl7.Fhir.Serialization.FhirJsonSerializer();  
+            var results = s.SerializeToString(tr);  
+            var filename=@"FHIR_INTERMEDIATE_U3_SUBMISSION_" + c.StudentId+"_"+datee+".JSON";
             System.IO.File.WriteAllText(filename, results);
             Console.WriteLine(filename);
             Assert.Equal(filename, filename);
@@ -89,9 +89,9 @@ public class SubmissionCreator
         public Dictionary<string,string> L01_1_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
+            var result="";
             //Test T01
             result=L01_1_testrunner.L01_1_T01();
             tr.Add("L01_1_T01",result);
@@ -106,10 +106,10 @@ public class SubmissionCreator
         public Dictionary<string,string> L01_2_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
-            MyConfiguration c=new MyConfiguration();
+            var result="";
+            var c=new MyConfiguration();
             //Test T01
             result=L01_2_testrunner.L01_2_T01();
             tr.Add("L01_2_T01",result);
@@ -134,9 +134,9 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_1_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
+            var result="";
             //Test T01
             result=L02_1_testrunner.L02_1_T01();
             tr.Add("L02_1_T01",result);
@@ -174,9 +174,9 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_2_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
-            MyConfiguration c=new MyConfiguration();
-            String result="";
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var c=new MyConfiguration();
+            var result="";
             //Test T01
             result=L02_2_testrunner.L02_2_T01();
             tr.Add("L02_2_T01",result);
@@ -201,9 +201,9 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_3_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
+            var result="";
             //Test T01
             result=L02_3_testrunner.L02_3_T01();
             tr.Add("L02_3_T01",result);
@@ -231,10 +231,10 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_4_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
-            MyConfiguration c=new MyConfiguration();
+            var result="";
+            var c=new MyConfiguration();
             //Test T01A
             result=L02_4_testrunner.L02_4_T01A();
             tr.Add("L02_4_T01A",result);
@@ -266,10 +266,10 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_5_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
-            MyConfiguration c=new MyConfiguration();
+            var result="";
+            var c=new MyConfiguration();
             //Test T01A
             result=L02_5_testrunner.L02_5_T01A();
             tr.Add("L02_5_T01A",result);
@@ -298,9 +298,9 @@ public class SubmissionCreator
         public Dictionary<string,string> L03_1_Tests_Results()
         {
             
-            Dictionary<string,string> tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new System.Collections.Generic.Dictionary<string, string>();
             
-            String result="";
+            var result="";
               //Test T01
             result=L03_3_testrunner.L03_3_T01A();
             tr.Add("L03_3_T01A",result);
@@ -315,13 +315,13 @@ public class SubmissionCreator
         
         public Dictionary<String,String> AddAll(Dictionary<String,String> tAll,Dictionary<String,String> tOne)
         {
-            Dictionary<string,string> tl=new System.Collections.Generic.Dictionary<string, string>();
-            foreach(KeyValuePair<string,string> test in tAll)
+            var tl=new System.Collections.Generic.Dictionary<string, string>();
+            foreach(var test in tAll)
             {
                 tl.Add(test.Key,test.Value);
 
             }
-            foreach(KeyValuePair<string,string> test in tOne)
+            foreach(var test in tOne)
             {
                 Console.WriteLine("adding...");
                 Console.WriteLine(test.Key);     

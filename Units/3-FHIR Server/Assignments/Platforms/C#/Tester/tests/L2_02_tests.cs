@@ -16,8 +16,8 @@ namespace fhirserver_dotnet_tests
         public void L02_2_T01_Practitioner_Direct_Get_Exists()
 
         {
-            String result = L02_2_testrunner.L02_2_T01();
-            String expected = "McEnroe John Patrick";
+            var result = L02_2_testrunner.L02_2_T01();
+            var expected = "McEnroe John Patrick";
             Assert.Equal(expected, result);
 
         }
@@ -25,9 +25,9 @@ namespace fhirserver_dotnet_tests
         public void L02_2_T02_Practitioner_Direct_Get_Not_exists()
 
         {
-            MyConfiguration c=new MyConfiguration();
-            String result = L02_2_testrunner.L02_2_T02();
-            String expected = c.MSG_PractitionerNotFound;
+            var c=new MyConfiguration();
+            var result = L02_2_testrunner.L02_2_T02();
+            var expected = c.MSG_PractitionerNotFound;
             Assert.Contains(expected, result);
 
         }
@@ -35,9 +35,9 @@ namespace fhirserver_dotnet_tests
         public void L02_2_T03_Practitioner_Direct_Get_Not_A_Practitioner()
 
         {
-            MyConfiguration c=new MyConfiguration();
-            String result = L02_2_testrunner.L02_2_T03();
-            String expected = c.MSG_PersonNotAPractitioner;
+            var c=new MyConfiguration();
+            var result = L02_2_testrunner.L02_2_T03();
+            var expected = c.MSG_PersonNotAPractitioner;
             Assert.Contains(expected, result);
 
         }

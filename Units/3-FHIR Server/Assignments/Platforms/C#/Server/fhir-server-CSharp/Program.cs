@@ -25,8 +25,8 @@ namespace fhir_server_CSharp
         private static string LocationHeaderValue = string.Empty;
         private static void Main(string[] args)
         {
-            string listenerPort = FhirServerConfig.PortListening.ToString();
-            string serverName = "localhost";//Environment.MachineName.ToUpper().Trim();
+            var listenerPort = FhirServerConfig.PortListening.ToString();
+            var serverName = "localhost";//Environment.MachineName.ToUpper().Trim();
 
             WebServer FhirWebServer = null;
 
@@ -72,11 +72,11 @@ namespace fhir_server_CSharp
                  * Calculates the display buffer length and center the text accordingly
                  */
                 //int bufferWidth = Console.BufferWidth;
-                int bufferWidth = 80;
-                int textLength = MSG0000000001.Length;
-                int lengthDifference = bufferWidth - textLength;
-                int halfLengthDifference = lengthDifference / 2;
-                string textToDisplay = new string('-', halfLengthDifference) + MSG0000000001 + new string('-', halfLengthDifference + 10);
+                var bufferWidth = 80;
+                var textLength = MSG0000000001.Length;
+                var lengthDifference = bufferWidth - textLength;
+                var halfLengthDifference = lengthDifference / 2;
+                var textToDisplay = new string('-', halfLengthDifference) + MSG0000000001 + new string('-', halfLengthDifference + 10);
 
                 if (textToDisplay.Length > bufferWidth)
                 {
@@ -118,14 +118,14 @@ namespace fhir_server_CSharp
 
         private static string SendResponse(HttpListenerRequest request)
         {
-            string strResponse = string.Empty;
+            var strResponse = string.Empty;
             HttpStatusCodeForResponse = 200;
             LocationHeaderValue = null;
 
             Utilz.PrintRequest(request, ref RequestCounter);
             sb.Append($"RS {RequestCounter} : ");
 
-            if (IsResourceAllowedInThisServer(request, out string resource))
+            if (IsResourceAllowedInThisServer(request, out var resource))
             {
                 if (resource.Equals(ResourceType.Patient.ToString(), StringComparison.Ordinal))
                 {
@@ -156,9 +156,9 @@ namespace fhir_server_CSharp
 
         private static bool IsResourceAllowedInThisServer(HttpListenerRequest request, out string resource)
         {
-            bool isResourceAllowed = false;
+            var isResourceAllowed = false;
 
-            string resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
+            var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
             string searchParamId;
             if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
@@ -192,8 +192,8 @@ namespace fhir_server_CSharp
                 {
                     if (request.QueryString != null && request.QueryString.Count > 0 && request.QueryString.Count <= 2)
                     {
-                        string mode = request.QueryString["Mode"];
-                        string format = request.QueryString["_format"];
+                        var mode = request.QueryString["Mode"];
+                        var format = request.QueryString["_format"];
 
                         if (!string.IsNullOrEmpty(mode) && mode.Equals("full", StringComparison.OrdinalIgnoreCase))
                         {
@@ -227,7 +227,7 @@ namespace fhir_server_CSharp
                 }
                 else if (resourceBeingSearched.Equals(ResourceType.MedicationRequest.ToString()) && request.QueryString.Count > 0)
                 {
-                    string searchParam = request.QueryString["_include"];
+                    var searchParam = request.QueryString["_include"];
                     if (!string.IsNullOrEmpty(searchParam) && searchParam.Contains(ResourceType.MedicationRequest.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         isResourceAllowed = true;
@@ -262,7 +262,7 @@ namespace fhir_server_CSharp
         }
         private static String CapabilityStatement_Route(HttpListenerRequest request)
         {
-            string strResponse = String.Empty;
+            var strResponse = String.Empty;
             if (!request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
             {
                 HttpStatusCodeForResponse = (int)HttpStatusCode.MethodNotAllowed;
@@ -274,7 +274,7 @@ namespace fhir_server_CSharp
 
                 if (FhirServerConfig.ValidateCapabilityStatementResource)
                 {
-                    bool isResourceValid = SharedServices.ValidateResource(capability, out OperationOutcome outcome);
+                    var isResourceValid = SharedServices.ValidateResource(capability, out var outcome);
 
                     if (!isResourceValid)
                     {
@@ -288,15 +288,15 @@ namespace fhir_server_CSharp
         }
         private static String MedicationRequest_Route(HttpListenerRequest request)
         {
-            String strResponse = String.Empty;
-            List<fhir_server_entity_model.LegacyFilter> criteria = new List<fhir_server_entity_model.LegacyFilter>();
-            bool HardIdSearch = false;
+            var strResponse = String.Empty;
+            var criteria = new List<fhir_server_entity_model.LegacyFilter>();
+            var HardIdSearch = false;
             HttpStatusCodeForResponse = 200;
             LocationHeaderValue = null;
 
             Utilz.PrintRequest(request, ref RequestCounter);
             sb.Append($"RS {RequestCounter} : ");
-            if (!MedicationRequestSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out DomainResource operation,out criteria))
+            if (!MedicationRequestSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out var operation,out criteria))
             {
                 RequestCounter++;
                 return operation.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
@@ -333,7 +333,7 @@ namespace fhir_server_CSharp
 
                             if (FhirServerConfig.ValidateMedicationRequestBundleAndResource)
                             {
-                                bool isResourceValid = SharedServices.ValidateResource(medRequest, out OperationOutcome outcome);
+                                var isResourceValid = SharedServices.ValidateResource(medRequest, out var outcome);
 
                                 if (!isResourceValid)
                                 {
@@ -357,9 +357,9 @@ namespace fhir_server_CSharp
         }
         private static String Patient_Route(HttpListenerRequest request)
         {
-            String strResponse = String.Empty;
-            List<fhir_server_entity_model.LegacyFilter> criteria = new List<fhir_server_entity_model.LegacyFilter>();
-            bool HardIdSearch = false;
+            var strResponse = String.Empty;
+            var criteria = new List<fhir_server_entity_model.LegacyFilter>();
+            var HardIdSearch = false;
             HttpStatusCodeForResponse = 200;
             LocationHeaderValue = null;
 
@@ -367,7 +367,7 @@ namespace fhir_server_CSharp
             sb.Append($"RS {RequestCounter} : ");
 
 
-            if (!PatientSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out DomainResource operation, out criteria))
+            if (!PatientSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out var operation, out criteria))
             {
                 RequestCounter++;
                 return operation.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
@@ -396,7 +396,7 @@ namespace fhir_server_CSharp
 
                         if (FhirServerConfig.ValidatePatientBundleAndResource)
                         {
-                            bool isResourceValid = SharedServices.ValidateResource(patient, out OperationOutcome outcome);
+                            var isResourceValid = SharedServices.ValidateResource(patient, out var outcome);
 
                             if (!isResourceValid)
                             {

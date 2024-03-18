@@ -18,59 +18,59 @@ namespace fhirserver_dotnet_library
         public static string L02_3_T01()
         {
             
-             MyConfiguration c = new MyConfiguration();
+             var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.GetPractitionersAll(server);
+            var rm = testhelper.GetPractitionersAll(server);
             return rm;
         
         }
         public static string L02_3_T02A()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"family","Lennon");
+            var rm = testhelper.PractitionerSearch(server,"family","Lennon");
             return rm;
         
         }
         public static string L02_3_T02B()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"family","McEnroe");
+            var rm = testhelper.PractitionerSearch(server,"family","McEnroe");
             return rm;
         
         }
         public static string L02_3_T03A()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"name","Lennon");
+            var rm = testhelper.PractitionerSearch(server,"name","Lennon");
             return rm;
         
 
         }
         public static string L02_3_T03B()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"name","John");
+            var rm = testhelper.PractitionerSearch(server,"name","John");
             return rm;
         
 
         }
         public static string L02_3_T04A()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"gender","male");
+            var rm = testhelper.PractitionerSearch(server,"gender","male");
             return rm;
         
         }
         public static string L02_3_T04B()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"gender","female");
+            var rm = testhelper.PractitionerSearch(server,"gender","female");
             return rm;
         
         }

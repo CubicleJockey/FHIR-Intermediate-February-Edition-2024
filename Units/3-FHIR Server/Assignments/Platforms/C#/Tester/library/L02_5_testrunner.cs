@@ -16,53 +16,53 @@ namespace fhirserver_dotnet_library
         public static string L02_5_T01A()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "email", "john.mcenroe@tennis.com");
+            var rm = testhelper.PractitionerSearch(server, "email", "john.mcenroe@tennis.com");
             return rm;
         }
 
         public static string L02_5_T01B()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "email", "john.mcenroe@tennas.com");
+            var rm = testhelper.PractitionerSearch(server, "email", "john.mcenroe@tennas.com");
             return rm;
         }
 
         public static string L02_5_T02A()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "telecom", "phone|5555-5555");
+            var rm = testhelper.PractitionerSearch(server, "telecom", "phone|5555-5555");
             return rm;
         }
         public static string L02_5_T02B()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "telecom", "email|john.mcenroe@tennis.com");
+            var rm = testhelper.PractitionerSearch(server, "telecom", "email|john.mcenroe@tennis.com");
             return rm;
 
         }
         public static string L02_5_T02C()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "telecom", "email|john.mcenroe@tennas.com");
+            var rm = testhelper.PractitionerSearch(server, "telecom", "email|john.mcenroe@tennas.com");
             return rm;
 
         }
         public static string L02_5_T02D()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server, "telecom", "john.mcenroe@tennis.com");
+            var rm = testhelper.PractitionerSearch(server, "telecom", "john.mcenroe@tennis.com");
             return rm;
 
         }

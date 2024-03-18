@@ -24,9 +24,9 @@ namespace fhir_server_dataaccess
         {
             if (LegacyMeds==null)
             {
-                string url = "http://3.221.164.25:9080/meds";
-                HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url).Result;
+                var url = "http://3.221.164.25:9080/meds";
+                var client = new HttpClient();
+                var response = client.GetStringAsync(url).Result;
                 LegacyMeds= JsonConvert.DeserializeObject<LegacyMed[]>(response);
             }
 
@@ -36,9 +36,9 @@ namespace fhir_server_dataaccess
         {
             if (LegacyRxs==null)
             {
-                string url = "http://3.221.164.25:9080/rx";
-                HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url).Result;
+                var url = "http://3.221.164.25:9080/rx";
+                var client = new HttpClient();
+                var response = client.GetStringAsync(url).Result;
                 LegacyRxs= JsonConvert.DeserializeObject<LegacyRx[]>(response);
             }
 
@@ -46,11 +46,11 @@ namespace fhir_server_dataaccess
         public static bool CheckIfOpioid(String rxnorm_code)
         {
             GetLegacyData();
-            bool opioid=false;
-            LegacyMed[] ms=LegacyMeds; 
-            for (int i = 0; i < ms.Length; i++)
+            var opioid=false;
+            var ms=LegacyMeds; 
+            for (var i = 0; i < ms.Length; i++)
             {
-                LegacyMed m = ms[i];
+                var m = ms[i];
                 if (m.code==rxnorm_code)
                 {
                     if (m.opioid=="yes")
@@ -66,20 +66,20 @@ namespace fhir_server_dataaccess
         {
             if (LegacyIdentifierTypes==null)
             {
-                string url = "http://3.221.164.25:9080/identifier_type";
-                HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url).Result;
+                var url = "http://3.221.164.25:9080/identifier_type";
+                var client = new HttpClient();
+                var response = client.GetStringAsync(url).Result;
                 LegacyIdentifierTypes = JsonConvert.DeserializeObject<LegacyIdentifierType[]>(response);
             }
         }
         public static String getLegacyIdentifierCode(long IdentifierTypeId)
         {
-            String Code ="";
+            var Code ="";
             GetLegacyData();
             if (LegacyIdentifierTypes!=null)
             {
-                int max=LegacyIdentifierTypes.Length;
-                for (int i = 0; i < max; i++)
+                var max=LegacyIdentifierTypes.Length;
+                for (var i = 0; i < max; i++)
                 {
                     if (LegacyIdentifierTypes[i].identifier_type_id==IdentifierTypeId)
                     {
@@ -96,9 +96,9 @@ namespace fhir_server_dataaccess
         {
             if (LegacyPersonIdentifiers==null)
             {
-                string url = "http://3.221.164.25:9080/person_identifier";
-                HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url).Result;
+                var url = "http://3.221.164.25:9080/person_identifier";
+                var client = new HttpClient();
+                var response = client.GetStringAsync(url).Result;
                 LegacyPersonIdentifiers = JsonConvert.DeserializeObject<LegacyPersonIdentifier[]>(response);
             }
         }        
@@ -106,9 +106,9 @@ namespace fhir_server_dataaccess
         {
             if (LegacyPerson==null)
             {
-                string url = "http://3.221.164.25:9080/person";
-                HttpClient client = new HttpClient();
-                string response = client.GetStringAsync(url).Result;
+                var url = "http://3.221.164.25:9080/person";
+                var client = new HttpClient();
+                var response = client.GetStringAsync(url).Result;
                 LegacyPerson = JsonConvert.DeserializeObject<LegacyPerson[]>(response);
             }
         }

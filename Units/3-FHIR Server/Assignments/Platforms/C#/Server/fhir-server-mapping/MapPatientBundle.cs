@@ -11,7 +11,7 @@ namespace fhir_server_mapping
     {
         public static string GetPeopleBundle(List<fhir_server_entity_model.LegacyPerson> people, string listernerUrl) 
         {
-            Bundle bundle = new Bundle();
+            var bundle = new Bundle();
             
             if(listernerUrl != null && listernerUrl.EndsWith("/")) 
             {
@@ -23,12 +23,12 @@ namespace fhir_server_mapping
             bundle.Type = Bundle.BundleType.Searchset;
             bundle.Link = new List<Bundle.LinkComponent>() { new Bundle.LinkComponent() { Relation = "self", Url = $"{listernerUrl}" } };
             
-            List<Bundle.EntryComponent> entry = new List<Bundle.EntryComponent>();
+            var entry = new List<Bundle.EntryComponent>();
             if(people != null && people.Count > 0) 
             {
                 foreach (var person in people)
                 {
-                    Uri patientUri = new Uri(listernerUrl);
+                    var patientUri = new Uri(listernerUrl);
 
                     entry.Add(new Bundle.EntryComponent() 
                     { 
@@ -45,7 +45,7 @@ namespace fhir_server_mapping
 
             if (FhirServerConfig.ValidatePatientBundleAndResource)
             {
-                bool isResourceValid = SharedServices.ValidateResource(bundle, out OperationOutcome operation);
+                var isResourceValid = SharedServices.ValidateResource(bundle, out var operation);
 
                 if (!isResourceValid)
                 {

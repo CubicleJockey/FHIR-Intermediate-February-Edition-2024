@@ -7,8 +7,8 @@ namespace fhir_server_mapping
     {
         public static Patient GetFHIRPatientResource(fhir_server_entity_model.LegacyPerson person) 
         {
-            List<Identifier> identifiers = new List<Identifier>();
-            List<fhir_server_entity_model.LegacyPersonIdentifier> personIdentifiers = fhir_server_dataaccess.PatientDataAccess.GetPersonDocType(person.PRSN_ID);
+            var identifiers = new List<Identifier>();
+            var personIdentifiers = fhir_server_dataaccess.PatientDataAccess.GetPersonDocType(person.PRSN_ID);
             
             foreach (var docType in personIdentifiers)
             {
@@ -21,7 +21,7 @@ namespace fhir_server_mapping
                 });
             }
 
-            Patient p = new Patient()
+            var p = new Patient()
             {
                 Id = person.PRSN_ID.ToString(),
                 Meta = new Meta()
@@ -58,7 +58,7 @@ namespace fhir_server_mapping
 
             if (!string.IsNullOrEmpty(person.PRSN_SECOND_NAME))
             {
-                List<string> gvnNames = new List<string>();
+                var gvnNames = new List<string>();
                 foreach (var item in p.Name[0].Given)
                 {
                     gvnNames.Add(item);
@@ -71,7 +71,7 @@ namespace fhir_server_mapping
 
             if (!string.IsNullOrEmpty(person.PRSN_NICK_NAME))
             {
-                HumanName nickName = new HumanName()
+                var nickName = new HumanName()
                 {
                     Use = HumanName.NameUse.Nickname,
                     GivenElement = new List<FhirString>() { new FhirString() { Value = person.PRSN_NICK_NAME } }
@@ -81,7 +81,7 @@ namespace fhir_server_mapping
 
             AdministrativeGender getGender(string gender) 
             {
-                AdministrativeGender adGender = AdministrativeGender.Unknown;
+                var adGender = AdministrativeGender.Unknown;
 
                 switch (gender.Trim().ToLower())
                 {

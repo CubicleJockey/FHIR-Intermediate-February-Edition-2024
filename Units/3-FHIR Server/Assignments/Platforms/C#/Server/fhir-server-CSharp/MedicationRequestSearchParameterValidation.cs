@@ -18,7 +18,7 @@ namespace fhir_server_CSharp
                 return validationResults;
             }
 
-            string medicationRequestFromBody = Utilz.FetchRequestBody(request);
+            var medicationRequestFromBody = Utilz.FetchRequestBody(request);
 
             if (string.IsNullOrEmpty(medicationRequestFromBody)) 
             {
@@ -34,7 +34,7 @@ namespace fhir_server_CSharp
 
             if (request.Headers != null && request.Headers.Count > 0)
             {
-                string contentType = request.Headers["Content-Type"];
+                var contentType = request.Headers["Content-Type"];
                 if(string.IsNullOrEmpty(contentType) || 
                     !(
                         contentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) || 
@@ -49,7 +49,7 @@ namespace fhir_server_CSharp
 
             try 
             {
-                DomainResource medicationRequest = SharedServices.ParseResource(medicationRequestFromBody);
+                var medicationRequest = SharedServices.ParseResource(medicationRequestFromBody);
 
                 if (medicationRequest.ResourceType != ResourceType.MedicationRequest) 
                 {
@@ -90,10 +90,10 @@ namespace fhir_server_CSharp
         {
 
             operation = null;
-            string searchParamId = string.Empty;
-            bool rtnValue = true;
+            var searchParamId = string.Empty;
+            var rtnValue = true;
             criteria = new List<fhir_server_entity_model.LegacyFilter>();
-            string resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
+            var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
             if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
             {
@@ -135,7 +135,7 @@ namespace fhir_server_CSharp
             else if (resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrEmpty(searchParamId))
             {
                     hardIdSearch = true;
-                    LegacyFilter item=new LegacyFilter();
+                    var item=new LegacyFilter();
                     item.criteria=LegacyFilter.field.id;
                     item.value=searchParamId;
                     criteria.Add(item);
@@ -162,7 +162,7 @@ namespace fhir_server_CSharp
                                 operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
                                 break;
                             }
-                             LegacyFilter item=new LegacyFilter();
+                             var item=new LegacyFilter();
                              item.criteria=LegacyFilter.field._id;
                              item.value=request.QueryString[param.ToString()];
                              criteria.Add(item);
@@ -178,11 +178,11 @@ namespace fhir_server_CSharp
                                 break;
                             }
 
-                            string referenceElement = request.QueryString[param.ToString()];
+                            var referenceElement = request.QueryString[param.ToString()];
                             var refData = referenceElement.Split(new string[] { ":", "|" }, StringSplitOptions.RemoveEmptyEntries);
                             if (refData != null && refData.Length == 2)
                             {
-                                LegacyFilter item=new LegacyFilter();
+                                var item=new LegacyFilter();
                                 item.criteria=LegacyFilter.field.subject;
                                 item.value=refData[1].Trim();
                                 criteria.Add(item);
@@ -192,7 +192,7 @@ namespace fhir_server_CSharp
                             {
                                 if (refData.Length == 0)
                                 {
-                                    LegacyFilter item=new LegacyFilter();
+                                    var item=new LegacyFilter();
                                     item.criteria=LegacyFilter.field.subject;
                                     item.value=$"Patient/{long.MinValue}";
                                     criteria.Add(item);
@@ -201,7 +201,7 @@ namespace fhir_server_CSharp
                                 {
                                     if (refData[0].StartsWith("Patient/", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        LegacyFilter item=new LegacyFilter();
+                                        var item=new LegacyFilter();
                                         item.criteria=LegacyFilter.field.subject;
                                         item.value=refData[0].Trim();
                                         criteria.Add(item);
@@ -209,7 +209,7 @@ namespace fhir_server_CSharp
                                     }
                                     else
                                     {
-                                        LegacyFilter item=new LegacyFilter();
+                                        var item=new LegacyFilter();
                                         item.criteria=LegacyFilter.field.subject;
                                         item.value=$"Patient/{refData[0].Trim()}";
                                         criteria.Add(item);
@@ -229,11 +229,11 @@ namespace fhir_server_CSharp
                                 break;
                             }
 
-                            string patientId = request.QueryString[param.ToString()].Trim();
-                            long.TryParse(patientId, out long parsedResult);
+                            var patientId = request.QueryString[param.ToString()].Trim();
+                            long.TryParse(patientId, out var parsedResult);
 
                             if (parsedResult == 0) { parsedResult = long.MinValue; }
-                               LegacyFilter item=new LegacyFilter();
+                               var item=new LegacyFilter();
                                         item.criteria=LegacyFilter.field.subject;
                                         item.value=$"Patient/{parsedResult}";
                                         criteria.Add(item);

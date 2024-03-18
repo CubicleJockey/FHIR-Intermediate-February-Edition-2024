@@ -17,51 +17,51 @@ namespace fhirserver_dotnet_library
         public static string L02_4_T01A()
         {
             
-             MyConfiguration c = new MyConfiguration();
+             var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/NPI|54323");
+            var rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/NPI|54323");
             return rm;
         
         }
         public static string L02_4_T01B()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/PP|241922");
+            var rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/PP|241922");
             return rm;
         
         }
         public static string L02_4_T01C()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/NPI|9999999");
+            var rm = testhelper.PractitionerSearch(server,"identifier","http://fhirintermediatecourse.org/NPI|9999999");
             return rm;
         
         }
         public static string L02_4_T02A()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"_id","10");
+            var rm = testhelper.PractitionerSearch(server,"_id","10");
             return rm;
         
 
         }
         public static string L02_4_T02B()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"_id","1008");
+            var rm = testhelper.PractitionerSearch(server,"_id","1008");
             return rm;
         
 
         }
         public static string L02_4_T02C()
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerSearch(server,"_id","9");
+            var rm = testhelper.PractitionerSearch(server,"_id","9");
             return rm;
         
         }

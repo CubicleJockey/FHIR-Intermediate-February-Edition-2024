@@ -7,29 +7,29 @@ namespace fhirserver_dotnet_library
         public static string L01_1_T01()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Patient", "email");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Patient", "email");
             return rm;
         }
 
         public static string L01_1_T02()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String mail = "john.mcenroe@tennis.com";
-            String name = testhelper.PatientSearchByEmail(server, mail);
+            var mail = "john.mcenroe@tennis.com";
+            var name = testhelper.PatientSearchByEmail(server, mail);
             return name;
         }
 
         public static string L01_1_T03()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String mail = "john.mcenroe@tennas.com";
-            String name = testhelper.PatientSearchByEmail(server, mail);
+            var mail = "john.mcenroe@tennas.com";
+            var name = testhelper.PatientSearchByEmail(server, mail);
             return name;
         }
     }

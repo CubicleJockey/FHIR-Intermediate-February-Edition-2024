@@ -24,8 +24,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
         public void L02_1_T01_Verify_Practitioner_Search_Parameter_name()
 
         {
-            String result=L02_1_testrunner.L02_1_T01();
-            String expected = "String";
+            var result=L02_1_testrunner.L02_1_T01();
+            var expected = "String";
             Assert.Equal(expected, result);
             
         }
@@ -33,8 +33,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T02_Verify_Practitioner_Search_Parameter_family()
 
         {
-            String result=L02_1_testrunner.L02_1_T02();
-            String expected = "String";
+            var result=L02_1_testrunner.L02_1_T02();
+            var expected = "String";
             Assert.Equal(expected, result);
             
         }
@@ -42,8 +42,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T03_Verify_Practitioner_Search_Parameter_given()
 
         {
-            String result=L02_1_testrunner.L02_1_T03();
-            String expected = "String";
+            var result=L02_1_testrunner.L02_1_T03();
+            var expected = "String";
             Assert.Equal(expected, result);
             
         }
@@ -51,8 +51,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T04_Verify_Practitioner_Search_Parameter__id()
 
         {
-            String result=L02_1_testrunner.L02_1_T04();
-            String expected = "Token";
+            var result=L02_1_testrunner.L02_1_T04();
+            var expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -60,8 +60,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T05_Verify_Practitioner_Search_Parameter_email()
 
         {
-            String result=L02_1_testrunner.L02_1_T05();
-            String expected = "Token";
+            var result=L02_1_testrunner.L02_1_T05();
+            var expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -69,8 +69,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T06_Verify_Practitioner_Search_Parameter_telecom()
 
         {
-            String result=L02_1_testrunner.L02_1_T06();
-            String expected = "Token";
+            var result=L02_1_testrunner.L02_1_T06();
+            var expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -79,8 +79,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
       public void L02_1_T07_Verify_Practitioner_Search_Parameter_identifier()
 
         {
-            String result=L02_1_testrunner.L02_1_T07();
-            String expected = "Token";
+            var result=L02_1_testrunner.L02_1_T07();
+            var expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -89,8 +89,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
     public void L02_1_T08_Verify_Practitioner_Search_Parameter_birthdate()
 
         {
-            String result=L02_1_testrunner.L02_1_T08();
-            String expected = "notsupported";
+            var result=L02_1_testrunner.L02_1_T08();
+            var expected = "notsupported";
             Assert.Equal(expected, result);
             
         }
@@ -98,8 +98,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
         public void L02_1_T09_Verify_Practitioner_Interaction_read()
 
         {
-            String result=L02_1_testrunner.L02_1_T09();
-            String expected = "Read";
+            var result=L02_1_testrunner.L02_1_T09();
+            var expected = "Read";
             Assert.Equal(expected, result);
             
         }
@@ -107,8 +107,8 @@ U3-L02_1_T10:metadata: Verify Practitioner/search-type as Interaction
         public void L02_1_T10_Verify_Practitioner_Interaction_searchtype()
 
         {
-            String result=L02_1_testrunner.L02_1_T10();
-            String expected = "SearchType";
+            var result=L02_1_testrunner.L02_1_T10();
+            var expected = "SearchType";
             Assert.Equal(expected, result);
             
         }

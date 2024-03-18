@@ -11,15 +11,15 @@ namespace fhir_server_dataaccess
         
         public static  List<LegacyRx> GetAllMedicationRequests(string SpecificRxId = null)
         {
-            List<LegacyRx> rxs = new List<LegacyRx>();
+            var rxs = new List<LegacyRx>();
             LegacyAPIAccess.GetLegacyData();
             var lr=LegacyAPIAccess.LegacyRxs;
             if (lr!=null)
             {
-                int max=lr.Length;
-                for (int i = 0; i < max; i++)
+                var max=lr.Length;
+                for (var i = 0; i < max; i++)
                 {
-                    LegacyRx item=lr[i];
+                    var item=lr[i];
                     rxs.Add(item);
                 }
             }
@@ -28,17 +28,17 @@ namespace fhir_server_dataaccess
         public static List<LegacyRx> GetMedicationRequest(List<LegacyFilter> Criteria) 
         {
             LegacyAPIAccess.GetLegacyData();
-            List<LegacyRx> rxs = new List<LegacyRx>();
-            string compoundId="";
-            string thisId="";
+            var rxs = new List<LegacyRx>();
+            var compoundId="";
+            var thisId="";
                 
             var lp=LegacyAPIAccess.LegacyRxs;
-            int max=lp.Length;
-            for (int i = 0; i < max; i++)
+            var max=lp.Length;
+            for (var i = 0; i < max; i++)
             {
-                LegacyRx item=lp[i];
-                bool include=true;
-                foreach ( LegacyFilter c in Criteria)
+                var item=lp[i];
+                var include=true;
+                foreach ( var c in Criteria)
                 {
                     Console.WriteLine(c.criteria.ToString());
                     switch  (c.criteria)
@@ -63,7 +63,7 @@ namespace fhir_server_dataaccess
                             }
                             break;
                         case LegacyFilter.field.subject:
-                            string patientId="Patient/"+item.patient_id.ToString();
+                            var patientId="Patient/"+item.patient_id.ToString();
                             if (c.value!=patientId)
                             {
                                 include=false;

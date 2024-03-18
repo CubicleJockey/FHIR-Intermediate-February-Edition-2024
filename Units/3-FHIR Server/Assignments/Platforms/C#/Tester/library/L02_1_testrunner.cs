@@ -18,89 +18,89 @@ namespace fhirserver_dotnet_library
         public static string L02_1_T01()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "name");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "name");
             return rm;
         }
 
         public static string L02_1_T02()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "family");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "family");
             return rm;
         }
 
         public static string L02_1_T03()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "given");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "given");
             return rm;
         }
         public static string L02_1_T04()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "_id");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "_id");
             return rm;
 
         }
         public static string L02_1_T05()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "email");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "email");
             return rm;
 
         }
         public static string L02_1_T06()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "telecom");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "telecom");
             return rm;
 
         }
         public static string L02_1_T07()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "identifier");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "identifier");
             return rm;
 
         }
         public static string L02_1_T08()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "birthdate");
+            var rm = testhelper.CapabilityCheckParameterType(server, "Practitioner", "birthdate");
             return rm;
 
         }
         public static string L02_1_T09()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckInteraction(server, "Practitioner", "Read");
+            var rm = testhelper.CapabilityCheckInteraction(server, "Practitioner", "Read");
             return rm;
 
         }
         public static string L02_1_T10()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.CapabilityCheckInteraction(server, "Practitioner", "SearchType");
+            var rm = testhelper.CapabilityCheckInteraction(server, "Practitioner", "SearchType");
             return rm;
 
         }

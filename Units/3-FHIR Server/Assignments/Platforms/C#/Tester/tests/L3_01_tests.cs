@@ -11,8 +11,8 @@ namespace fhirserver_dotnet_tests
         public void L03_1_T01A_MedicationRequestDirectGetValidate()
 
         {
-            String result = L03_3_testrunner.L03_3_T01A();
-            String expected = "All OK";
+            var result = L03_3_testrunner.L03_3_T01A();
+            var expected = "All OK";
             Assert.Equal(expected, result);
 
         }
@@ -21,8 +21,8 @@ namespace fhirserver_dotnet_tests
         public void L03_1_T02A_MedicationRequestPractitionerDisplay()
 
         {
-            String result = L03_3_testrunner.L03_3_T02A();
-            String expected = "Lewis Jerry";
+            var result = L03_3_testrunner.L03_3_T02A();
+            var expected = "Lewis Jerry";
             Assert.Equal(expected, result);
 
         }
@@ -30,9 +30,9 @@ namespace fhirserver_dotnet_tests
         public void L03_1_T03A_MessageForOpioids()
 
         {
-            MyConfiguration c=new MyConfiguration();
-            String result = L03_3_testrunner.L03_3_T03A();
-            String expected = c.MSG_OpioidWarning;
+            var c=new MyConfiguration();
+            var result = L03_3_testrunner.L03_3_T03A();
+            var expected = c.MSG_OpioidWarning;
             Assert.Equal(expected, result);
 
         }

@@ -15,8 +15,8 @@ namespace fhirserver_dotnet_tests
         public void L01_1_T01_Verify_Email_As_Search_Parameter_In_CapabilityStatement()
 
         {
-            String result=L01_1_testrunner.L01_1_T01();
-            String expected = "Token";
+            var result=L01_1_testrunner.L01_1_T01();
+            var expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -24,8 +24,8 @@ namespace fhirserver_dotnet_tests
         public void L01_1_T02_Search_By_Email_Existing()
 
         {
-            String result=L01_1_testrunner.L01_1_T02();
-            String expected = "McEnroe John Patrick";
+            var result=L01_1_testrunner.L01_1_T02();
+            var expected = "McEnroe John Patrick";
             Assert.Equal(expected, result);
         
         }
@@ -34,8 +34,8 @@ namespace fhirserver_dotnet_tests
         public void L01_1_T03_Search_By_Email_Not_Existing()
 
         {
-            String result=L01_1_testrunner.L01_1_T03();
-            String expected = "<<NOT EXISTING>>";
+            var result=L01_1_testrunner.L01_1_T03();
+            var expected = "<<NOT EXISTING>>";
             Assert.Equal(expected, result);
         }
     }

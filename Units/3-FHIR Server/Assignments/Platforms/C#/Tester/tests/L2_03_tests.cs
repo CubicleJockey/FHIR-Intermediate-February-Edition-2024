@@ -22,8 +22,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T01_Practitioner_Get_All()
 
         {
-            String result = L02_3_testrunner.L02_3_T01();
-            String expected = "5:0";
+            var result = L02_3_testrunner.L02_3_T01();
+            var expected = "5:0";
             Assert.Equal(expected, result);
 
         }
@@ -31,8 +31,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T02A_Practitioner_SearchByFamily_None()
 
         {
-            String result = L02_3_testrunner.L02_3_T02A();
-            String expected = "0:0";
+            var result = L02_3_testrunner.L02_3_T02A();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -40,8 +40,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T02B_Practitioner_SearchByFamily_One()
 
         {
-            String result = L02_3_testrunner.L02_3_T02B();
-            String expected = "1:0";
+            var result = L02_3_testrunner.L02_3_T02B();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }
@@ -50,8 +50,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T03A_Practitioner_SearchByName_None()
 
         {
-            String result = L02_3_testrunner.L02_3_T03A();
-            String expected = "0:0";
+            var result = L02_3_testrunner.L02_3_T03A();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -60,8 +60,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T03B_Practitioner_SearchByName_Three()
 
         {
-            String result = L02_3_testrunner.L02_3_T03B();
-            String expected = "3:0";
+            var result = L02_3_testrunner.L02_3_T03B();
+            var expected = "3:0";
             Assert.Equal(expected, result);
 
         }
@@ -70,8 +70,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T04A_Practitioner_Gender_male()
 
         {
-            String result = L02_3_testrunner.L02_3_T04A();
-            String expected = "5:0";
+            var result = L02_3_testrunner.L02_3_T04A();
+            var expected = "5:0";
             Assert.Equal(expected, result);
 
         }
@@ -81,8 +81,8 @@ namespace fhirserver_dotnet_tests
         public void L02_3_T04A_Practitioner_Gender_female()
 
         {
-            String result = L02_3_testrunner.L02_3_T04B();
-            String expected = "0:0";
+            var result = L02_3_testrunner.L02_3_T04B();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }

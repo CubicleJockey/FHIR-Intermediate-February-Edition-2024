@@ -13,7 +13,7 @@ namespace fhir_server_mapping
         
         
         {
-           Bundle bundle = new Bundle();
+           var bundle = new Bundle();
 
             if (listernerUrl != null && listernerUrl.EndsWith("/"))
             {
@@ -25,13 +25,13 @@ namespace fhir_server_mapping
             bundle.Type = Bundle.BundleType.Searchset;
             bundle.Link = new List<Bundle.LinkComponent>() { new Bundle.LinkComponent() { Relation = "self", Url = $"{listernerUrl}" } };
 
-            List<Bundle.EntryComponent> entry = new List<Bundle.EntryComponent>();
+            var entry = new List<Bundle.EntryComponent>();
             if (rxes != null && rxes.Count > 0)
             {
                 foreach (var rx in rxes)
                 {
-                    Uri MedicationRequestUri = new Uri(listernerUrl);
-                    string rxid="";
+                    var MedicationRequestUri = new Uri(listernerUrl);
+                    var rxid="";
                     entry.Add(new Bundle.EntryComponent()
                     {
                         Resource = MapMedicationRequest.GetFHIRMedicationRequestResource(rx),
@@ -47,7 +47,7 @@ namespace fhir_server_mapping
 
             if (FhirServerConfig.ValidatePractitionerBundleAndResource)
             {
-                bool isResourceValid = SharedServices.ValidateResource(bundle, out OperationOutcome operation);
+                var isResourceValid = SharedServices.ValidateResource(bundle, out var operation);
 
                 if (!isResourceValid)
                 {

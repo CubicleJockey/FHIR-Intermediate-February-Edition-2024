@@ -21,7 +21,7 @@ namespace fhir_server_sharedservices
 
         public static bool ValidateResource(Resource resource, out OperationOutcome operation)
         {
-            string UsCoreJsonRepository = string.Empty;
+            var UsCoreJsonRepository = string.Empty;
 
             using (var pathProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory()))
             {
@@ -46,7 +46,7 @@ namespace fhir_server_sharedservices
 
         public static DomainResource ParseResource(string resource)
         {
-            FhirJsonParser parser = new FhirJsonParser(new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
+            var parser = new FhirJsonParser(new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
             return parser.Parse<DomainResource>(resource);
         }
 
@@ -74,7 +74,7 @@ namespace fhir_server_sharedservices
         private static LegacySystemMapHelper LoadSystemMapFromJson() 
         {
             LegacySystemMapHelper mappedData = null;
-            String location=Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"/fhir_options.json";
+            var location=Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+"/fhir_options.json";
             Console.WriteLine(location);
             
             if (File.Exists(location)) 

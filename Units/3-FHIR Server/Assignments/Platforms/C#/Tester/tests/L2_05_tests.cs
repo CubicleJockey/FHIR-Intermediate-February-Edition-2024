@@ -20,8 +20,8 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T01A_Practitioner_SearchByEmail_Exists()
 
         {
-            String result = L02_5_testrunner.L02_5_T01A();
-            String expected = "1:0";
+            var result = L02_5_testrunner.L02_5_T01A();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }
@@ -29,8 +29,8 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T01B_Practitioner_SearchByEmail_NotExists()
 
         {
-            String result = L02_5_testrunner.L02_5_T01B();
-            String expected = "0:0";
+            var result = L02_5_testrunner.L02_5_T01B();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -38,9 +38,9 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T02A_Practitioner_SearchByTelecom_Phone_Error()
 
         {
-            MyConfiguration c=new MyConfiguration();
-            String result = L02_5_testrunner.L02_5_T02A();
-            String expected = c.MSG_PractitionerTelecomSearchEmailOnly;
+            var c=new MyConfiguration();
+            var result = L02_5_testrunner.L02_5_T02A();
+            var expected = c.MSG_PractitionerTelecomSearchEmailOnly;
             Assert.Contains(expected, result);
 
         }
@@ -48,8 +48,8 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T02B_Practitioner_SearchByTelecom_Email_Exists()
 
         {
-            String result = L02_5_testrunner.L02_5_T02B();
-            String expected = "1:0";
+            var result = L02_5_testrunner.L02_5_T02B();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }
@@ -57,8 +57,8 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T02C_Practitioner_SearchByTelecom_Email_NotExists()
 
         {
-            String result = L02_5_testrunner.L02_5_T02C();
-            String expected = "0:0";
+            var result = L02_5_testrunner.L02_5_T02C();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -66,8 +66,8 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
  public void L02_5_T02D_Practitioner_SearchByTelecom_NoSystem_Exists()
 
         {
-            String result = L02_5_testrunner.L02_5_T02D();
-            String expected = "1:0";
+            var result = L02_5_testrunner.L02_5_T02D();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }

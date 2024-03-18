@@ -118,7 +118,7 @@ namespace fhir_server_CSharp
 
         private string getPrintableResponseMessage(HttpListenerResponse Response)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var item in Response.Headers.Keys)
             {
                 sb.AppendLine($"{new string(' ', 7)}{item.ToString()}: {Response.Headers.Get(item.ToString())}");
@@ -150,7 +150,7 @@ namespace fhir_server_CSharp
 
         private string GetHttpStatusCodeDescription(int statusCode)
         {
-            string HttpStatusDescription = string.Empty;
+            var HttpStatusDescription = string.Empty;
 
             switch (statusCode)
             {

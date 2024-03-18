@@ -13,27 +13,27 @@ namespace fhirserver_dotnet_library
         public static string L02_2_T01()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerGetById(server,"Practitioner/10");
+            var rm = testhelper.PractitionerGetById(server,"Practitioner/10");
             return rm;
         }
 
         public static string L02_2_T02()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerGetById(server,"Practitioner/1008");
+            var rm = testhelper.PractitionerGetById(server,"Practitioner/1008");
             return rm;
         }
 
         public static string L02_2_T03()
 
         {
-            MyConfiguration c = new MyConfiguration();
+            var c = new MyConfiguration();
             var server = c.ServerEndpoint;
-            String rm = testhelper.PractitionerGetById(server,"Practitioner/9");
+            var rm = testhelper.PractitionerGetById(server,"Practitioner/9");
             return rm;
        }
     }

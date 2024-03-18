@@ -28,8 +28,8 @@ U3-L02_4_T02C:Search by _id: non existing id
  public void L02_4_T01A_Practitioner_SearchByIdentifier_NPI_Exists()
 
         {
-            String result = L02_4_testrunner.L02_4_T01A();
-            String expected = "1:0";
+            var result = L02_4_testrunner.L02_4_T01A();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }
@@ -37,9 +37,9 @@ U3-L02_4_T02C:Search by _id: non existing id
         public void L02_4_T01B_Practitioner_SearchByIdentifier_NotNPI()
 
         {
-            MyConfiguration c=new MyConfiguration();
-            String result = L02_4_testrunner.L02_4_T01B();
-            String expected = c.MSG_PractitionerOnlyIdentifierNPI;
+            var c=new MyConfiguration();
+            var result = L02_4_testrunner.L02_4_T01B();
+            var expected = c.MSG_PractitionerOnlyIdentifierNPI;
             Assert.Contains(expected, result);
 
         }
@@ -47,8 +47,8 @@ U3-L02_4_T02C:Search by _id: non existing id
         public void L02_4_T01C_Practitioner_SearchByIdentifierNotFound()
 
         {
-            String result = L02_4_testrunner.L02_4_T01C();
-            String expected = "0:0";
+            var result = L02_4_testrunner.L02_4_T01C();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -57,8 +57,8 @@ U3-L02_4_T02C:Search by _id: non existing id
         public void L02_4_T02A_Practitioner_SearchById_Found()
 
         {
-            String result = L02_4_testrunner.L02_4_T02A();
-            String expected = "1:0";
+            var result = L02_4_testrunner.L02_4_T02A();
+            var expected = "1:0";
             Assert.Equal(expected, result);
 
         }
@@ -67,8 +67,8 @@ U3-L02_4_T02C:Search by _id: non existing id
         public void L02_4_T02B_Practitioner_SearchById_NotPractitioner()
 
         {
-            String result = L02_4_testrunner.L02_4_T02B();
-            String expected = "0:0";
+            var result = L02_4_testrunner.L02_4_T02B();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }
@@ -77,8 +77,8 @@ U3-L02_4_T02C:Search by _id: non existing id
         public void L02_4_T02C_Practitioner_SearchById_NotFound()
 
         {
-            String result = L02_4_testrunner.L02_4_T02C();
-            String expected = "0:0";
+            var result = L02_4_testrunner.L02_4_T02C();
+            var expected = "0:0";
             Assert.Equal(expected, result);
 
         }

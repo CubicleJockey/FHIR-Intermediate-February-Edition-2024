@@ -15,10 +15,10 @@ namespace fhir_server_CSharp
             operation = null;
             criteria = new List<LegacyFilter>(); 
         
-            string searchParamId = string.Empty;
-            bool rtnValue = true;
+            var searchParamId = string.Empty;
+            var rtnValue = true;
 
-            string resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
+            var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
             if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
             {
@@ -68,7 +68,7 @@ namespace fhir_server_CSharp
                 }
                 else
                 {   
-                    LegacyFilter sc=new LegacyFilter();
+                    var sc=new LegacyFilter();
                     sc.criteria=LegacyFilter.field.id;
                     sc.value=searchParamId.ToString();
                     criteria.Add(sc);
@@ -95,7 +95,7 @@ namespace fhir_server_CSharp
                                 operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
                                 break;
                             }
-                            LegacyFilter sc=new LegacyFilter();
+                            var sc=new LegacyFilter();
                             sc.criteria=LegacyFilter.field._id;
                             sc.value=request.QueryString[param.ToString()];
                             rtnValue=true;
@@ -112,11 +112,11 @@ namespace fhir_server_CSharp
                                 break;
                             }
 
-                            string search_system = string.Empty;
-                            string search_type = string.Empty;
-                            string search_value = string.Empty;
+                            var search_system = string.Empty;
+                            var search_type = string.Empty;
+                            var search_value = string.Empty;
 
-                            string[] SystemAndValue = request.QueryString[param.ToString()].Split("|", StringSplitOptions.RemoveEmptyEntries);
+                            var SystemAndValue = request.QueryString[param.ToString()].Split("|", StringSplitOptions.RemoveEmptyEntries);
 
                             if (SystemAndValue != null && SystemAndValue.Length > 1)
                             {
@@ -142,7 +142,7 @@ namespace fhir_server_CSharp
                             }
                             else
                             {
-                                LegacyFilter sc=new LegacyFilter();
+                                var sc=new LegacyFilter();
                                 sc.criteria=LegacyFilter.field.identifier;
                                 sc.value=search_system+"|"+search_value;
                                 criteria.Add(sc);
@@ -161,7 +161,7 @@ namespace fhir_server_CSharp
                             }
                             else
                             {
-                                LegacyFilter sc=new LegacyFilter();
+                                var sc=new LegacyFilter();
                                 sc.criteria=LegacyFilter.field.family;
                                 sc.value=request.QueryString[param.ToString()];
                                 criteria.Add(sc);
@@ -179,7 +179,7 @@ namespace fhir_server_CSharp
                                 break;
                             }
 
-                                LegacyFilter sc=new LegacyFilter();
+                                var sc=new LegacyFilter();
                                 sc.criteria=LegacyFilter.field.name;
                                 sc.value=request.QueryString[param.ToString()];
                                 criteria.Add(sc);
@@ -196,7 +196,7 @@ namespace fhir_server_CSharp
                                 operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                                 break;
                             }
-                                LegacyFilter sc=new LegacyFilter();
+                                var sc=new LegacyFilter();
                                 sc.criteria=LegacyFilter.field.birthdate;
                                 sc.value=request.QueryString[param.ToString()];
                                 criteria.Add(sc);
@@ -214,7 +214,7 @@ namespace fhir_server_CSharp
                                 break;
                             }
 
-                                LegacyFilter sc=new LegacyFilter();
+                                var sc=new LegacyFilter();
                                 sc.criteria=LegacyFilter.field.gender;
                                 sc.value=request.QueryString[param.ToString()];
                                 criteria.Add(sc);
