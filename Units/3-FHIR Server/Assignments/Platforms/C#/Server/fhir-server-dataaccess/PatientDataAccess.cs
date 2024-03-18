@@ -52,47 +52,47 @@ namespace fhir_server_dataaccess
             {
                 var item=lp[i];
                 var include=true;
-                foreach ( var c in Criteria)
+                foreach ( var criteria in Criteria)
                 {
-                    switch  (c.criteria)
+                    switch  (criteria.criteria)
                     {
                         case LegacyFilter.field.name:
                             {
                                 var fullname=item.PRSN_FIRST_NAME.ToLower()+" "+item.PRSN_LAST_NAME.ToLower();
-                                if (!(fullname.Contains(c.value.ToLower())))
+                                if (!(fullname.Contains(criteria.value.ToLower())))
                                 {
                                     include=false;
                                 }
                                 break;
                             }
                         case LegacyFilter.field.family:
-                            if (!(item.PRSN_LAST_NAME.ToLower().Contains(c.value.ToLower())))
+                            if (!(item.PRSN_LAST_NAME.ToLower().Contains(criteria.value.ToLower())))
                             {
                               include=false;      
                             }
                             break;
                         case LegacyFilter.field.given:
-                            if (!(item.PRSN_FIRST_NAME.ToLower().Contains(c.value.ToLower())))
+                            if (!(item.PRSN_FIRST_NAME.ToLower().Contains(criteria.value.ToLower())))
                             {
                               include=false;      
                             }
                             break;
                         case LegacyFilter.field.id:
-                            if (item.PRSN_ID.ToString()!=c.value)
+                            if (item.PRSN_ID.ToString()!=criteria.value)
                             {
                                 include=false;
                             }
                             break;
                         case LegacyFilter.field._id:
                             
-                            if (item.PRSN_ID.ToString()!=c.value)
+                            if (item.PRSN_ID.ToString()!=criteria.value)
                             
                             {
                                 include=false;
                             }
                             break;
                         case LegacyFilter.field.birthdate:
-                            var which_date=c.value;
+                            var which_date=criteria.value;
                             
                             if (!(item.PRSN_BIRTH_DATE.ToString()==which_date))
                             {
@@ -100,7 +100,7 @@ namespace fhir_server_dataaccess
                             }
                             break;
                         case LegacyFilter.field.identifier:
-                            var search_ident=c.value;
+                            var search_ident=criteria.value;
                             var personIdentifiers = GetPersonDocType(item.PRSN_ID);
                             var ident_found=false;
                             foreach (var docType in personIdentifiers)
@@ -121,10 +121,16 @@ namespace fhir_server_dataaccess
                             if (!ident_found){include=false;}
                             break;
                         case LegacyFilter.field.gender:
-                            if (item.PRSN_GENDER.ToLower()!=c.value.ToLower())
+                            if (item.PRSN_GENDER.ToLower()!=criteria.value.ToLower())
                             {
                                 include=false;
                             }
+                            break;
+                        case LegacyFilter.field.email:
+                            //TODO: Get patient by email
+
+                            var a = 10;
+
                             break;
                     default:
                         break;

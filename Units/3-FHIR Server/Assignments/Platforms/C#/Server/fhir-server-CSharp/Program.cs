@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using System.Collections.Generic;
+using fhir_server_entity_model;
 using fhir_server_sharedservices;
 
 namespace fhir_server_CSharp

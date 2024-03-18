@@ -10,8 +10,7 @@ namespace fhir_server_CSharp
 {
     public static class PatientSearchParameterValidation
     {
-        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch,
-            out DomainResource operation, out List<LegacyFilter> criteria)
+        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch, out DomainResource operation, out List<LegacyFilter> criteria)
         {
             operation = null;
             criteria = new List<LegacyFilter>();
@@ -256,6 +255,15 @@ namespace fhir_server_CSharp
                                 operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
+                            
+                            var sc = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field.email,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            criteria.Add(sc);
+                            rtnValue = true;
+
                         }
                         else
                         {
@@ -265,8 +273,6 @@ namespace fhir_server_CSharp
                             break;
                         }
                     }
-
-
                 }
             }
 

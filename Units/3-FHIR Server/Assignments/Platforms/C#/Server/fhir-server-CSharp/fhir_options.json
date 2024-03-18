@@ -23,5 +23,4 @@
   ],
   "HospitalIdentifierUrl": "http://fhirintermediatecourse.org/patient-id",
   "PractitionerIdentifierUrl": "http://fhirintermediatecourse.org/NPI"
-
 }
