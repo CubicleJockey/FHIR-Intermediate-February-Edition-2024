@@ -17,7 +17,7 @@ namespace fhirserver_dotnet_library
 
         public string MSG_OpioidWarning = "WARNINGS - Limitations of use - Because of the risks associated with the use of opioids, [Product] should only be used in patients for whom other treatment options, including non-opioid analgesics, are ineffective, not tolerated or otherwise inadequate to provide appropriate management of pain";
 
-        public string StudentId { get; } = "kaminker.diego@gmail.com";
-        public string StudentName { get; } = "Diego Kaminker";
+        public string StudentId { get; } = "davis.andre@gmail.com";
+        public string StudentName { get; } = "André Davis";
     }
 }
