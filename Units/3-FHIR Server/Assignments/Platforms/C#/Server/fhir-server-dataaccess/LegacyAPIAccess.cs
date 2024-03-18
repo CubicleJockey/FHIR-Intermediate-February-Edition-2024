@@ -112,6 +112,5 @@ namespace fhir_server_dataaccess
                 LegacyPerson = JsonConvert.DeserializeObject<LegacyPerson[]>(response);
             }
         }
-     
     }
 }

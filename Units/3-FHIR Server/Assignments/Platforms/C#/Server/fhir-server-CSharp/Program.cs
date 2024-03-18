@@ -371,7 +371,6 @@ namespace fhir_server_CSharp
                 return operation.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
             }
 
-
             if ((criteria.Count == 0) && (!HardIdSearch))
             {
                 var data = fhir_server_dataaccess.PatientDataAccess.GetAllPatients();

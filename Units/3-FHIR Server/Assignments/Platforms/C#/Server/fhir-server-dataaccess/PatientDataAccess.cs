@@ -84,7 +84,6 @@ namespace fhir_server_dataaccess
                             }
                             break;
                         case LegacyFilter.field._id:
-                            
                             if (item.PRSN_ID.ToString()!=criteria.value)
                             
                             {
@@ -94,7 +93,7 @@ namespace fhir_server_dataaccess
                         case LegacyFilter.field.birthdate:
                             var which_date=criteria.value;
                             
-                            if (!(item.PRSN_BIRTH_DATE.ToString()==which_date))
+                            if (item.PRSN_BIRTH_DATE.ToString() != which_date)
                             {
                                 include=false;
                             }

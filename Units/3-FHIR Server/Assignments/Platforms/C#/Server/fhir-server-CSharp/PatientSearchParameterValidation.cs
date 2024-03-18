@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Hl7.Fhir.FhirPath;
 
 namespace fhir_server_CSharp
 {
@@ -256,14 +257,52 @@ namespace fhir_server_CSharp
                                 break;
                             }
                             
-                            var sc = new LegacyFilter
+                            var searchCriteria = new LegacyFilter
                             {
                                 criteria = LegacyFilter.field.email,
                                 value = request.QueryString[param.ToString()]
                             };
-                            criteria.Add(sc);
+                            criteria.Add(searchCriteria);
                             rtnValue = true;
 
+                        }
+                        else if (param.ToString().Equals("telecom", StringComparison.OrdinalIgnoreCase)) 
+                        {
+                            if (!param.ToString().Equals("telecom", StringComparison.Ordinal))
+                            {
+                                rtnValue = false;
+                                Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
+                                break;
+                            }    
+                            
+                            var item = request.QueryString[param.ToString()];
+                            var parts = item.Split('|');
+
+                            switch (parts[0].ToLower())
+                            {
+                                case "email":
+                                    var searchCriteria = new LegacyFilter
+                                    {
+                                        criteria = LegacyFilter.field.email,
+                                        value = parts[1]
+                                    };
+                                    criteria.Add(searchCriteria);
+                                    break;
+                                case "phone":
+                                    //TODO: Figure out how to report this error properly
+                                    rtnValue = false;
+                                    Program.HttpStatusCodeForResponse = (int)HttpStatusCode.NotImplemented;
+                                    throw new NotImplementedException("The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented");
+                                    operation = new OperationOutcome
+                                    {
+                                        Text = new Narrative
+                                        {
+                                            Div = "The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented"
+                                        }
+                                    };
+                                    break;
+                            }
                         }
                         else
                         {
@@ -280,6 +319,6 @@ namespace fhir_server_CSharp
         }
 
 
-        private static string ParamErrorMessage(string param) => $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, email, identifier]";
+        private static string ParamErrorMessage(string param) => $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]";
     }
 }
