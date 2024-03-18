@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace fhir_server_CSharp
+﻿namespace fhir_server_CSharp
 {
     internal static class Constants
     {

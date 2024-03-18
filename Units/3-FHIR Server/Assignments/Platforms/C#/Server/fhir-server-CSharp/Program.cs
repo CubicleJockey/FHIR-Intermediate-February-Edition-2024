@@ -1,14 +1,11 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
-using System.Configuration;
 using System.Net;
 using System.Text;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Collections.Generic;
 using fhir_server_sharedservices;
-using fhir_server_entity_model;
 
 namespace fhir_server_CSharp
 {

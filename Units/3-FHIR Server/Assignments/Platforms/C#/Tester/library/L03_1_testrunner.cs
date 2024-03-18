@@ -1,4 +1,3 @@
-using System;
 namespace fhirserver_dotnet_library
 {
 public static class L03_3_testrunner

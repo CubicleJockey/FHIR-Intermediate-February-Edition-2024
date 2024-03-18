@@ -1,4 +1,3 @@
-using System;
 namespace fhirserver_dotnet_library
 {
 

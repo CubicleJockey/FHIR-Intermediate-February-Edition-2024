@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using fhirserver_dotnet_library;
 namespace fhirserver_dotnet_tests
