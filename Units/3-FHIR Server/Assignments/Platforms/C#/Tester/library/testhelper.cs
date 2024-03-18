@@ -59,8 +59,8 @@ namespace fhirserver_dotnet_library
         public static string MedicationRequestValidate_USCORE(string JsonMedicationRequest, string server)
         {
             var aux = "";
-            var o = new Hl7.Fhir.Model.MedicationRequest();
-            var parser = new Hl7.Fhir.Serialization.FhirJsonParser();
+            var o = new MedicationRequest();
+            var parser = new FhirJsonParser();
 
             try
             {
@@ -73,7 +73,7 @@ namespace fhirserver_dotnet_library
 
             if (aux == "")
             {
-                var client = new Hl7.Fhir.Rest.FhirClient(server);
+                var client = new FhirClient(server);
                 var profile = new FhirUri("http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest");
 
                 var inParams = new Parameters();
@@ -104,7 +104,7 @@ namespace fhirserver_dotnet_library
                 var mr = client.Read<MedicationRequest>(Id);
                 result = (MedicationRequest)mr;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
 
                 throw (e);
@@ -144,7 +144,7 @@ namespace fhirserver_dotnet_library
                 }
                 result = totP.ToString() + ":" + totNP.ToString();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
 
                 result = e.Message;
@@ -168,7 +168,7 @@ namespace fhirserver_dotnet_library
                 }
                 result = MyPractitioner;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
 
                 result = e.Message;
@@ -275,7 +275,7 @@ namespace fhirserver_dotnet_library
                 }
 
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
 
                 result = e.Message;

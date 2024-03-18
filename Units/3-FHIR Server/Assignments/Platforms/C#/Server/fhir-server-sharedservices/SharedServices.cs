@@ -31,7 +31,7 @@ namespace fhir_server_sharedservices
                 }
             }
             
-            operation = new Hl7.Fhir.Validation.Validator
+            operation = new Validator
                             (new ValidationSettings()
                             {
                                 ResourceResolver = new MultiResolver(new ZipSource(UsCoreJsonRepository), ZipSource.CreateValidationSource()),
@@ -56,15 +56,15 @@ namespace fhir_server_sharedservices
             {
                 Text = new Narrative()
                 {
-                    Status = Hl7.Fhir.Model.Narrative.NarrativeStatus.Generated,
+                    Status = Narrative.NarrativeStatus.Generated,
                     Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><h1>Operation Outcome</h1><table border=\"0\"><tr><td style=\"font-weight: bold;\">ERROR</td><td>[]</td><td><pre>{message}</pre></td>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t</tr>\n\t\t</table>\n\t</div>"
                 },
                 Issue = new List<OperationOutcome.IssueComponent>()
                     {
-                        new Hl7.Fhir.Model.OperationOutcome.IssueComponent()
+                        new OperationOutcome.IssueComponent()
                         {
                             Severity = severity,
-                            Code = Hl7.Fhir.Model.OperationOutcome.IssueType.Processing,
+                            Code = OperationOutcome.IssueType.Processing,
                             Diagnostics = $"{message}"
                         }
                     }

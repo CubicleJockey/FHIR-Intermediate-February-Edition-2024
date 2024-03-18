@@ -12,7 +12,7 @@ public class SubmissionCreator
         public void CreateSubmission()
         {
             var c=new MyConfiguration();
-            var TestList=new System.Collections.Generic.Dictionary<string, string>();
+            var TestList=new Dictionary<string, string>();
             TestList=AddAll (TestList,L01_1_Tests_Results());
             TestList=AddAll (TestList,L01_2_Tests_Results());
             TestList=AddAll (TestList,L02_1_Tests_Results());
@@ -23,8 +23,8 @@ public class SubmissionCreator
             TestList=AddAll (TestList,L03_1_Tests_Results());
           
             
-            var  tr=new  Hl7.Fhir.Model.TestReport();
-            tr.Result=Hl7.Fhir.Model.TestReport.TestReportResult.Pending;
+            var  tr=new  TestReport();
+            tr.Result=TestReport.TestReportResult.Pending;
             var datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
             datee=datee.Replace(":","");
             
@@ -89,7 +89,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L01_1_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             //Test T01
@@ -106,7 +106,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L01_2_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             var c=new MyConfiguration();
@@ -134,7 +134,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_1_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             //Test T01
@@ -174,7 +174,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_2_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             var c=new MyConfiguration();
             var result="";
             //Test T01
@@ -201,7 +201,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_3_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             //Test T01
@@ -231,7 +231,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_4_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             var c=new MyConfiguration();
@@ -266,7 +266,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L02_5_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
             var c=new MyConfiguration();
@@ -298,7 +298,7 @@ public class SubmissionCreator
         public Dictionary<string,string> L03_1_Tests_Results()
         {
             
-            var tr=new System.Collections.Generic.Dictionary<string, string>();
+            var tr=new Dictionary<string, string>();
             
             var result="";
               //Test T01
@@ -315,7 +315,7 @@ public class SubmissionCreator
         
         public Dictionary<string,string> AddAll(Dictionary<string,string> tAll,Dictionary<string,string> tOne)
         {
-            var tl=new System.Collections.Generic.Dictionary<string, string>();
+            var tl=new Dictionary<string, string>();
             foreach(var test in tAll)
             {
                 tl.Add(test.Key,test.Value);

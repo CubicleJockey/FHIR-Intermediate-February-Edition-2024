@@ -104,7 +104,7 @@ namespace fhir_server_CSharp
                 }
                 catch (Exception ex)
                 {
-                    System.Console.WriteLine($"{ex.StackTrace} + {Environment.NewLine} + {ex.StackTrace}");
+                    Console.WriteLine($"{ex.StackTrace} + {Environment.NewLine} + {ex.StackTrace}");
                 }
             });
         }

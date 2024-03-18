@@ -101,12 +101,12 @@ namespace fhir_server_dataaccess
                             break;
                         case LegacyFilter.field.identifier:
                             var search_ident=c.value;
-                            var personIdentifiers = fhir_server_dataaccess.PatientDataAccess.GetPersonDocType(item.PRSN_ID);
+                            var personIdentifiers = GetPersonDocType(item.PRSN_ID);
                             var ident_found=false;
                             foreach (var docType in personIdentifiers)
                             {
     
-                                var the_System = "http://fhirintermediatecourse.org/"+fhir_server_dataaccess.LegacyAPIAccess.getLegacyIdentifierCode(docType.identifier_type_id);
+                                var the_System = "http://fhirintermediatecourse.org/"+LegacyAPIAccess.getLegacyIdentifierCode(docType.identifier_type_id);
                                 var the_Value = docType.value;
                                 var the_ident=the_System+"|"+the_Value;
                                 Console.WriteLine(the_ident);

@@ -92,7 +92,7 @@ namespace fhir_server_CSharp
             operation = null;
             var searchParamId = string.Empty;
             var rtnValue = true;
-            criteria = new List<fhir_server_entity_model.LegacyFilter>();
+            criteria = new List<LegacyFilter>();
             var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
             if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
