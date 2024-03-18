@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>fhir_server_sharedservices</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hl7.Fhir.R4" Version="1.9.0" />
+    <PackageReference Include="Hl7.Fhir.Specification.R4" Version="1.9.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\fhir-server-entity-model\fhir-server-entity-model.csproj" />
+  </ItemGroup>
+
+</Project>
