@@ -23,39 +23,49 @@ public class SubmissionCreator
             TestList=AddAll (TestList,L03_1_Tests_Results());
           
             
-            var  tr=new  TestReport();
-            tr.Result=TestReport.TestReportResult.Pending;
+            var  tr=new  TestReport
+            {
+                Result = TestReport.TestReportResult.Pending
+            };
             var datee=DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
             datee=datee.Replace(":","");
             
             tr.Identifier=new Identifier("http://fhirintermediate.org/test_report/id",c.StudentId+"-"+datee);
             tr.Issued=datee;
             tr.Status=TestReport.TestReportStatus.InProgress;
-            var r=new ResourceReference();
-            r.Identifier=new Identifier("http://fhirintermediate.org/test_script/id","FHIR_INTERMEDIATE_U03-.NET");
+            var r=new ResourceReference
+            {
+                Identifier = new Identifier("http://fhirintermediate.org/test_script/id","FHIR_INTERMEDIATE_U03-.NET")
+            };
             tr.TestScript=r;
             tr.Tester=c.StudentId;
 
-            var pcS=new TestReport.ParticipantComponent();
-            pcS.Type=TestReport.TestReportParticipantType.Server;
-            pcS.Uri=c.ServerEndpoint;
-            pcS.Display="Resource Server";
+            var pcS=new TestReport.ParticipantComponent
+            {
+                Type = TestReport.TestReportParticipantType.Server,
+                Uri = c.ServerEndpoint,
+                Display = "Resource Server"
+            };
             tr.Participant.Add(pcS);
             
             
-            var pcC=new TestReport.ParticipantComponent();
-            pcC.Type=TestReport.TestReportParticipantType.Client;
-            pcC.Uri="http://localhost";
-            pcC.Display=c.StudentName;
+            var pcC=new TestReport.ParticipantComponent
+            {
+                Type = TestReport.TestReportParticipantType.Client,
+                Uri = "http://localhost",
+                Display = c.StudentName
+            };
             tr.Participant.Add(pcC);
 
             foreach(var test in TestList)
             {
                 
-                var testComponent=new TestReport.TestComponent();
-                testComponent.Name=test.Key;
-                
-                testComponent.Description=test.Key;
+                var testComponent=new TestReport.TestComponent
+                {
+                    Name = test.Key,
+                    Description = test.Key
+                };
+
                 var ta=new TestReport.TestActionComponent();
                 var tac=new TestReport.AssertComponent();
                 if (test.Value=="")

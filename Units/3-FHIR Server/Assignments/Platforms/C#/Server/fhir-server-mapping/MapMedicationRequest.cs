@@ -15,9 +15,11 @@ namespace fhir_server_mapping
         {
             var display="";
             var criteria=new List<LegacyFilter>();
-            var item=new LegacyFilter();
-            item.criteria=LegacyFilter.field._id;
-            item.value=PatientId;
+            var item=new LegacyFilter
+            {
+                criteria = LegacyFilter.field._id,
+                value = PatientId
+            };
             criteria.Add(item);
             var p=PatientDataAccess.GetPerson(criteria) ;
             if (p.Count>0)
@@ -51,8 +53,10 @@ namespace fhir_server_mapping
                     
                 if (!string.IsNullOrWhiteSpace(rx.sig))
                 {
-                    var item = new Dosage();
-                    item.Text=rx.sig.ToString();
+                    var item = new Dosage
+                    {
+                        Text = rx.sig.ToString()
+                    };
                     ds.Add(item);
                     
                 }

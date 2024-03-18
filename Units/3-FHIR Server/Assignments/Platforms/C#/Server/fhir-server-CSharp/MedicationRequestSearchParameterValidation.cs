@@ -9,74 +9,79 @@ namespace fhir_server_CSharp
 {
     public static class MedicationRequestSearchParameterValidation
     {
-        public static bool ValidatePOSTParameters(HttpListenerRequest request, out DomainResource operation) 
+        public static bool ValidatePOSTParameters(HttpListenerRequest request, out DomainResource operation)
         {
             bool validationResults;
             if (request.QueryString.Count != 0 || !request.RawUrl.ToUpper().EndsWith("MEDICATIONREQUEST"))
             {
-                operation = handleInvalidScenario($"Parameter(s) '{request.Url}' invalid when creating a resource in the server. Use POST body instead.");
+                operation = handleInvalidScenario(
+                    $"Parameter(s) '{request.Url}' invalid when creating a resource in the server. Use POST body instead.");
                 return validationResults;
             }
 
             var medicationRequestFromBody = Utilz.FetchRequestBody(request);
 
-            if (string.IsNullOrWhiteSpace(medicationRequestFromBody)) 
+            if (string.IsNullOrWhiteSpace(medicationRequestFromBody))
             {
-                operation = handleInvalidScenario($"POST body cannot be empty. Valid MedicationRequest json payload is required.");
+                operation = handleInvalidScenario(
+                    $"POST body cannot be empty. Valid MedicationRequest json payload is required.");
                 return validationResults;
             }
 
-            if(request.Headers == null || request.Headers.Count == 0) 
+            if (request.Headers == null || request.Headers.Count == 0)
             {
-                operation = handleInvalidScenario($"Content-Type is not specified. Please check the CapabilityStatement for more details about this server.");
+                operation = handleInvalidScenario(
+                    $"Content-Type is not specified. Please check the CapabilityStatement for more details about this server.");
                 return validationResults;
             }
 
             if (request.Headers != null && request.Headers.Count > 0)
             {
                 var contentType = request.Headers["Content-Type"];
-                if(string.IsNullOrWhiteSpace(contentType) || 
+                if (string.IsNullOrWhiteSpace(contentType) ||
                     !(
-                        contentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) || 
+                        contentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) ||
                         contentType.Equals("application/fhir+json", StringComparison.OrdinalIgnoreCase)
-                     )
-                ) 
+                    )
+                   )
                 {
-                    operation = handleInvalidScenario($"Content-Type [{contentType}] is not valid for this server. Please check the CapabilityStatement for more details about this server.");
+                    operation = handleInvalidScenario(
+                        $"Content-Type [{contentType}] is not valid for this server. Please check the CapabilityStatement for more details about this server.");
                     return validationResults;
                 }
             }
 
-            try 
+            try
             {
                 var medicationRequest = SharedServices.ParseResource(medicationRequestFromBody);
 
-                if (medicationRequest.ResourceType != ResourceType.MedicationRequest) 
+                if (medicationRequest.ResourceType != ResourceType.MedicationRequest)
                 {
-                    operation = handleInvalidScenario($"Json being passed via body is not a MedicationRequest. It is a '{medicationRequest.ResourceType}' instead.");
+                    operation = handleInvalidScenario(
+                        $"Json being passed via body is not a MedicationRequest. It is a '{medicationRequest.ResourceType}' instead.");
                     return validationResults;
                 }
 
-                OperationOutcome operationOutcome;
-                validationResults = SharedServices.ValidateResource(medicationRequest, out operationOutcome);
-                if (!validationResults) 
+                validationResults = SharedServices.ValidateResource(medicationRequest, out var operationOutcome);
+                if (!validationResults)
                 {
                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.UnprocessableEntity;
                     operation = operationOutcome;
                     return validationResults;
                 }
 
-                //If all are good, the assigning the MedicationResquest resource to out parameter.
+                //If all are good, the assigning the MedicationRequest resource to out parameter.
                 operation = medicationRequest;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
-                operation = handleInvalidScenario($"{ex.Message}. Unable to convert POST body to a valid MedicationRequest object.");
+                operation = handleInvalidScenario(
+                    $"{ex.Message}. Unable to convert POST body to a valid MedicationRequest object.");
                 return validationResults;
             }
-            
 
-            OperationOutcome handleInvalidScenario(string message) 
+
+            OperationOutcome handleInvalidScenario(string message)
             {
                 validationResults = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.UnprocessableEntity;
@@ -86,7 +91,8 @@ namespace fhir_server_CSharp
             return validationResults;
         }
 
-        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch, out DomainResource operation,out List<LegacyFilter> criteria)
+        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch,
+            out DomainResource operation, out List<LegacyFilter> criteria)
         {
 
             operation = null;
@@ -118,33 +124,40 @@ namespace fhir_server_CSharp
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                operation = Utilz.getErrorOperationOutcome($"Unsupported http method '{request.HttpMethod}' for MedicationRequest resource- Server knows how to handle: [GET, POST] only for MedicationRequest resource");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unsupported http method '{request.HttpMethod}' for MedicationRequest resource- Server knows how to handle: [GET, POST] only for MedicationRequest resource");
             }
             else if (string.IsNullOrWhiteSpace(resourceBeingSearched))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
             else if (!resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrWhiteSpace(searchParamId))
+            else if (resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal) 
+                     && request.QueryString is { Count: 0 } 
+                     && !string.IsNullOrWhiteSpace(searchParamId))
             {
-                    hardIdSearch = true;
-                    var item=new LegacyFilter();
-                    item.criteria=LegacyFilter.field.id;
-                    item.value=searchParamId;
-                    criteria.Add(item);
-                    return rtnValue;
-                
+                hardIdSearch = true;
+                var item = new LegacyFilter
+                {
+                    criteria = LegacyFilter.field.id,
+                    value = searchParamId
+                };
+                criteria.Add(item);
+                return rtnValue;
+
             }
             else
             {
-                
+
 
                 if (request.QueryString != null && request.QueryString.Count > 0)
                 {
@@ -159,61 +172,76 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
                                 break;
                             }
-                             var item=new LegacyFilter();
-                             item.criteria=LegacyFilter.field._id;
-                             item.value=request.QueryString[param.ToString()];
-                             criteria.Add(item);
-                         }
-                        else if (param != null && param.ToString().Equals("subject", StringComparison.OrdinalIgnoreCase))
+
+                            var item = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field._id,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            criteria.Add(item);
+                        }
+                        else if (param != null &&
+                                 param.ToString().Equals("subject", StringComparison.OrdinalIgnoreCase))
                         {
                             //check the case now;
                             if (!param.ToString().Equals("subject", StringComparison.Ordinal))
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
                                 break;
                             }
 
                             var referenceElement = request.QueryString[param.ToString()];
-                            var refData = referenceElement.Split(new string[] { ":", "|" }, StringSplitOptions.RemoveEmptyEntries);
+                            var refData = referenceElement.Split(new string[] { ":", "|" },
+                                StringSplitOptions.RemoveEmptyEntries);
                             if (refData != null && refData.Length == 2)
                             {
-                                var item=new LegacyFilter();
-                                item.criteria=LegacyFilter.field.subject;
-                                item.value=refData[1].Trim();
+                                var item = new LegacyFilter
+                                {
+                                    criteria = LegacyFilter.field.subject,
+                                    value = refData[1].Trim()
+                                };
                                 criteria.Add(item);
-                                
+
                             }
                             else
                             {
                                 if (refData.Length == 0)
                                 {
-                                    var item=new LegacyFilter();
-                                    item.criteria=LegacyFilter.field.subject;
-                                    item.value=$"Patient/{long.MinValue}";
+                                    var item = new LegacyFilter
+                                    {
+                                        criteria = LegacyFilter.field.subject,
+                                        value = $"Patient/{long.MinValue}"
+                                    };
                                     criteria.Add(item);
                                 }
                                 else
                                 {
                                     if (refData[0].StartsWith("Patient/", StringComparison.OrdinalIgnoreCase))
                                     {
-                                        var item=new LegacyFilter();
-                                        item.criteria=LegacyFilter.field.subject;
-                                        item.value=refData[0].Trim();
+                                        var item = new LegacyFilter
+                                        {
+                                            criteria = LegacyFilter.field.subject,
+                                            value = refData[0].Trim()
+                                        };
                                         criteria.Add(item);
-                                            
+
                                     }
                                     else
                                     {
-                                        var item=new LegacyFilter();
-                                        item.criteria=LegacyFilter.field.subject;
-                                        item.value=$"Patient/{refData[0].Trim()}";
+                                        var item = new LegacyFilter
+                                        {
+                                            criteria = LegacyFilter.field.subject,
+                                            value = $"Patient/{refData[0].Trim()}"
+                                        };
                                         criteria.Add(item);
-                                        
+
                                     }
                                 }
                             }
@@ -225,21 +253,28 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
                                 break;
                             }
 
                             var patientId = request.QueryString[param.ToString()].Trim();
                             long.TryParse(patientId, out var parsedResult);
 
-                            if (parsedResult == 0) { parsedResult = long.MinValue; }
-                               var item=new LegacyFilter();
-                                        item.criteria=LegacyFilter.field.subject;
-                                        item.value=$"Patient/{parsedResult}";
-                                        criteria.Add(item);
-                                     
+                            if (parsedResult == 0)
+                            {
+                                parsedResult = long.MinValue;
+                            }
+
+                            var item = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field.subject,
+                                value = $"Patient/{parsedResult}"
+                            };
+                            criteria.Add(item);
+
                         }
-                        
+
                         else
                         {
                             if (param == null)
@@ -253,20 +288,15 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Refer to CapabilityStatement of this server to find supported search parameters for this resource.");
                                 break;
                             }
                         }
                     }
-                    
-                    
-                    
-                        
                 }
-
             }
 
-            
             return rtnValue;
         }
     }

@@ -10,17 +10,19 @@ namespace fhir_server_CSharp
 {
     public static class PatientSearchParameterValidation
     {
-        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch, out DomainResource operation, out List<LegacyFilter> criteria)
+        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch,
+            out DomainResource operation, out List<LegacyFilter> criteria)
         {
             operation = null;
-            criteria = new List<LegacyFilter>(); 
-        
+            criteria = new List<LegacyFilter>();
+
             var searchParamId = string.Empty;
             var rtnValue = true;
 
             var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
-            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/")) {
+            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
+            {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("/"));
                 if (searchParamId.StartsWith("/"))
                 {
@@ -43,42 +45,49 @@ namespace fhir_server_CSharp
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.MethodNotAllowed;
-                operation = Utilz.getErrorOperationOutcome($"Unsupported http method '{request.HttpMethod}' for Patient resource- Server knows how to handle: [GET] only for Patient resource");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unsupported http method '{request.HttpMethod}' for Patient resource- Server knows how to handle: [GET] only for Patient resource");
             }
             else if (string.IsNullOrWhiteSpace(resourceBeingSearched))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
             else if (!resourceBeingSearched.Equals("Patient", StringComparison.Ordinal))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
+                operation = Utilz.getErrorOperationOutcome(
+                    $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrWhiteSpace(searchParamId))
+            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) &&
+                     request.QueryString is { Count: 0 } && !string.IsNullOrWhiteSpace(searchParamId))
             {
                 if (!long.TryParse(searchParamId, out _))
                 {
                     rtnValue = false;
                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.NotFound;
-                    operation = Utilz.getErrorOperationOutcome($"Resource {resourceBeingSearched}/{searchParamId} is not known");
+                    operation = Utilz.getErrorOperationOutcome(
+                        $"Resource {resourceBeingSearched}/{searchParamId} is not known");
                 }
                 else
-                {   
-                    var sc=new LegacyFilter();
-                    sc.criteria=LegacyFilter.field.id;
-                    sc.value=searchParamId.ToString();
+                {
+                    var sc = new LegacyFilter
+                    {
+                        criteria = LegacyFilter.field.id,
+                        value = searchParamId.ToString()
+                    };
                     criteria.Add(sc);
-                    rtnValue=true;
+                    rtnValue = true;
                     hardIdSearch = true;
                     return rtnValue;
                 }
             }
             else
             {
-                
+
 
                 if (request.QueryString != null && request.QueryString.Count > 0)
                 {
@@ -91,13 +100,17 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
                                 break;
                             }
-                            var sc=new LegacyFilter();
-                            sc.criteria=LegacyFilter.field._id;
-                            sc.value=request.QueryString[param.ToString()];
-                            rtnValue=true;
+
+                            var sc = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field._id,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            rtnValue = true;
                             criteria.Add(sc);
                         }
                         else if (param.ToString().Equals("identifier", StringComparison.OrdinalIgnoreCase))
@@ -107,7 +120,8 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
                                 break;
                             }
 
@@ -115,19 +129,23 @@ namespace fhir_server_CSharp
                             var search_type = string.Empty;
                             var search_value = string.Empty;
 
-                            var SystemAndValue = request.QueryString[param.ToString()].Split("|", StringSplitOptions.RemoveEmptyEntries);
+                            var SystemAndValue = request.QueryString[param.ToString()]
+                                .Split("|", StringSplitOptions.RemoveEmptyEntries);
 
                             if (SystemAndValue != null && SystemAndValue.Length > 1)
                             {
                                 search_system = SystemAndValue[0];
-                                search_type = SharedServices.GetSystemTypeMapping().SystemMap.Where(e => e.System.Equals(search_system, StringComparison.Ordinal)).Select(e => e.Type).FirstOrDefault();
+                                search_type = SharedServices.GetSystemTypeMapping().SystemMap
+                                    .Where(e => e.System.Equals(search_system, StringComparison.Ordinal))
+                                    .Select(e => e.Type).FirstOrDefault();
                                 search_value = SystemAndValue[1];
 
-                                if (string.IsNullOrWhiteSpace(search_type)) 
+                                if (string.IsNullOrWhiteSpace(search_type))
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for Patient resource.");
+                                    operation = Utilz.getErrorOperationOutcome(
+                                        $"Identifier '{search_system}' is not a valid system for Patient resource.");
                                     break;
                                 }
                             }
@@ -141,11 +159,13 @@ namespace fhir_server_CSharp
                             }
                             else
                             {
-                                var sc=new LegacyFilter();
-                                sc.criteria=LegacyFilter.field.identifier;
-                                sc.value=search_system+"|"+search_value;
+                                var sc = new LegacyFilter
+                                {
+                                    criteria = LegacyFilter.field.identifier,
+                                    value = $"{search_system}|{search_value}"
+                                };
                                 criteria.Add(sc);
-                                rtnValue=true;
+                                rtnValue = true;
                             }
                         }
                         else if (param.ToString().Equals("family", StringComparison.OrdinalIgnoreCase))
@@ -155,17 +175,22 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                                 break;
                             }
                             else
                             {
-                                var sc=new LegacyFilter();
-                                sc.criteria=LegacyFilter.field.family;
-                                sc.value=request.QueryString[param.ToString()];
+                                var sc = new LegacyFilter
+                                {
+                                    criteria = LegacyFilter.field.family,
+                                    value = request.QueryString[param.ToString()]
+                                };
                                 criteria.Add(sc);
-                                rtnValue=true;   
-                            };
+                                rtnValue = true;
+                            }
+
+                            ;
                         }
                         else if (param.ToString().Equals("name", StringComparison.OrdinalIgnoreCase))
                         {
@@ -174,16 +199,19 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                                 break;
                             }
 
-                                var sc=new LegacyFilter();
-                                sc.criteria=LegacyFilter.field.name;
-                                sc.value=request.QueryString[param.ToString()];
-                                criteria.Add(sc);
-                                rtnValue=true;   
-                        
+                            var sc = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field.name,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            criteria.Add(sc);
+                            rtnValue = true;
+
                         }
                         else if (param.ToString().Equals("birthdate", StringComparison.OrdinalIgnoreCase))
                         {
@@ -192,15 +220,19 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                                 break;
                             }
-                                var sc=new LegacyFilter();
-                                sc.criteria=LegacyFilter.field.birthdate;
-                                sc.value=request.QueryString[param.ToString()];
-                                criteria.Add(sc);
-                                rtnValue=true;   
-                        
+
+                            var sc = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field.birthdate,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            criteria.Add(sc);
+                            rtnValue = true;
+
                         }
                         else if (param.ToString().Equals("gender", StringComparison.OrdinalIgnoreCase))
                         {
@@ -209,27 +241,31 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(
+                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
                                 break;
                             }
 
-                                var sc=new LegacyFilter();
-                                sc.criteria=LegacyFilter.field.gender;
-                                sc.value=request.QueryString[param.ToString()];
-                                criteria.Add(sc);
-                                 rtnValue=true;   
-                            
+                            var sc = new LegacyFilter
+                            {
+                                criteria = LegacyFilter.field.gender,
+                                value = request.QueryString[param.ToString()]
+                            };
+                            criteria.Add(sc);
+                            rtnValue = true;
+
                         }
                         else
                         {
                             rtnValue = false;
                             Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                            operation = Utilz.getErrorOperationOutcome($"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                            operation = Utilz.getErrorOperationOutcome(
+                                $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
                             break;
                         }
                     }
 
-                    
+
                 }
             }
 
