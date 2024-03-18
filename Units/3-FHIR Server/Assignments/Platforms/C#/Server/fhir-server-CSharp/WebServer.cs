@@ -138,7 +138,7 @@ namespace fhir_server_CSharp
                 ctx.Response.AddHeader("Access-Control-Allow-Methods", "POST, GET");
                 ctx.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type");
 
-                if (!string.IsNullOrEmpty(ContentLocationHeaderValue))
+                if (!string.IsNullOrWhiteSpace(ContentLocationHeaderValue))
                 {
                     ctx.Response.AddHeader("Content-Location", ContentLocationHeaderValue);
                 }

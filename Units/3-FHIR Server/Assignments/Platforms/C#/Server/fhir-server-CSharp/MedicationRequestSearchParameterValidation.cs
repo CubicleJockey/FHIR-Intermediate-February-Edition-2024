@@ -20,7 +20,7 @@ namespace fhir_server_CSharp
 
             var medicationRequestFromBody = Utilz.FetchRequestBody(request);
 
-            if (string.IsNullOrEmpty(medicationRequestFromBody)) 
+            if (string.IsNullOrWhiteSpace(medicationRequestFromBody)) 
             {
                 operation = handleInvalidScenario($"POST body cannot be empty. Valid MedicationRequest json payload is required.");
                 return validationResults;
@@ -35,7 +35,7 @@ namespace fhir_server_CSharp
             if (request.Headers != null && request.Headers.Count > 0)
             {
                 var contentType = request.Headers["Content-Type"];
-                if(string.IsNullOrEmpty(contentType) || 
+                if(string.IsNullOrWhiteSpace(contentType) || 
                     !(
                         contentType.Equals("application/json", StringComparison.OrdinalIgnoreCase) || 
                         contentType.Equals("application/fhir+json", StringComparison.OrdinalIgnoreCase)
@@ -95,7 +95,7 @@ namespace fhir_server_CSharp
             criteria = new List<fhir_server_entity_model.LegacyFilter>();
             var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
-            if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
+            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
             {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("/"));
                 if (searchParamId.StartsWith("/"))
@@ -104,7 +104,7 @@ namespace fhir_server_CSharp
                     searchParamId = searchParamId.Substring(1);
                 }
             }
-            else if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
+            else if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
             {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("?"));
                 if (searchParamId.StartsWith("?"))
@@ -120,7 +120,7 @@ namespace fhir_server_CSharp
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
                 operation = Utilz.getErrorOperationOutcome($"Unsupported http method '{request.HttpMethod}' for MedicationRequest resource- Server knows how to handle: [GET, POST] only for MedicationRequest resource");
             }
-            else if (string.IsNullOrEmpty(resourceBeingSearched))
+            else if (string.IsNullOrWhiteSpace(resourceBeingSearched))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
@@ -132,7 +132,7 @@ namespace fhir_server_CSharp
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
                 operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrEmpty(searchParamId))
+            else if (resourceBeingSearched.Equals("MedicationRequest", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrWhiteSpace(searchParamId))
             {
                     hardIdSearch = true;
                     var item=new LegacyFilter();

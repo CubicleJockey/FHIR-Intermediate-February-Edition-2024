@@ -49,7 +49,7 @@ namespace fhir_server_mapping
                 };
                 var ds = new List<Dosage>();
                     
-                if (!string.IsNullOrEmpty(rx.sig))
+                if (!string.IsNullOrWhiteSpace(rx.sig))
                 {
                     var item = new Dosage();
                     item.Text=rx.sig.ToString();

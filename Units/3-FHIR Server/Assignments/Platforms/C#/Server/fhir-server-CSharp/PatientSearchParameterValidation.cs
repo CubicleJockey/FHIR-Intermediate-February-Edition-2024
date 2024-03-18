@@ -20,8 +20,7 @@ namespace fhir_server_CSharp
 
             var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
-            if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
-            {
+            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/")) {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("/"));
                 if (searchParamId.StartsWith("/"))
                 {
@@ -29,7 +28,7 @@ namespace fhir_server_CSharp
                     searchParamId = searchParamId.Substring(1);
                 }
             }
-            else if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
+            else if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
             {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("?"));
                 if (searchParamId.StartsWith("?"))
@@ -46,7 +45,7 @@ namespace fhir_server_CSharp
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.MethodNotAllowed;
                 operation = Utilz.getErrorOperationOutcome($"Unsupported http method '{request.HttpMethod}' for Patient resource- Server knows how to handle: [GET] only for Patient resource");
             }
-            else if (string.IsNullOrEmpty(resourceBeingSearched))
+            else if (string.IsNullOrWhiteSpace(resourceBeingSearched))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
@@ -58,7 +57,7 @@ namespace fhir_server_CSharp
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
                 operation = Utilz.getErrorOperationOutcome($"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrEmpty(searchParamId))
+            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) && request.QueryString != null && request.QueryString.Count == 0 && !string.IsNullOrWhiteSpace(searchParamId))
             {
                 if (!long.TryParse(searchParamId, out _))
                 {
@@ -124,7 +123,7 @@ namespace fhir_server_CSharp
                                 search_type = SharedServices.GetSystemTypeMapping().SystemMap.Where(e => e.System.Equals(search_system, StringComparison.Ordinal)).Select(e => e.Type).FirstOrDefault();
                                 search_value = SystemAndValue[1];
 
-                                if (string.IsNullOrEmpty(search_type)) 
+                                if (string.IsNullOrWhiteSpace(search_type)) 
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
@@ -137,7 +136,7 @@ namespace fhir_server_CSharp
                                 search_value = request.QueryString[param.ToString()];
                             }
 
-                            if (!string.IsNullOrEmpty(search_type) && search_type.Equals("ID"))
+                            if (!string.IsNullOrWhiteSpace(search_type) && search_type.Equals("ID"))
                             {
                             }
                             else

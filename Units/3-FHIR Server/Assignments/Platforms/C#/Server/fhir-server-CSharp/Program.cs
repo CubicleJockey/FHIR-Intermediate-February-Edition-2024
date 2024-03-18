@@ -158,7 +158,7 @@ namespace fhir_server_CSharp
             var resourceBeingSearched = request.Url.AbsolutePath.Replace(FhirServerConfig.FHIRServerUrl, string.Empty);
 
             string searchParamId;
-            if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
+            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("/"))
             {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("/"));
                 if (searchParamId.StartsWith("/"))
@@ -166,7 +166,7 @@ namespace fhir_server_CSharp
                     resourceBeingSearched = resourceBeingSearched.Substring(0, resourceBeingSearched.IndexOf("/"));
                 }
             }
-            else if (!string.IsNullOrEmpty(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
+            else if (!string.IsNullOrWhiteSpace(resourceBeingSearched) && resourceBeingSearched.Contains("?"))
             {
                 searchParamId = resourceBeingSearched.Substring(resourceBeingSearched.IndexOf("?"));
                 if (searchParamId.StartsWith("?"))
@@ -175,7 +175,7 @@ namespace fhir_server_CSharp
                 }
             }
 
-            if (!string.IsNullOrEmpty(resourceBeingSearched) &&
+            if (!string.IsNullOrWhiteSpace(resourceBeingSearched) &&
                     (
                         resourceBeingSearched.Equals(ResourceType.Patient.ToString(), StringComparison.Ordinal) ||
                         resourceBeingSearched.Equals(ResourceType.Practitioner.ToString(), StringComparison.Ordinal) ||
@@ -192,11 +192,11 @@ namespace fhir_server_CSharp
                         var mode = request.QueryString["Mode"];
                         var format = request.QueryString["_format"];
 
-                        if (!string.IsNullOrEmpty(mode) && mode.Equals("full", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(mode) && mode.Equals("full", StringComparison.OrdinalIgnoreCase))
                         {
                             isResourceAllowed = true;
 
-                            if (!string.IsNullOrEmpty(format))
+                            if (!string.IsNullOrWhiteSpace(format))
                             {
                                 if (!(format.Equals("application/json", StringComparison.OrdinalIgnoreCase) || format.Equals("application/fhir+json", StringComparison.OrdinalIgnoreCase)))
                                 {
@@ -225,18 +225,18 @@ namespace fhir_server_CSharp
                 else if (resourceBeingSearched.Equals(ResourceType.MedicationRequest.ToString()) && request.QueryString.Count > 0)
                 {
                     var searchParam = request.QueryString["_include"];
-                    if (!string.IsNullOrEmpty(searchParam) && searchParam.Contains(ResourceType.MedicationRequest.ToString(), StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrWhiteSpace(searchParam) && searchParam.Contains(ResourceType.MedicationRequest.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         isResourceAllowed = true;
                     }
                     else if
                         (
-                            !string.IsNullOrEmpty(request.QueryString["_id"]) ||
-                            !string.IsNullOrEmpty(request.QueryString["status"]) ||
-                            !string.IsNullOrEmpty(request.QueryString["intent"]) ||
-                            !string.IsNullOrEmpty(request.QueryString["subject"]) ||
-                            !string.IsNullOrEmpty(request.QueryString["patient"]) ||
-                            !string.IsNullOrEmpty(request.QueryString["requester"])
+                            !string.IsNullOrWhiteSpace(request.QueryString["_id"]) ||
+                            !string.IsNullOrWhiteSpace(request.QueryString["status"]) ||
+                            !string.IsNullOrWhiteSpace(request.QueryString["intent"]) ||
+                            !string.IsNullOrWhiteSpace(request.QueryString["subject"]) ||
+                            !string.IsNullOrWhiteSpace(request.QueryString["patient"]) ||
+                            !string.IsNullOrWhiteSpace(request.QueryString["requester"])
                         )
                     {
                         isResourceAllowed = true;

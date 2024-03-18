@@ -41,7 +41,7 @@ namespace fhir_server_mapping
                         Use = HumanName.NameUse.Official,
                         Family = person.PRSN_LAST_NAME, 
                         Given = new List<string>() { person.PRSN_FIRST_NAME },
-                        Text = $"{(string.IsNullOrEmpty(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrEmpty(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}"
+                        Text = $"{(string.IsNullOrWhiteSpace(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}"
                     } 
                 },
                 Telecom = new List<ContactPoint>() 
@@ -56,7 +56,7 @@ namespace fhir_server_mapping
                 BirthDate = person.PRSN_BIRTH_DATE
             };
 
-            if (!string.IsNullOrEmpty(person.PRSN_SECOND_NAME))
+            if (!string.IsNullOrWhiteSpace(person.PRSN_SECOND_NAME))
             {
                 var gvnNames = new List<string>();
                 foreach (var item in p.Name[0].Given)
@@ -66,10 +66,10 @@ namespace fhir_server_mapping
                 gvnNames.Add(person.PRSN_SECOND_NAME);
 
                 p.Name[0].Given = gvnNames;
-                p.Name[0].Text = $"{(string.IsNullOrEmpty(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrEmpty(person.PRSN_SECOND_NAME) ? "" : person.PRSN_SECOND_NAME)} {(string.IsNullOrEmpty(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}";
+                p.Name[0].Text = $"{(string.IsNullOrWhiteSpace(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_SECOND_NAME) ? "" : person.PRSN_SECOND_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}";
             }
 
-            if (!string.IsNullOrEmpty(person.PRSN_NICK_NAME))
+            if (!string.IsNullOrWhiteSpace(person.PRSN_NICK_NAME))
             {
                 var nickName = new HumanName()
                 {
