@@ -62,8 +62,7 @@ namespace fhir_server_CSharp
                 operation = Utilz.getErrorOperationOutcome(
                     $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) &&
-                     request.QueryString is { Count: 0 } && !string.IsNullOrWhiteSpace(searchParamId))
+            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) && request.QueryString is { Count: 0 } && !string.IsNullOrWhiteSpace(searchParamId))
             {
                 if (!long.TryParse(searchParamId, out _))
                 {
@@ -100,8 +99,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
 
@@ -120,8 +118,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
 
@@ -144,8 +141,7 @@ namespace fhir_server_CSharp
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                    operation = Utilz.getErrorOperationOutcome(
-                                        $"Identifier '{search_system}' is not a valid system for Patient resource.");
+                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for Patient resource.");
                                     break;
                                 }
                             }
@@ -175,8 +171,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
                             else
@@ -199,8 +194,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
 
@@ -220,8 +214,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
 
@@ -241,8 +234,7 @@ namespace fhir_server_CSharp
                             {
                                 rtnValue = false;
                                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                operation = Utilz.getErrorOperationOutcome(
-                                    $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]");
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                                 break;
                             }
 
@@ -255,12 +247,21 @@ namespace fhir_server_CSharp
                             rtnValue = true;
 
                         }
+                        else if (param.ToString().Equals("email", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (!param.ToString().Equals("email", StringComparison.Ordinal))
+                            {
+                                rtnValue = false;
+                                Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
+                                break;
+                            }
+                        }
                         else
                         {
                             rtnValue = false;
                             Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                            operation = Utilz.getErrorOperationOutcome(
-                                $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, telecom, family, gender, name, identifier]");
+                            operation = Utilz.getErrorOperationOutcome(ParamErrorMessage(param.ToString()));
                             break;
                         }
                     }
@@ -272,5 +273,7 @@ namespace fhir_server_CSharp
             return rtnValue;
         }
 
+
+        private static string ParamErrorMessage(string param) => $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, email, identifier]";
     }
 }
