@@ -33,6 +33,6 @@ namespace fhir_server_entity_model
 
 		}
 		public field criteria  { get; set; }
-		public String value  { get; set; }
+		public string value  { get; set; }
 	}
 }

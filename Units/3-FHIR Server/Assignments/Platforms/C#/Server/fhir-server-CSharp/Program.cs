@@ -257,9 +257,9 @@ namespace fhir_server_CSharp
 
             return isResourceAllowed;
         }
-        private static String CapabilityStatement_Route(HttpListenerRequest request)
+        private static string CapabilityStatement_Route(HttpListenerRequest request)
         {
-            var strResponse = String.Empty;
+            var strResponse = string.Empty;
             if (!request.HttpMethod.Equals("GET", StringComparison.OrdinalIgnoreCase))
             {
                 HttpStatusCodeForResponse = (int)HttpStatusCode.MethodNotAllowed;
@@ -283,9 +283,9 @@ namespace fhir_server_CSharp
             }
             return strResponse;
         }
-        private static String MedicationRequest_Route(HttpListenerRequest request)
+        private static string MedicationRequest_Route(HttpListenerRequest request)
         {
-            var strResponse = String.Empty;
+            var strResponse = string.Empty;
             var criteria = new List<fhir_server_entity_model.LegacyFilter>();
             var HardIdSearch = false;
             HttpStatusCodeForResponse = 200;
@@ -352,9 +352,9 @@ namespace fhir_server_CSharp
             }
             return strResponse;
         }
-        private static String Patient_Route(HttpListenerRequest request)
+        private static string Patient_Route(HttpListenerRequest request)
         {
-            var strResponse = String.Empty;
+            var strResponse = string.Empty;
             var criteria = new List<fhir_server_entity_model.LegacyFilter>();
             var HardIdSearch = false;
             HttpStatusCodeForResponse = 200;

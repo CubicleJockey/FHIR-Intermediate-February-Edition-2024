@@ -93,7 +93,7 @@ namespace fhirserver_dotnet_library
         }
 
 
-        public static MedicationRequest MedicationRequestGet(String serverEndpoint, String Id)
+        public static MedicationRequest MedicationRequestGet(string serverEndpoint, string Id)
         {
 
             MedicationRequest result;
@@ -113,13 +113,13 @@ namespace fhirserver_dotnet_library
             return result;
 
         }
-        public static String GetPractitionersAll(String ServerEndpoint)
+        public static string GetPractitionersAll(string ServerEndpoint)
         {
             var result = PractitionerSearch(ServerEndpoint, "", "");
             return result;
         }
 
-        public static String PractitionerSearch(String ServerEndpoint, string SearchParameter, string Value)
+        public static string PractitionerSearch(string ServerEndpoint, string SearchParameter, string Value)
         {
             var result = "";
             var client = new FhirClient(ServerEndpoint);
@@ -152,7 +152,7 @@ namespace fhirserver_dotnet_library
 
             return result;
         }
-        public static String PractitionerGetById(String ServerEndpoint, string Id)
+        public static string PractitionerGetById(string ServerEndpoint, string Id)
         {
 
             var result = "<<NOT EXISTING>>";
@@ -177,7 +177,7 @@ namespace fhirserver_dotnet_library
             return result;
 
         }
-        public static String CapabilityCheckInteraction(String ServerEndpoint, String resource, String interaction)
+        public static string CapabilityCheckInteraction(string ServerEndpoint, string resource, string interaction)
         {
             var result = "";
 
@@ -216,7 +216,7 @@ namespace fhirserver_dotnet_library
             }
             return result;
         }
-        public static String CapabilityCheckParameterType(String ServerEndpoint, String resource, String name)
+        public static string CapabilityCheckParameterType(string ServerEndpoint, string resource, string name)
         {
             var result = "notsupported";
             var cs = GetCapabilityStatement(ServerEndpoint);
@@ -248,13 +248,13 @@ namespace fhirserver_dotnet_library
             }
             return result;
         }
-        private static CapabilityStatement GetCapabilityStatement(String ServerEndPoint)
+        private static CapabilityStatement GetCapabilityStatement(string ServerEndPoint)
         {
             var client = new FhirClient(ServerEndPoint);
             var cs = client.CapabilityStatement();
             return cs;
         }
-        public static String PatientSearchByTelecom(String ServerEndpoint, String telecom)
+        public static string PatientSearchByTelecom(string ServerEndpoint, string telecom)
         {
             var result = "<<NOT EXISTING>>";
 
@@ -283,7 +283,7 @@ namespace fhirserver_dotnet_library
 
             return result;
         }
-        public static String PatientSearchByEmail(String ServerEndpoint, String email)
+        public static string PatientSearchByEmail(string ServerEndpoint, string email)
         {
             var result = "<<NOT EXISTING>>";
 

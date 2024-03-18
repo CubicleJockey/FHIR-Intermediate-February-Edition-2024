@@ -11,7 +11,7 @@ namespace fhir_server_mapping
     public static class MapMedicationRequest
     {
         
-        private static string GetPatientRefDisplay(String PatientId)
+        private static string GetPatientRefDisplay(string PatientId)
         {
             var display="";
             var criteria=new List<LegacyFilter>();

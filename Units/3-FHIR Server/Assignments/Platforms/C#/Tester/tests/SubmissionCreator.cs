@@ -313,7 +313,7 @@ public class SubmissionCreator
             return tr;
         }
         
-        public Dictionary<String,String> AddAll(Dictionary<String,String> tAll,Dictionary<String,String> tOne)
+        public Dictionary<string,string> AddAll(Dictionary<string,string> tAll,Dictionary<string,string> tOne)
         {
             var tl=new System.Collections.Generic.Dictionary<string, string>();
             foreach(var test in tAll)

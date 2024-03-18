@@ -43,7 +43,7 @@ namespace fhir_server_dataaccess
             }
 
         }
-        public static bool CheckIfOpioid(String rxnorm_code)
+        public static bool CheckIfOpioid(string rxnorm_code)
         {
             GetLegacyData();
             var opioid=false;
@@ -72,7 +72,7 @@ namespace fhir_server_dataaccess
                 LegacyIdentifierTypes = JsonConvert.DeserializeObject<LegacyIdentifierType[]>(response);
             }
         }
-        public static String getLegacyIdentifierCode(long IdentifierTypeId)
+        public static string getLegacyIdentifierCode(long IdentifierTypeId)
         {
             var Code ="";
             GetLegacyData();
