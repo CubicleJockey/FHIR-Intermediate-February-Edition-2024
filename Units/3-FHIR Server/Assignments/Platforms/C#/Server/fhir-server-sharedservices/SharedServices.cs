@@ -32,8 +32,8 @@ namespace fhir_server_sharedservices
             }
             
             operation = new Validator
-                            (new ValidationSettings()
-                            {
+                            (new ValidationSettings
+                                {
                                 ResourceResolver = new MultiResolver(new ZipSource(UsCoreJsonRepository), ZipSource.CreateValidationSource()),
                                 GenerateSnapshot = true,
                                 Trace = false,
@@ -46,29 +46,29 @@ namespace fhir_server_sharedservices
 
         public static DomainResource ParseResource(string resource)
         {
-            var parser = new FhirJsonParser(new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
+            var parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
             return parser.Parse<DomainResource>(resource);
         }
 
         public static string GetExceptionAsOperationOutcome(string message, OperationOutcome.IssueSeverity severity = OperationOutcome.IssueSeverity.Error)
         {
-            return new OperationOutcome()
+            return new OperationOutcome
             {
-                Text = new Narrative()
+                Text = new Narrative
                 {
                     Status = Narrative.NarrativeStatus.Generated,
                     Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><h1>Operation Outcome</h1><table border=\"0\"><tr><td style=\"font-weight: bold;\">ERROR</td><td>[]</td><td><pre>{message}</pre></td>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t</tr>\n\t\t</table>\n\t</div>"
                 },
-                Issue = new List<OperationOutcome.IssueComponent>()
-                    {
-                        new OperationOutcome.IssueComponent()
+                Issue = new List<OperationOutcome.IssueComponent>
+                {
+                        new OperationOutcome.IssueComponent
                         {
                             Severity = severity,
                             Code = OperationOutcome.IssueType.Processing,
                             Diagnostics = $"{message}"
                         }
                     }
-            }.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = true, Pretty = true, IgnoreUnknownElements = false });
+            }.ToJson(new FhirJsonSerializationSettings { AppendNewLine = true, Pretty = true, IgnoreUnknownElements = false });
         }
 
         private static LegacySystemMapHelper LoadSystemMapFromJson() 
@@ -82,7 +82,7 @@ namespace fhir_server_sharedservices
                 mappedData = JsonSerializer.Deserialize<LegacySystemMapHelper>
                     (
                         File.ReadAllText(location), 
-                        new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, IgnoreNullValues = true }
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true, IgnoreNullValues = true }
                     );
             }
             return mappedData;

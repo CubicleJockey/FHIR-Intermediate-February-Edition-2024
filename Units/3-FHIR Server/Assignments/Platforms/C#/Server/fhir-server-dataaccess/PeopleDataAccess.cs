@@ -1,28 +1,36 @@
 using System;
 using fhir_server_entity_model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace fhir_server_dataaccess
 {
-    public static class PatientDataAccess
+    public static class PeopleDataAccess
     {
         
         public static  List<LegacyPerson> GetAllPatients(string SpecificPatientId = null)
         {
-            var people = new List<LegacyPerson>();
             LegacyAPIAccess.GetLegacyData();
-            var lp=LegacyAPIAccess.LegacyPerson;
-            if (lp!=null)
-            {
-                var max=lp.Length;
-                for (var i = 0; i < max; i++)
-                {
-                    var item=lp[i];
-                    people.Add(item);
-                }
-            }
-            return people;
+            var lp=LegacyAPIAccess.LegacyPerson.ToList();
+            return lp;
         }
+
+        public static List<LegacyPerson> GetAllPractitioners()
+        {
+            LegacyAPIAccess.GetLegacyData();
+            var practitionerType = LegacyAPIAccess.LegacyIdentifierTypes.First(t => t.identifier_code == "NPI");
+
+            var practitioners = 
+                (
+                    from person in LegacyAPIAccess.LegacyPerson
+                    join identifier in LegacyAPIAccess.LegacyPersonIdentifiers on person.PRSN_ID equals identifier.prsn_id
+                    where identifier.identifier_type_id == practitionerType.identifier_type_id
+                    select person
+                ).ToList();
+            
+            return practitioners;
+        }
+        
         public static List<LegacyPersonIdentifier> GetPersonDocType(long personId)
         {
             LegacyAPIAccess.GetLegacyData();

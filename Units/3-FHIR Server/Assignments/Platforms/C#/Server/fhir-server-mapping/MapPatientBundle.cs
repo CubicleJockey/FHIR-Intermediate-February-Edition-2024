@@ -21,7 +21,7 @@ namespace fhir_server_mapping
             bundle.Id = Guid.NewGuid().ToString();
             bundle.Meta = new Meta { LastUpdated = DateTime.Now };
             bundle.Type = Bundle.BundleType.Searchset;
-            bundle.Link = new List<Bundle.LinkComponent>() { new Bundle.LinkComponent() { Relation = "self", Url = $"{listernerUrl}" } };
+            bundle.Link = new List<Bundle.LinkComponent> { new Bundle.LinkComponent { Relation = "self", Url = $"{listernerUrl}" } };
             
             var entry = new List<Bundle.EntryComponent>();
             if(people != null && people.Count > 0) 
@@ -30,11 +30,11 @@ namespace fhir_server_mapping
                 {
                     var patientUri = new Uri(listernerUrl);
 
-                    entry.Add(new Bundle.EntryComponent() 
+                    entry.Add(new Bundle.EntryComponent
                     { 
                         Resource = MapPatient.GetFHIRPatientResource(person), 
                         FullUrl = $"{patientUri.Scheme}://{patientUri.Authority}{string.Join("", patientUri.Segments)}/{person.PRSN_ID}",
-                        Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match }
+                        Search = new Bundle.SearchComponent { Mode = Bundle.SearchEntryMode.Match }
                     });
                 }
             }
@@ -49,11 +49,11 @@ namespace fhir_server_mapping
 
                 if (!isResourceValid)
                 {
-                    return operation.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                    return operation.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
                 }
             }
 
-            return bundle.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+            return bundle.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
         }
     }
 }

@@ -8,45 +8,45 @@ namespace fhir_server_mapping
         public static Patient GetFHIRPatientResource(fhir_server_entity_model.LegacyPerson person) 
         {
             var identifiers = new List<Identifier>();
-            var personIdentifiers = fhir_server_dataaccess.PatientDataAccess.GetPersonDocType(person.PRSN_ID);
+            var personIdentifiers = fhir_server_dataaccess.PeopleDataAccess.GetPersonDocType(person.PRSN_ID);
             
             foreach (var docType in personIdentifiers)
             {
     
-                identifiers.Add(new Identifier() 
+                identifiers.Add(new Identifier
                 { 
                     System = "http://fhirintermediatecourse.org/"+ fhir_server_dataaccess.LegacyAPIAccess.getLegacyIdentifierCode(docType.identifier_type_id),
                     Value = docType.value,
-                    Period = new Period() { Start = person.PRSN_CREATE_DATE }
+                    Period = new Period { Start = person.PRSN_CREATE_DATE }
                 });
             }
 
-            var p = new Patient()
+            var p = new Patient
             {
                 Id = person.PRSN_ID.ToString(),
-                Meta = new Meta()
+                Meta = new Meta
                 {
-                    Profile = new List<string>() { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" }
+                    Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" }
                 },
-                Text = new Narrative() 
+                Text = new Narrative
                 { 
                     Status = Narrative.NarrativeStatus.Generated, 
                     Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p>{person.PRSN_FIRST_NAME} {person.PRSN_SECOND_NAME} {person.PRSN_LAST_NAME}</p></div>" 
                 },
                 Identifier = identifiers,
-                Name = new List<HumanName>() 
+                Name = new List<HumanName>
                 { 
-                    new HumanName() 
+                    new HumanName
                     {
                         Use = HumanName.NameUse.Official,
                         Family = person.PRSN_LAST_NAME, 
-                        Given = new List<string>() { person.PRSN_FIRST_NAME },
+                        Given = new List<string> { person.PRSN_FIRST_NAME },
                         Text = $"{(string.IsNullOrWhiteSpace(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}"
                     } 
                 },
-                Telecom = new List<ContactPoint>() 
+                Telecom = new List<ContactPoint>
                 { 
-                    new ContactPoint() 
+                    new ContactPoint
                     { 
                         System = ContactPoint.ContactPointSystem.Email, 
                         Value = person.PRSN_EMAIL 
@@ -71,10 +71,10 @@ namespace fhir_server_mapping
 
             if (!string.IsNullOrWhiteSpace(person.PRSN_NICK_NAME))
             {
-                var nickName = new HumanName()
+                var nickName = new HumanName
                 {
                     Use = HumanName.NameUse.Nickname,
-                    GivenElement = new List<FhirString>() { new FhirString() { Value = person.PRSN_NICK_NAME } }
+                    GivenElement = new List<FhirString> { new FhirString { Value = person.PRSN_NICK_NAME } }
                 };
                 p.Name.Add(nickName);
             }

@@ -36,16 +36,16 @@ namespace fhir_server_CSharp
 
         internal static Hl7.Fhir.Model.OperationOutcome getErrorOperationOutcome(string message, Hl7.Fhir.Model.OperationOutcome.IssueSeverity severity = Hl7.Fhir.Model.OperationOutcome.IssueSeverity.Error)
         {
-            return new Hl7.Fhir.Model.OperationOutcome()
+            return new Hl7.Fhir.Model.OperationOutcome
             {
-                Text = new Hl7.Fhir.Model.Narrative()
+                Text = new Hl7.Fhir.Model.Narrative
                 {
                     Status = Hl7.Fhir.Model.Narrative.NarrativeStatus.Generated,
                     Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><h1>Operation Outcome</h1><table border=\"0\"><tr><td style=\"font-weight: bold;\">ERROR</td><td>[]</td><td><pre>{message}</pre></td>\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t</tr>\n\t\t</table>\n\t</div>"
                 },
-                Issue = new List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>()
-                    {
-                        new Hl7.Fhir.Model.OperationOutcome.IssueComponent()
+                Issue = new List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>
+                {
+                        new Hl7.Fhir.Model.OperationOutcome.IssueComponent
                         {
                             Severity = severity,
                             Code = Hl7.Fhir.Model.OperationOutcome.IssueType.Processing,

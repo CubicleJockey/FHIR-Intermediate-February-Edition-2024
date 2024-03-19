@@ -1,19 +1,25 @@
-﻿using fhir_server_sharedservices;
+﻿using fhir_server_entity_model;
+using fhir_server_sharedservices;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using fhir_server_entity_model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Hl7.Fhir.FhirPath;
 using System.Net.Mail;
 
 namespace fhir_server_CSharp
 {
-    public static class PatientSearchParameterValidation
+    public static class PatientOrPractitionerSearchParameterValidation
     {
-        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch, out DomainResource operation, out List<LegacyFilter> criteria)
+        public static bool ValidateSearchParams(HttpListenerRequest request, ref bool hardIdSearch, out DomainResource operation, out List<LegacyFilter> criteria, bool usePractitioner = false)
         {
+            var resource = nameof(ResourceType.Patient);
+            if (usePractitioner)
+            {
+                resource = nameof(ResourceType.Practitioner);
+            }
+            
             operation = null;
             criteria = new List<LegacyFilter>();
 
@@ -47,7 +53,7 @@ namespace fhir_server_CSharp
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.MethodNotAllowed;
                 operation = Utilz.getErrorOperationOutcome(
-                    $"Unsupported http method '{request.HttpMethod}' for Patient resource- Server knows how to handle: [GET] only for Patient resource");
+                    $"Unsupported http method '{request.HttpMethod}' for {resource} resource- Server knows how to handle: [GET] only for Patient resource");
             }
             else if (string.IsNullOrWhiteSpace(resourceBeingSearched))
             {
@@ -56,14 +62,16 @@ namespace fhir_server_CSharp
                 operation = Utilz.getErrorOperationOutcome(
                     $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (!resourceBeingSearched.Equals("Patient", StringComparison.Ordinal))
+            else if (!resourceBeingSearched.Equals(nameof(ResourceType.Patient), StringComparison.Ordinal)
+                     && !resourceBeingSearched.Equals(nameof(ResourceType.Practitioner), StringComparison.Ordinal))
             {
                 rtnValue = false;
                 Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
                 operation = Utilz.getErrorOperationOutcome(
                     $"Unknown resource type '{resourceBeingSearched}' - Server knows how to handle: [Patient, Practitioner, MedicationRequest]");
             }
-            else if (resourceBeingSearched.Equals("Patient", StringComparison.Ordinal) && request.QueryString is { Count: 0 } && !string.IsNullOrWhiteSpace(searchParamId))
+            else if ((resourceBeingSearched.Equals(nameof(ResourceType.Patient), StringComparison.Ordinal) || resourceBeingSearched.Equals(nameof(ResourceType.Practitioner), StringComparison.Ordinal))
+                     && request.QueryString is { Count: 0 } && !string.IsNullOrWhiteSpace(searchParamId))
             {
                 if (!long.TryParse(searchParamId, out _))
                 {

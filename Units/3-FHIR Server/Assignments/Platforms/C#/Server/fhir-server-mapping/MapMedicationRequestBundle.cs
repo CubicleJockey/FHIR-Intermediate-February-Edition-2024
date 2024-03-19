@@ -23,7 +23,7 @@ namespace fhir_server_mapping
             bundle.Id = Guid.NewGuid().ToString();
             bundle.Meta = new Meta { LastUpdated = DateTime.Now };
             bundle.Type = Bundle.BundleType.Searchset;
-            bundle.Link = new List<Bundle.LinkComponent>() { new Bundle.LinkComponent() { Relation = "self", Url = $"{listernerUrl}" } };
+            bundle.Link = new List<Bundle.LinkComponent> { new Bundle.LinkComponent { Relation = "self", Url = $"{listernerUrl}" } };
 
             var entry = new List<Bundle.EntryComponent>();
             if (rxes != null && rxes.Count > 0)
@@ -32,11 +32,11 @@ namespace fhir_server_mapping
                 {
                     var MedicationRequestUri = new Uri(listernerUrl);
                     var rxid="";
-                    entry.Add(new Bundle.EntryComponent()
+                    entry.Add(new Bundle.EntryComponent
                     {
                         Resource = MapMedicationRequest.GetFHIRMedicationRequestResource(rx),
                         FullUrl = $"{MedicationRequestUri.Scheme}://{MedicationRequestUri.Authority}{string.Join("", MedicationRequestUri.Segments)}/{rxid}",
-                        Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match }
+                        Search = new Bundle.SearchComponent { Mode = Bundle.SearchEntryMode.Match }
                     });
                 }
             }
@@ -51,11 +51,11 @@ namespace fhir_server_mapping
 
                 if (!isResourceValid)
                 {
-                    return operation.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                    return operation.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
                 }
             }
 
-            return bundle.ToJson(new FhirJsonSerializationSettings() { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+            return bundle.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
         
         }
     }
