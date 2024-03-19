@@ -135,12 +135,21 @@ namespace fhir_server_CSharp
                             var search_type = string.Empty;
                             var search_value = string.Empty;
 
-                            var SystemAndValue = request.QueryString[param.ToString()]
-                                .Split("|", StringSplitOptions.RemoveEmptyEntries);
-
+                            var SystemAndValue = request.QueryString[param.ToString()].Split("|", StringSplitOptions.RemoveEmptyEntries);
+                            
                             if (SystemAndValue != null && SystemAndValue.Length > 1)
                             {
                                 search_system = SystemAndValue[0];
+                                
+                                if (usePractitioner && search_system.Contains("NPI"))
+                                {
+                                    rtnValue = false;
+                                    Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for {resource} resource.");
+                                    break;
+                                }
+
+                                
                                 search_type = SharedServices.GetSystemTypeMapping().SystemMap
                                     .Where(e => e.System.Equals(search_system, StringComparison.Ordinal))
                                     .Select(e => e.Type).FirstOrDefault();
@@ -150,7 +159,7 @@ namespace fhir_server_CSharp
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for Patient resource.");
+                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for {resource} resource.");
                                     break;
                                 }
                             }

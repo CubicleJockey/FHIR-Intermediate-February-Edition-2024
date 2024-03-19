@@ -1,0 +1,58 @@
+﻿using fhir_server_sharedservices;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using System.Collections.Generic;
+using System;
+
+namespace fhir_server_mapping
+{
+    public static class MapPractitionerBundle
+    {
+        public static string GetPeopleBundle(List<fhir_server_entity_model.LegacyPerson> people, string listernerUrl)
+        {
+            var bundle = new Bundle();
+
+            if (listernerUrl != null && listernerUrl.EndsWith("/"))
+            {
+                listernerUrl = listernerUrl.Substring(0, listernerUrl.LastIndexOf("/"));
+            }
+
+            bundle.Id = Guid.NewGuid().ToString();
+            bundle.Meta = new Meta { LastUpdated = DateTime.Now };
+            bundle.Type = Bundle.BundleType.Searchset;
+            bundle.Link = new List<Bundle.LinkComponent> { new Bundle.LinkComponent { Relation = "self", Url = $"{listernerUrl}" } };
+
+            var entry = new List<Bundle.EntryComponent>();
+            if (people != null && people.Count > 0)
+            {
+                foreach (var person in people)
+                {
+                    var practitionerUri = new Uri(listernerUrl);
+
+                    entry.Add(new Bundle.EntryComponent
+                    {
+                        Resource = MapPractitioner.GetFHIRPractitionerResource(person),
+                        FullUrl = $"{practitionerUri.Scheme}://{practitionerUri.Authority}{string.Join(string.Empty, practitionerUri.Segments)}/{person.PRSN_ID}",
+                        Search = new Bundle.SearchComponent { Mode = Bundle.SearchEntryMode.Match }
+                    });
+                }
+            }
+
+            bundle.Timestamp = DateTime.Now;
+            bundle.Total = entry.Count;
+            bundle.Entry = entry;
+
+            if (FhirServerConfig.ValidatePatientBundleAndResource)
+            {
+                var isResourceValid = SharedServices.ValidateResource(bundle, out var operation);
+
+                if (!isResourceValid)
+                {
+                    return operation.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                }
+            }
+
+            return bundle.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+        }
+    }
+}

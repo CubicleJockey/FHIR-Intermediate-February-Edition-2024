@@ -1,56 +1,58 @@
-﻿using System.Collections.Generic;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace fhir_server_mapping
 {
-    public static class MapPatient
+    public static class MapPractitioner
     {
-        public static Patient GetFHIRPatientResource(fhir_server_entity_model.LegacyPerson person)
+        public static Practitioner GetFHIRPractitionerResource(fhir_server_entity_model.LegacyPerson person)
         {
             var identifiers = new List<Identifier>();
             var personIdentifiers = fhir_server_dataaccess.PeopleDataAccess.GetPersonDocType(person.PRSN_ID);
-            
+
             foreach (var docType in personIdentifiers)
             {
-    
+
                 identifiers.Add(new Identifier
-                { 
-                    System = "http://fhirintermediatecourse.org/"+ fhir_server_dataaccess.LegacyAPIAccess.getLegacyIdentifierCode(docType.identifier_type_id),
+                {
+                    System = "http://fhirintermediatecourse.org/" + fhir_server_dataaccess.LegacyAPIAccess.getLegacyIdentifierCode(docType.identifier_type_id),
                     Value = docType.value,
                     Period = new Period { Start = person.PRSN_CREATE_DATE }
                 });
             }
 
-            var p = new Patient
+            var p = new Practitioner
             {
                 Id = person.PRSN_ID.ToString(),
                 Meta = new Meta
                 {
-                    Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" }
+                    Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner" }
                 },
                 Text = new Narrative
-                { 
-                    Status = Narrative.NarrativeStatus.Generated, 
-                    Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p>{person.PRSN_FIRST_NAME} {person.PRSN_SECOND_NAME} {person.PRSN_LAST_NAME}</p></div>" 
+                {
+                    Status = Narrative.NarrativeStatus.Generated,
+                    Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p>{person.PRSN_FIRST_NAME} {person.PRSN_SECOND_NAME} {person.PRSN_LAST_NAME}</p></div>"
                 },
                 Identifier = identifiers,
                 Name = new List<HumanName>
-                { 
+                {
                     new HumanName
                     {
                         Use = HumanName.NameUse.Official,
-                        Family = person.PRSN_LAST_NAME, 
+                        Family = person.PRSN_LAST_NAME,
                         Given = new List<string> { person.PRSN_FIRST_NAME },
-                        Text = $"{(string.IsNullOrWhiteSpace(person.PRSN_FIRST_NAME) ? "" : person.PRSN_FIRST_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_LAST_NAME) ? "" : person.PRSN_LAST_NAME)}"
-                    } 
+                        Text = $"{(string.IsNullOrWhiteSpace(person.PRSN_FIRST_NAME) ? string.Empty : person.PRSN_FIRST_NAME)} {(string.IsNullOrWhiteSpace(person.PRSN_LAST_NAME) ? string.Empty : person.PRSN_LAST_NAME)}"
+                    }
                 },
                 Telecom = new List<ContactPoint>
-                { 
+                {
                     new ContactPoint
-                    { 
-                        System = ContactPoint.ContactPointSystem.Email, 
-                        Value = person.PRSN_EMAIL 
-                    } 
+                    {
+                        System = ContactPoint.ContactPointSystem.Email,
+                        Value = person.PRSN_EMAIL
+                    }
                 },
                 Gender = getGender(person.PRSN_GENDER),
                 BirthDate = person.PRSN_BIRTH_DATE
@@ -79,7 +81,7 @@ namespace fhir_server_mapping
                 p.Name.Add(nickName);
             }
 
-            AdministrativeGender getGender(string gender) 
+            AdministrativeGender getGender(string gender)
             {
                 var adGender = AdministrativeGender.Unknown;
 

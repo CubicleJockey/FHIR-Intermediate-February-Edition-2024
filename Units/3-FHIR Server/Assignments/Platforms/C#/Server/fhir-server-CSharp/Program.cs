@@ -122,9 +122,12 @@ namespace fhir_server_CSharp
 
             if (IsResourceAllowedInThisServer(request, out var resource))
             {
-                if (resource.Equals(ResourceType.Patient.ToString(), StringComparison.Ordinal))
+                if (resource.Equals(ResourceType.Patient.ToString(), StringComparison.Ordinal)
+                    || resource.Equals(ResourceType.Practitioner.ToString(), StringComparison.Ordinal))
                 {
-                    strResponse = PatientOrPractitioner_Route(request);
+                    var usePractitioner = resource.Equals(ResourceType.Practitioner.ToString(), StringComparison.Ordinal);
+                    
+                    strResponse = PatientOrPractitioner_Route(request, usePractitioner);
                 }
                 else if (resource.Equals(ResourceType.MedicationRequest.ToString(), StringComparison.Ordinal))
                 {
@@ -380,8 +383,10 @@ namespace fhir_server_CSharp
                 var data = usePractitioner 
                     ? fhir_server_dataaccess.PeopleDataAccess.GetAllPractitioners() 
                     : fhir_server_dataaccess.PeopleDataAccess.GetAllPatients();
-                
-                strResponse = fhir_server_mapping.MapPatientBundle.GetPeopleBundle(data, request.Url.ToString());
+
+                strResponse = usePractitioner 
+                                ? fhir_server_mapping.MapPractitionerBundle.GetPeopleBundle(data, request.Url.ToString()) 
+                                : fhir_server_mapping.MapPatientBundle.GetPeopleBundle(data, request.Url.ToString());
             }
             else
             {
@@ -396,11 +401,19 @@ namespace fhir_server_CSharp
                     }
                     else
                     {
-                        var patient = fhir_server_mapping.MapPatient.GetFHIRPatientResource(data[0]);
+                        Resource patientOrPractitioner;
+                        if (usePractitioner)
+                        {
+                            patientOrPractitioner = fhir_server_mapping.MapPractitioner.GetFHIRPractitionerResource(data[0]);
+                        }
+                        else
+                        {
+                            patientOrPractitioner = fhir_server_mapping.MapPatient.GetFHIRPatientResource(data[0]);
+                        }
 
                         if (FhirServerConfig.ValidatePatientBundleAndResource)
                         {
-                            var isResourceValid = SharedServices.ValidateResource(patient, out var outcome);
+                            var isResourceValid = SharedServices.ValidateResource(patientOrPractitioner, out var outcome);
 
                             if (!isResourceValid)
                             {
@@ -408,7 +421,7 @@ namespace fhir_server_CSharp
                             }
                         }
 
-                        strResponse = patient.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
+                        strResponse = patientOrPractitioner.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
                     }
                 }
                 else
