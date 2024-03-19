@@ -15,7 +15,7 @@ namespace fhirserver_dotnet_tests
 
         {
             var result=L01_2_testrunner.L01_2_T01();
-            var expected = "Token";
+            const string expected = "Token";
             Assert.Equal(expected, result);
             
         }
@@ -24,7 +24,7 @@ namespace fhirserver_dotnet_tests
 
         {
             var result=L01_2_testrunner.L01_2_T02();
-            var expected = "McEnroe John Patrick";
+            const string expected = "McEnroe John Patrick";
             Assert.Equal(expected, result);
         
         }
@@ -51,7 +51,7 @@ namespace fhirserver_dotnet_tests
 
         {
             var result=L01_2_testrunner.L01_2_T05();
-            var expected = "Lange Dorothea";
+            const string expected = "Lange Dorothea";
             Assert.Equal(expected, result);
         }
     }

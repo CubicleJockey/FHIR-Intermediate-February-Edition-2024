@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Hl7.Fhir.FhirPath;
+using System.Net.Mail;
 
 namespace fhir_server_CSharp
 {
@@ -276,32 +277,52 @@ namespace fhir_server_CSharp
                                 break;
                             }    
                             
+                            
+                            
                             var item = request.QueryString[param.ToString()];
-                            var parts = item.Split('|');
 
-                            switch (parts[0].ToLower())
+                            if (!item.Contains('|')) //No System
                             {
-                                case "email":
+                                if (IsValidEmail(item))
+                                {
                                     var searchCriteria = new LegacyFilter
                                     {
                                         criteria = LegacyFilter.field.email,
-                                        value = parts[1]
+                                        value = item
                                     };
                                     criteria.Add(searchCriteria);
-                                    break;
-                                case "phone":
-                                    //TODO: Figure out how to report this error properly
+                                }
+                                else
+                                {
                                     rtnValue = false;
-                                    Program.HttpStatusCodeForResponse = (int)HttpStatusCode.NotImplemented;
-                                    throw new NotImplementedException("The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented");
-                                    operation = new OperationOutcome
-                                    {
-                                        Text = new Narrative
+                                    Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                    operation = Utilz.getErrorOperationOutcome($"HTTP {(int)HttpStatusCode.NotImplemented} Not Implemented: The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented");
+                                }
+                            }
+                            else
+                            {
+
+                                var parts = item.Split('|');
+
+                                switch (parts[0].ToLower())
+                                {
+                                    case "email":
+                                        var searchCriteria = new LegacyFilter
                                         {
-                                            Div = "The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented"
-                                        }
-                                    };
-                                    break;
+                                            criteria = LegacyFilter.field.email,
+                                            value = parts[1]
+                                        };
+                                        criteria.Add(searchCriteria);
+                                        break;
+                                    case "phone":
+                                        //TODO: Figure out how to report this error properly
+                                        rtnValue = false;
+                                        Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                        operation =
+                                            Utilz.getErrorOperationOutcome(
+                                                $"HTTP {(int)HttpStatusCode.NotImplemented} Not Implemented: The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented");
+                                        break;
+                                }
                             }
                         }
                         else
@@ -320,5 +341,15 @@ namespace fhir_server_CSharp
 
 
         private static string ParamErrorMessage(string param) => $"Unknown search parameter \"{param}\". Value search parameters for this search are: [_id, birthdate, email, telecom, family, gender, name, identifier]";
+
+        private static bool IsValidEmail(string email)
+        {
+            try
+            {
+                _ = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException) { return false; }
+        }
     }
 }

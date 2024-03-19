@@ -365,9 +365,19 @@ namespace fhir_server_CSharp
             sb.Append($"RS {RequestCounter} : ");
 
 
+            //If not valid search parameters
             if (!PatientSearchParameterValidation.ValidateSearchParams(request, ref HardIdSearch, out var operation, out criteria))
             {
                 RequestCounter++;
+
+                // var notImplemented = (int)HttpStatusCode.NotImplemented;
+                // if (HttpStatusCodeForResponse == notImplemented)
+                // {
+                //     var operationOutcome = (OperationOutcome)operation;
+                //     var message = operationOutcome.Issue.First().Diagnostics;
+                //     return $"HTTP {(int)HttpStatusCode.NotImplemented} Not Implemented {message}";
+                // }
+                
                 return operation.ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
             }
 
@@ -382,7 +392,7 @@ namespace fhir_server_CSharp
 
                 if (HardIdSearch)
                 {
-                    if (data != null && data.Count == 0)
+                    if (data is { Count: 0 })
                     {
                         HttpStatusCodeForResponse = (int)HttpStatusCode.NotFound;
                         strResponse = Utilz.getErrorOperationOutcome($"Unable to find patient @ {request.Url}", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings() { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
