@@ -140,14 +140,14 @@ namespace fhir_server_CSharp
                             {
                                 search_system = SystemAndValue[0];
                                 
-                                if (usePractitioner && search_system.Contains("NPI"))
+                                if (usePractitioner && !search_system.Contains("NPI"))
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                    operation = Utilz.getErrorOperationOutcome($"Identifier '{search_system}' is not a valid system for {resource} resource.");
+                                    operation = Utilz.getErrorOperationOutcome(
+                                        $" HTTP {Program.HttpStatusCodeForResponse} Bad Request: The person you requested is not a practitioner - Lacks a NPI identifier");
                                     break;
                                 }
-
                                 
                                 search_type = SharedServices.GetSystemTypeMapping().SystemMap
                                     .Where(e => e.System.Equals(search_system, StringComparison.Ordinal))
@@ -331,12 +331,13 @@ namespace fhir_server_CSharp
                                         criteria.Add(searchCriteria);
                                         break;
                                     case "phone":
-                                        //TODO: Figure out how to report this error properly
                                         rtnValue = false;
                                         Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
-                                        operation =
-                                            Utilz.getErrorOperationOutcome(
-                                                $"HTTP {(int)HttpStatusCode.NotImplemented} Not Implemented: The underlying server only handles email addresses for the patients, thus search by system=phone is not implemented");
+
+                                        var types = usePractitioner ? "practitioners" : "patients";
+                                        var message =  $"HTTP {(int)HttpStatusCode.NotImplemented} Not Implemented: The underlying server only handles email addresses for the {types}, thus search by system=phone is not implemented";
+                                        
+                                        operation = Utilz.getErrorOperationOutcome(message);
                                         break;
                                 }
                             }

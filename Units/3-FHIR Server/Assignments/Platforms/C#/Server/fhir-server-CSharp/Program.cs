@@ -407,6 +407,15 @@ namespace fhir_server_CSharp
                         if (usePractitioner)
                         {
                             patientOrPractitioner = fhir_server_mapping.MapPractitioner.GetFHIRPractitionerResource(data[0]);
+
+                            var checkPractitioner = (Practitioner)patientOrPractitioner;
+                            var hasNpi = checkPractitioner.Identifier.Any(i => i.System.Contains("NPI"));
+                            if (!hasNpi)
+                            {
+                                HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                                strResponse = Utilz.getErrorOperationOutcome($"HTTP {HttpStatusCodeForResponse} Bad Request: The person you requested is not a practitioner - Lacks a NPI identifier", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+                                return strResponse;
+                            }
                         }
                         else
                         {
@@ -428,7 +437,9 @@ namespace fhir_server_CSharp
                 }
                 else
                 {
-                    strResponse = fhir_server_mapping.MapPatientBundle.GetPeopleBundle(data, request.Url.ToString());
+                    strResponse = usePractitioner 
+                                    ? fhir_server_mapping.MapPractitionerBundle.GetPeopleBundle(data, request.Url.ToString()) 
+                                    : fhir_server_mapping.MapPatientBundle.GetPeopleBundle(data, request.Url.ToString());
                 }
             }
 

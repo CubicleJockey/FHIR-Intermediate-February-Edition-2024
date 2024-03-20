@@ -1,5 +1,6 @@
 using Xunit;
 using fhirserver_dotnet_library;
+
 namespace fhirserver_dotnet_tests
 {
 
@@ -15,8 +16,8 @@ U3-L02_5_T02C:Practitioner / Search By telecom - email / not existing
 U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
 
 */
-[Fact]
- public void L02_5_T01A_Practitioner_SearchByEmail_Exists()
+        [Fact]
+        public void L02_5_T01A_Practitioner_SearchByEmail_Exists()
 
         {
             var result = L02_5_testrunner.L02_5_T01A();
@@ -24,8 +25,9 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
             Assert.Equal(expected, result);
 
         }
-[Fact]
- public void L02_5_T01B_Practitioner_SearchByEmail_NotExists()
+
+        [Fact]
+        public void L02_5_T01B_Practitioner_SearchByEmail_NotExists()
 
         {
             var result = L02_5_testrunner.L02_5_T01B();
@@ -33,18 +35,20 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
             Assert.Equal(expected, result);
 
         }
-[Fact]
- public void L02_5_T02A_Practitioner_SearchByTelecom_Phone_Error()
+
+        [Fact]
+        public void L02_5_T02A_Practitioner_SearchByTelecom_Phone_Error()
 
         {
-            var c=new MyConfiguration();
+            var c = new MyConfiguration();
             var result = L02_5_testrunner.L02_5_T02A();
             var expected = c.MSG_PractitionerTelecomSearchEmailOnly;
             Assert.Contains(expected, result);
 
         }
-[Fact]
- public void L02_5_T02B_Practitioner_SearchByTelecom_Email_Exists()
+
+        [Fact]
+        public void L02_5_T02B_Practitioner_SearchByTelecom_Email_Exists()
 
         {
             var result = L02_5_testrunner.L02_5_T02B();
@@ -52,8 +56,9 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
             Assert.Equal(expected, result);
 
         }
-[Fact]
- public void L02_5_T02C_Practitioner_SearchByTelecom_Email_NotExists()
+
+        [Fact]
+        public void L02_5_T02C_Practitioner_SearchByTelecom_Email_NotExists()
 
         {
             var result = L02_5_testrunner.L02_5_T02C();
@@ -61,8 +66,9 @@ U3-L02_5_T02D:Practitioner / Search By telecom - w/o system / existing
             Assert.Equal(expected, result);
 
         }
-[Fact]
- public void L02_5_T02D_Practitioner_SearchByTelecom_NoSystem_Exists()
+
+        [Fact]
+        public void L02_5_T02D_Practitioner_SearchByTelecom_NoSystem_Exists()
 
         {
             var result = L02_5_testrunner.L02_5_T02D();
