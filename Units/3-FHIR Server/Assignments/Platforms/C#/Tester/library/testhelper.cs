@@ -115,7 +115,7 @@ namespace fhirserver_dotnet_library
         }
         public static string GetPractitionersAll(string ServerEndpoint)
         {
-            var result = PractitionerSearch(ServerEndpoint, "", "");
+            var result = PractitionerSearch(ServerEndpoint, string.Empty, string.Empty);
             return result;
         }
 

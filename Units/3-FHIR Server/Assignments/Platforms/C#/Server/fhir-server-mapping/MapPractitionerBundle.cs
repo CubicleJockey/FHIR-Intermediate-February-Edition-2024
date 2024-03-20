@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace fhir_server_mapping
 {
@@ -29,9 +30,15 @@ namespace fhir_server_mapping
                 {
                     var practitionerUri = new Uri(listernerUrl);
 
+                    var practitioner = MapPractitioner.GetFHIRPractitionerResource(person);
+
+                    //ONLY NPI are valid practittioners in this system
+                    var hasNpi = practitioner.Identifier.Any(i => i.System.Contains("NPI"));
+                    if (!hasNpi) { continue; }
+
                     entry.Add(new Bundle.EntryComponent
                     {
-                        Resource = MapPractitioner.GetFHIRPractitionerResource(person),
+                        Resource = practitioner,
                         FullUrl = $"{practitionerUri.Scheme}://{practitionerUri.Authority}{string.Join(string.Empty, practitionerUri.Segments)}/{person.PRSN_ID}",
                         Search = new Bundle.SearchComponent { Mode = Bundle.SearchEntryMode.Match }
                     });

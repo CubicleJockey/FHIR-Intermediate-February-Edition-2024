@@ -144,8 +144,11 @@ namespace fhir_server_CSharp
                                 {
                                     rtnValue = false;
                                     Program.HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+
+                                    var identifierType = search_system.Split('/').Last();
+                                    
                                     operation = Utilz.getErrorOperationOutcome(
-                                        $" HTTP {Program.HttpStatusCodeForResponse} Bad Request: The person you requested is not a practitioner - Lacks a NPI identifier");
+                                        $"HTTP {Program.HttpStatusCodeForResponse} Bad Request: Practitioners can only be found knowing the NPI identifier - You are specifying : {identifierType}");
                                     break;
                                 }
                                 
