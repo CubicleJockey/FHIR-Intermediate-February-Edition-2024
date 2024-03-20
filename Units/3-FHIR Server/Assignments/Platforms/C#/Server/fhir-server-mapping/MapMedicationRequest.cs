@@ -29,27 +29,31 @@ namespace fhir_server_mapping
             }
             return display;
         }
+
+        //TODO: Add intent: proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
         public static MedicationRequest GetFHIRMedicationRequestResource(LegacyRx rx)
         {
-                var mr = new MedicationRequest();
+                var medicationRequest = new MedicationRequest();
                 var parser = new FhirJsonParser(new ParserSettings { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false });
-                var compoundId = rx.patient_id.ToString() + "-"+rx.prescriber_id.ToString()+"-"+rx.prescription_date.ToString().Replace("-","")+"-"+rx.rxnorm_code.ToString();
-                mr.Id = Convert.ToBase64String(Encoding.UTF8.GetBytes(compoundId));
-                var PatientDisplay=GetPatientRefDisplay(rx.patient_id.ToString());
-                mr.Subject = new ResourceReference
+                var compoundId = $"{rx.patient_id}-{rx.prescriber_id}-{rx.prescription_date.ToString().Replace("-", string.Empty)}-{rx.rxnorm_code}";
+                medicationRequest.Id = Convert.ToBase64String(Encoding.UTF8.GetBytes(compoundId));
+                var patientDisplay=GetPatientRefDisplay(rx.patient_id.ToString());
+                medicationRequest.Subject = new ResourceReference
                 {
                     Reference = $"Patient/{rx.patient_id}",
-                    Display = $"{PatientDisplay}"
+                    Display = $"{patientDisplay}"
                 };
-                mr.AuthoredOn = rx.prescription_date;
+                
+                medicationRequest.AuthoredOn = rx.prescription_date;
                 var cc=new CodeableConcept("http://www.nlm.nih.gov/research/umls/rxnorm",rx.rxnorm_code,rx.rxnorm_display);
-                mr.Medication=cc;
+                medicationRequest.Medication=cc;
+                
                 var opioid=LegacyAPIAccess.CheckIfOpioid(rx.rxnorm_code);
-                mr.Requester =new ResourceReference
+                medicationRequest.Requester =new ResourceReference
                 {
                     Reference =$"Practitioner/{rx.prescriber_id}"
                 };
-                var ds = new List<Dosage>();
+                var dosage = new List<Dosage>();
                     
                 if (!string.IsNullOrWhiteSpace(rx.sig))
                 {
@@ -57,24 +61,42 @@ namespace fhir_server_mapping
                     {
                         Text = rx.sig.ToString()
                     };
-                    ds.Add(item);
+                    dosage.Add(item);
                     
                 }
-                if (ds.Count>0)
-                {mr.DosageInstruction = ds;}
-                mr.Meta = new Meta
+
+                if (opioid)
+                {
+                    var item = new Dosage
+                    {
+                        Text = "WARNINGS - Limitations of use - Because of the risks associated with the use of opioids, [Product] should only be used in patients for whom other treatment options, including non-opioid analgesics, are ineffective, not tolerated or otherwise inadequate to provide appropriate management of pain"
+                    };
+                    dosage.Add(item);
+                }
+                
+                if (dosage.Count > 0) { medicationRequest.DosageInstruction = dosage; }
+                
+                medicationRequest.Meta = new Meta
                 {
                     Profile = new List<string> { "http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationrequest" },
                 };
-                var GeneratedText = "Prescription for "+PatientDisplay+ " Date:"+rx.prescription_date+" of "+rx.rxnorm_code+":"+rx.rxnorm_display+" "+rx.sig;
-                if (opioid) {GeneratedText=GeneratedText+" (opioid)";}
-                mr.Text = new Narrative
+                var generatedText = $"Prescription for {patientDisplay} Date:{rx.prescription_date} of {rx.rxnorm_code}:{rx.rxnorm_display} {rx.sig}";
+
+                if (opioid)
+                {
+                    generatedText += " (opioid)";
+                }
+
+                medicationRequest.Intent = MedicationRequest.medicationRequestIntent.Order;
+                medicationRequest.Status = MedicationRequest.medicationrequestStatus.Unknown;
+                
+                medicationRequest.Text = new Narrative
                 {
                     Status = Narrative.NarrativeStatus.Generated,
-                    Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>"+GeneratedText+"</p></div>"
+                    Div = $"<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>"+generatedText+"</p></div>"
                 };
 
-            return mr;
+            return medicationRequest;
         }
     }
 }

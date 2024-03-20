@@ -338,6 +338,14 @@ namespace fhir_server_CSharp
                                 }
                             }
 
+                            var practitionerId = medRequest.Requester.Reference.Split('/').Last();
+                            var requester = fhir_server_dataaccess.PeopleDataAccess.GetPerson(new List<LegacyFilter>
+                            {
+                                new LegacyFilter { criteria = LegacyFilter.field._id, value = practitionerId }
+                            }).Single();
+
+                            medRequest.Requester.Display = $"{requester.PRSN_LAST_NAME} {requester.PRSN_FIRST_NAME}";
+                            
                             strResponse = medRequest.ToJson(new FhirJsonSerializationSettings { Pretty = false, AppendNewLine = false, IgnoreUnknownElements = true });
                         }
                     }

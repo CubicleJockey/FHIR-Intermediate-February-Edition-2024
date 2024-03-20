@@ -36,7 +36,6 @@ namespace fhirserver_dotnet_library
                     if (mr.DosageInstruction[1].Text != "")
                     {
                         result =  mr.DosageInstruction[1].Text;
-
                     }
                 }
             }
