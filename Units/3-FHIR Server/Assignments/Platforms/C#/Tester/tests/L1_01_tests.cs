@@ -2,7 +2,6 @@ using Xunit;
 using fhirserver_dotnet_library;
 namespace fhirserver_dotnet_tests
 {
-
     public class L01_1_Tests
     {
         //L01_1_Tests	Tests for U3-L01_1:Add Support for Searching Patient By Email
@@ -10,7 +9,7 @@ namespace fhirserver_dotnet_tests
         //L01_1_T02	U3-L01_1_T02:Patient - Search by email - existing
         //L01_1_T03	U3-L01_1_T03:Patient - Search by email - Not Exists
 
-        [Fact]
+        [Fact,]
         public void L01_1_T01_Verify_Email_As_Search_Parameter_In_CapabilityStatement()
 
         {

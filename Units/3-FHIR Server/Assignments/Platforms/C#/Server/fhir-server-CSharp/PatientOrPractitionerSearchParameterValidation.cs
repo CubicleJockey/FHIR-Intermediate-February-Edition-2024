@@ -88,7 +88,6 @@ namespace fhir_server_CSharp
                         value = searchParamId.ToString()
                     };
                     criteria.Add(sc);
-                    rtnValue = true;
                     hardIdSearch = true;
                     return rtnValue;
                 }

@@ -43,7 +43,7 @@ namespace fhir_server_CSharp
                         s =>
                         {
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.Write($"{sb.ToString()}");
+                            Console.Write($"{sb}");
 
                             if (HttpStatusCodeForResponse >= 400 && HttpStatusCodeForResponse <= 506)
                             {
@@ -58,10 +58,9 @@ namespace fhir_server_CSharp
                             Console.WriteLine(Environment.NewLine);
                         },
                         () => { if (sb != null) { sb.Clear(); } },
-                        () => { return HttpStatusCodeForResponse; },
+                        () => HttpStatusCodeForResponse,
                         (statusCode) => { HttpStatusCodeForResponse = statusCode; },
-                        () => { return LocationHeaderValue; }
-                    );
+                        () => LocationHeaderValue);
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine(new string('-', Console.BufferWidth));
@@ -396,8 +395,11 @@ namespace fhir_server_CSharp
                 {
                     if (data is { Count: 0 })
                     {
-                        HttpStatusCodeForResponse = (int)HttpStatusCode.NotFound;
-                        strResponse = Utilz.getErrorOperationOutcome($"Unable to find {resource.ToLower()} @ {request.Url}", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+                        //HttpStatusCodeForResponse = (int)HttpStatusCode.NotFound;
+                        HttpStatusCodeForResponse = (int)HttpStatusCode.BadRequest;
+                        //strResponse = $"HTTP {(int)HttpStatusCode.NotFound} Not Found: Resource {resource}/{criteria.First().value} is not known";
+                        //strResponse = Utilz.getErrorOperationOutcome($"HTTP {(int)HttpStatusCode.NotFound} Unable to find {resource.ToLower()} @ {request.Url}", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
+                        strResponse = Utilz.getErrorOperationOutcome($"HTTP {(int)HttpStatusCode.NotFound} Not Found: Resource {resource}/{criteria.First().value} is not known", OperationOutcome.IssueSeverity.Information).ToJson(new FhirJsonSerializationSettings { AppendNewLine = false, Pretty = false, IgnoreUnknownElements = true });
                     }
                     else
                     {
