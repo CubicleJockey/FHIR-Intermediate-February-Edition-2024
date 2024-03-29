@@ -58,7 +58,8 @@ function callCDSServiceCheckPrice(patientId, userId, medicationRequestId) {
         type: "POST",
         contentType: "application/json",
         url: cdssURL,
-        data: JSON.stringify(hook)
+        data: JSON.stringify(hook),
+        crossDomain: true
     }).then(function (response) {
             var cards = response.cards;
             var information = "No price information";

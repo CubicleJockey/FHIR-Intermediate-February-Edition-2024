@@ -1,0 +1,61 @@
+//CDSS URL: "https://fhir-org-cds-services.appspot.com/cds-services/cms-price-check"
+{
+    "hookInstance": "d68b7834-b997-40da-86bb-938db8664922",
+    "hook": "order-select",
+    "fhirserver": "https://launch.smarthealthit.org/v/r4/fhir",
+    "context": {
+        "userId": "Practitioner/e443ac58-8ece-4385-8d55-775c1b8f3a37",
+        "patientId": "59bc5dbb-1957-47ef-b6b5-25952e6bfdab",
+        "selections": [
+            "MedicationRequest/f56be270-0ea1-4b05-af4d-b7cf2b151a82"
+        ],
+        "draftOrders": {
+            "resourceType": "Bundle",
+            "entry": [
+                {
+                    "resource": {
+                        "resourceType": "MedicationRequest",
+                        "id": "f56be270-0ea1-4b05-af4d-b7cf2b151a82",
+                        "meta": {
+                            "versionId": "5",
+                            "lastUpdated": "2024-02-23T02:08:03.922-05:00",
+                            "tag": [
+                                {
+                                    "system": "https://smarthealthit.org/tags",
+                                    "code": "synthea-5-2019"
+                                }
+                            ]
+                        },
+                        "status": "stopped",
+                        "intent": "order",
+                        "medicationCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                                    "code": "834061",
+                                    "display": "Penicillin V Potassium 250 MG Oral Tablet"
+                                }
+                            ],
+                            "text": "Penicillin V Potassium 250 MG Oral Tablet"
+                        },
+                        "subject": {
+                            "reference": "Patient/59bc5dbb-1957-47ef-b6b5-25952e6bfdab"
+                        },
+                        "encounter": {
+                            "reference": "Encounter/f9cfda88-0c08-405d-aec3-cb4381176c18"
+                        },
+                        "authoredOn": "2016-03-28T07:00:48+00:00",
+                        "requester": {
+                            "reference": "Practitioner/a1b28730-eedd-4efa-870e-a70af74fec46"
+                        },
+                        "reasonReference": [
+                            {
+                                "reference": "Condition/8d214a0e-73f7-492c-86cc-b09e8ffa4c4d"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
