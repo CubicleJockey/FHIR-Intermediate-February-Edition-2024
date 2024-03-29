@@ -1,4 +1,5 @@
 //CDSS URL: "https://fhir-org-cds-services.appspot.com/cds-services/cms-price-check" <--- does not exist anymore
+//CDSS URL UPDATE: https://sandbox-services.cds-hooks.org/cds-services/cms-price-check
 {
     "hookInstance": "d68b7834-b997-40da-86bb-938db8664922",
     "hook": "order-select",
