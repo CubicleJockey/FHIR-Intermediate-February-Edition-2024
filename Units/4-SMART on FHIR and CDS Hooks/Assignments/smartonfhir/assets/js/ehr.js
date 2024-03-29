@@ -12,13 +12,14 @@ function createMedicationGrid(bundle, patientId, userid) {
         return (
             `<tr>
       
-       <td class="text-center">${v.resource.status}</td>
-       <td>${v.resource.medicationCodeableConcept.text}</td>
-       <td class="text-center">${formatdate(v.resource.authoredOn)}</td>
-       <td class="text-center"><i title="Check Price" class="fa fa-check-square fa-lg text-success pointer checkprice 
-                data-cdssURL="${cdssURL}" data-fhirserver="${fhirserver}" 
-                data-userid="${userid}" data-patientId="${patientId}"
-                data-medicationRequestId="${v.resource.id}"></i></td>
+        <td class="text-center">${v.resource.status}</td>
+        <td class="text-center">${v.resource.intent}</td>
+        <td>${v.resource.medicationCodeableConcept.text}</td>
+        <td class="text-center">${formatdate(v.resource.authoredOn)}</td>
+        <td class="text-center"><i title="Check Price" class="fa fa-check-square fa-lg text-success pointer checkprice 
+                    data-cdssURL="${cdssURL}" data-fhirserver="${fhirserver}" 
+                    data-userid="${userid}" data-patientId="${patientId}"
+                    data-medicationRequestId="${v.resource.id}"></i></td>
        </tr>`
         );
     }).join('');

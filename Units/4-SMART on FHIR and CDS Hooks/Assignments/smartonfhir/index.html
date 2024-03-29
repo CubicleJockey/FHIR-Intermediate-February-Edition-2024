@@ -22,7 +22,8 @@
     </script>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script> -->
+    <script src="./assets/js/fhir-client.js"></script>
 
     <script src="assets/js/ehr.js"></script>
     <style>
@@ -66,7 +67,7 @@
         <div class="row">
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3 text-center">
-                    <img id="patientPhoto" src="assets/images/men.jpg" class="img-circle center" width="80">
+                    <img id="patientPhoto" src="assets/images/men.jpg" class="img-circle center" width="80" alt="">
                     <div class="clear"><input id="patient-id" name="patient-id" type="hidden" value="5"></div>
                     </br>
                     <p><small><span id="patientId"></span></small></p>
@@ -112,6 +113,7 @@
                                     <tr>
                                         
                                         <th class="text-center">STATUS</th>
+                                        <th class="text-center">INTENT</th>
                                         <th>MEDICATION</th>
                                         <th class="text-center">DATE</th>
                                         <th class="text-center">CHECK PRICE</th>
@@ -128,7 +130,7 @@
 
 
     <script type="text/javascript">
-        FHIR.oauth2.ready().then(function (client) {
+        FHIR.oauth2.ready().then((client) => {
             console.log(client);
 
             // Render the current patient (or any error)
@@ -136,15 +138,15 @@
                 function (pt) {
                     // read patient data
                     console.log(pt);
-                    var lastname = pt.name[0].family;
-                    var names = "";
+                    let lastname = pt.name[0].family;
+                    let names = "";
                     namesCount = pt.name[0].given.length;
                     for (i = 0; i < namesCount; i++) {
                         names = names + " " + pt.name[0].given[i];
                     }
-                    var age = getAge(pt.birthDate);
-                    var gender = pt.gender;
-                    var id=pt.id;
+                    let age = getAge(pt.birthDate);
+                    let gender = pt.gender;
+                    let id=pt.id;
 
 
                     //display patient information 
@@ -157,7 +159,7 @@
                     else
                         document.getElementById("patientPhoto").src = "assets/images/men.jpg";
                 },
-                function (error) {
+                (error) => {
                     document.getElementById("patient").innerText = error.stack;
                 }
             );
@@ -165,9 +167,8 @@
             // Render user
             var userid = client.user.id;
             client.request("/Practitioner/" + userid, {})
-
                 .then(
-                    function (pract) {
+                    (pract) => {
                         var practitionerLastName = pract.name[0].family;
                         var practitionerGivenName = pract.name[0].given[0];
                         document.getElementById("username").innerText = practitionerGivenName + ' ' +
@@ -183,22 +184,19 @@
                 })
 
                 // Reject if no MedicationRequests are found
-                .then(function (data) {
+                .then((data) => {
                     if (!data.entry || !data.entry.length) {
                         throw new Error("No medications found for the selected patient");
                     }
                     return data.entry;
                 })
-
-
                 // Render the current patient's medications (or any error)
                 .then(
-                    function (meds) {
-
+                    (meds) => {
                         createMedicationGrid(meds, client.patient.id, userid);
 
                     },
-                    function (error) {
+                    (error) => {
                         document.getElementById("meds").innerText = error.stack;
                     }
                 );
