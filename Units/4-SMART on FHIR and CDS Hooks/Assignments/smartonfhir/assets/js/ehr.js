@@ -1,4 +1,5 @@
-const cdssURL = "https://fhir-org-cds-services.appspot.com/cds-services/cms-price-check";
+//const cdssURL = "https://fhir-org-cds-services.appspot.com/cds-services/cms-price-check";
+const cdssURL = "https://sandbox-services.cds-hooks.org/cds-services/cms-price-check"
 const fhirserver = "https://launch.smarthealthit.org/v/r4/fhir";
 
 var b = [];
